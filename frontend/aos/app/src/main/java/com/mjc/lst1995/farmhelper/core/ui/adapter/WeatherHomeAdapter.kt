@@ -1,10 +1,11 @@
-package com.mjc.lst1995.farmhelper.core.ui
+package com.mjc.lst1995.farmhelper.core.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.mjc.lst1995.farmhelper.core.ui.model.Weather
+import com.mjc.lst1995.farmhelper.core.ui.viewholder.WeatherHomeHolder
 import com.mjc.lst1995.farmhelper.databinding.WeatherHomeHorderBinding
 
 class WeatherHomeAdapter : ListAdapter<Weather, WeatherHomeHolder>(WeatherHomeDiffUtil) {

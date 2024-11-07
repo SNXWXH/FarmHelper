@@ -1,4 +1,4 @@
-package com.mjc.lst1995.farmhelper.core.ui
+package com.mjc.lst1995.farmhelper.core.ui.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.mjc.lst1995.farmhelper.core.ui.model.Weather
