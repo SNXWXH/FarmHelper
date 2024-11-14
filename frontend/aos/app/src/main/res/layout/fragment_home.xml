@@ -54,15 +54,16 @@
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
+            android:id="@+id/home_nv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
+            app:headerLayout="@layout/temp_head_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-            app:headerLayout="@layout/temp_head_layout"
-            app:menu="@menu/menu_home" />
+            app:menu="@menu/menu_login" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

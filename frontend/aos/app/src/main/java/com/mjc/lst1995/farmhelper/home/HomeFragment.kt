@@ -1,8 +1,10 @@
 package com.mjc.lst1995.farmhelper.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.GravityCompat
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mjc.lst1995.farmhelper.R
 import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
@@ -37,6 +39,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         binding.materialToolbar.setOnMenuItemClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.END)
+            true
+        }
+
+        binding.homeNv.setNavigationItemSelectedListener { itemMenu ->
+            when (itemMenu.itemId) {
+                R.id.login -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+                }
+            }
             true
         }
 
