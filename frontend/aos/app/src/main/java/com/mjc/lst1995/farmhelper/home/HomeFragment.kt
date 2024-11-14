@@ -9,7 +9,10 @@ import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
 import com.mjc.lst1995.farmhelper.core.ui.adapter.WeatherHomeAdapter
 import com.mjc.lst1995.farmhelper.core.ui.model.Weather
 import com.mjc.lst1995.farmhelper.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val weathers =
         listOf(
