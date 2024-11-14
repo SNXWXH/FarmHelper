@@ -1,7 +1,6 @@
 package com.mjc.lst1995.farmhelper.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.findNavController
@@ -36,21 +35,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setDrawer()
+        setNavItemSelect()
+        setWeatherRV()
+    }
 
-        binding.materialToolbar.setOnMenuItemClickListener {
-            binding.drawerLayout.openDrawer(GravityCompat.END)
-            true
-        }
-
-        binding.homeNv.setNavigationItemSelectedListener { itemMenu ->
-            when (itemMenu.itemId) {
-                R.id.login -> {
-                    findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
-                }
-            }
-            true
-        }
-
+    private fun setWeatherRV() {
         adapter = WeatherHomeAdapter()
         adapter.submitList(weathers)
         binding.run {
@@ -60,4 +50,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
     }
 
+    private fun setNavItemSelect() {
+        binding.homeNV.setNavigationItemSelectedListener { itemMenu ->
+            when (itemMenu.itemId) {
+                R.id.login -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+                }
+            }
+            true
+        }
+    }
+
+    private fun setDrawer() {
+        binding.materialToolbar.setOnMenuItemClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.END)
+            true
+        }
+    }
 }
