@@ -5,7 +5,7 @@ import MonthRank from '@/components/MonthRank';
 export default function Home() {
   return (
     <>
-      <div className='flex flex-col items-center h-screen pt-14 '>
+      <div className='flex flex-col items-center h-screen pt-14'>
         <div className='w-3/5'>
           <div className='mt-14'>
             <p className='font-nanumHeavy font-heavy text-2xl'>오늘의 날씨</p>

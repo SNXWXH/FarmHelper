@@ -21,7 +21,7 @@ export default function Header() {
             날씨
           </Link>
           <Link
-            href='/work'
+            href='/workLog'
             className='w-24 flex justify-center hover:text-[#669248]'
           >
             작업일지
