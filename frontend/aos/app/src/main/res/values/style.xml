@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="textViewStyle" parent="Widget.AppCompat.TextView">
-        <item name="android:font">@font/nanumsquareneo_heavy</item>
+        <item name="android:fontFamily">@font/nanumsquareneo_regular</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="extraBoldStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/nanumsquareneo_extrabold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="heavyStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/nanumsquareneo_heavy</item>
         <item name="android:textSize">20sp</item>
     </style>
 </resources>
