@@ -9,7 +9,7 @@ export default function CropListCard({
 }) {
   return (
     <>
-      <div className='flex flex-col items-center bg-[#F4FEE6] w-60 h-72'>
+      <div className='flex flex-col items-center bg-[#F4FEE6] w-64 h-72'>
         <div className='h-3/5 flex justify-center items-center mt-4'>
           <Image src='/temporaryImg.png' alt='img' width={140} height={0} />
         </div>
