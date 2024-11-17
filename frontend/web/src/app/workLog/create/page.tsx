@@ -3,6 +3,16 @@
 import { ChangeEvent, useState } from 'react';
 
 export default function CreateLog() {
+  const [fileName, setFileName] = useState('');
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) setFileName(file.name);
+    else {
+      setFileName('');
+    }
+  };
+
   return (
     <>
       <div className='flex h-screen justify-center'>
