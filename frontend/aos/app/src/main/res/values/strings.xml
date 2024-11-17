@@ -3,4 +3,7 @@
     <string name="sns_login_contents">SNS 간편 로그인</string>
     <string name="google_login_contents">구글로 로그인</string>"
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">로그인</string>
+    <string name="logout">로그아웃</string>
+    <string name="menus">메뉴들</string>
 </resources>

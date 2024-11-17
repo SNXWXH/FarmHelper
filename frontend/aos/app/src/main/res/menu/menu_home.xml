@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_toggle_drawer"
-        android:icon="@android:drawable/ic_dialog_dialer"
-        android:title="Toggle Drawer"
+        android:icon="@drawable/menu_menus_24dp"
+        android:title="@string/menus"
         app:showAsAction="always" />
 </menu>
