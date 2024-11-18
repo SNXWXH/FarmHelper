@@ -27,8 +27,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:menu="@menu/menu_home"
-                app:title="농부의 하루" />
-
+                app:title="@string/app_name" />
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -50,15 +49,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="앞으로의 날씨" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/weathersRV"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:orientation="horizontal"
-                            tools:listitem="@layout/weather_home_horder" />
+                            android:text="@string/today_weather" />
 
                     </LinearLayout>
 
@@ -74,6 +65,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/recommended_crop_of_the_day" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recommendCropRV"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/holder_recommended_crop" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -102,6 +102,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/daily_work_log" />
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:layout_marginBottom="32dp"
+                            android:gravity="center"
+                            android:text="@string/check_today_work_log_after_login" />
                     </LinearLayout>
 
                 </LinearLayout>
