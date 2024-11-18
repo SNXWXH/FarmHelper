@@ -6,4 +6,7 @@
     <string name="login">로그인</string>
     <string name="logout">로그아웃</string>
     <string name="menus">메뉴들</string>
+    <string name="recommended_crop_of_the_day">오늘의 추천 작물</string>
+    <string name="popular_crop_of_the_month">이번 달 인기 작물</string>
+    <string name="daily_work_log">오늘의 작업일지</string>
 </resources>
