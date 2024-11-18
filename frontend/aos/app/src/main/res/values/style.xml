@@ -14,4 +14,11 @@
         <item name="android:fontFamily">@font/nanumsquareneo_heavy</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="cardViewStyle" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardElevation">4dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="cardBackgroundColor">@color/md_theme_primaryContainer</item>
+    </style>
+
 </resources>
