@@ -44,8 +44,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             adapter = CropHomeAdapter()
             adapter.submitList(recommendedCrops)
             recommendCropRV.adapter = adapter
-            recommendCropRV.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
