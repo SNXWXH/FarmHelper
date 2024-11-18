@@ -4,6 +4,26 @@ import { useState } from 'react';
 import TodoDetail from '@/components/TodoDetail';
 
 export default function DetailWrite() {
+  const [details, setDetails] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const addDetail = () => {
+    if (inputValue.trim()) {
+      setDetails((prev) => [...prev, inputValue.trim()]);
+      setInputValue('');
+    }
+  };
+
+  const removeDetail = (index: number) => {
+    setDetails((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      addDetail();
+    }
+  };
+
   return (
     <div className='flex flex-col items-center h-screen w-full pt-14'>
       <div className='w-3/5'>
