@@ -5,7 +5,6 @@ import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mjc.lst1995.farmhelper.R
 import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
 import com.mjc.lst1995.farmhelper.core.ui.adapter.CropHomeAdapter
