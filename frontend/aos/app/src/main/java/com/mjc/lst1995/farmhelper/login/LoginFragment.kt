@@ -3,7 +3,6 @@ package com.mjc.lst1995.farmhelper.login
 import android.app.PendingIntent
 import android.content.IntentSender
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,10 +19,8 @@ import com.mjc.lst1995.farmhelper.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
-
     @Inject
     lateinit var auth: FirebaseAuth
 
@@ -38,19 +35,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
             try {
                 val idToken = signInClient.getSignInCredentialFromIntent(result.data).googleIdToken
-                Log.d("LoginFragment", idToken.toString())
                 if (idToken != null) {
                     firebaseAuthWithGoogle(idToken)
-                } else {
-                    Log.d("LoginFragment", "No ID token!")
+                    return@registerForActivityResult
                 }
-            } catch (e: ApiException) {
-                Log.w("LoginFragment", "Google sign in failed / signInLauncher", e)
+            } catch (_: ApiException) {
             }
         }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
+        setLoginClickListener()
+    }
+
+    private fun setLoginClickListener() {
         binding.googleLoginIV.setOnClickListener {
             googleWithLogin()
         }
@@ -58,29 +59,29 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     private fun googleWithLogin() {
         signInClient = Identity.getSignInClient(requireContext())
-        signInClient.getSignInIntent(signInRequest.build())
+        signInClient
+            .getSignInIntent(signInRequest.build())
             .addOnSuccessListener { pendingIntent ->
-                Log.d("LoginFragment", "Received signInIntent from Google")
                 launchSignIn(pendingIntent)
-            }
-            .addOnFailureListener { e ->
-                Log.e("LoginFragment", "Google Sign-In intent failed", e)
+            }.addOnFailureListener {
+                showMessage("현재 구글로 로그인하는 기능에 문제가 발생하였습니다.")
             }
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         try {
             val credential = GoogleAuthProvider.getCredential(idToken, null)
-            auth.signInWithCredential(credential)
+            auth
+                .signInWithCredential(credential)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Log.d("LoginFragment", "signInWithCredential:success")
+                        // 성공하였을 때 서버에 닉네임이 있는지 확인하여 동작 설정
                     } else {
-                        Log.w("LoginFragment", "signInWithCredential:failure", task.exception)
+                        showMessage("로그인에 실패하였습니다. 다시 시도해 주세요.")
                     }
                 }
         } catch (e: Exception) {
-            Log.e("LoginFragment", "Firebase auth with Google failed", e)
+            showMessage("로그인에 실패하였습니다. 다시 시도해 주세요.")
         }
     }
 
@@ -89,8 +90,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             val intentSenderRequest = IntentSenderRequest.Builder(pendingIntent).build()
             signInLauncher.launch(intentSenderRequest)
         } catch (e: IntentSender.SendIntentException) {
-            Log.e("LoginFragment", "Failed to launch sign-in", e)
+            showMessage("현재 구글로 로그인하는 기능에 문제가 발생하였습니다.")
         }
     }
-
 }
