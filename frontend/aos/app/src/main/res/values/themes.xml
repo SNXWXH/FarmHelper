@@ -1,6 +1,10 @@
 <resources>
     <style name="Base.Theme.FarmHelper" parent="Theme.Material3.Light.NoActionBar">
-        <item name="android:textViewStyle">@style/textViewStyle</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
+        <item name="buttonStyle">@style/ButtonStyle</item>
+        <item name="textInputOutlinedStyle">@style/TextInputLayout</item>
+        <item name="cardViewStyle">@style/CardViewStyle</item>
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
