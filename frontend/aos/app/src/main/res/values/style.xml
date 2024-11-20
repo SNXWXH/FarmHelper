@@ -44,8 +44,8 @@
         <item name="android:fontFamily">@font/nanumsquareneo_bold</item>
         <item name="android:textSize">14sp</item>
         <item name="android:singleLine">true</item>
-        <item name="android:minWidth">120dp</item>
-        <item name="circleRadius">18dp</item>
+        <item name="android:background">@drawable/rounded_button</item>
+        <item name="android:minWidth">100dp</item>
     </style>
 
     <!--에디터텍스트-->
