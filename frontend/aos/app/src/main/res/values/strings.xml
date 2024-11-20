@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">농부의 하루</string>
+    <!-- 메인 화면-->
     <string name="login_contents">간편 로그인</string>
     <string name="google_login_contents">구글로 로그인</string>"
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">로그인</string>
     <string name="logout">로그아웃</string>
     <string name="menus">메뉴들</string>
@@ -11,4 +11,10 @@
     <string name="popular_crop_of_the_month">이번 달 인기 작물</string>
     <string name="daily_work_log">오늘의 작업일지</string>
     <string name="check_today_work_log_after_login">로그인 후 오늘의 작업일지를 확인해보세요!</string>
+
+    <!-- 로그인-->
+    <string name="nick_name_input_message">사용하실 닉네임을 입력해주세요.</string>
+    <string name="nick_name_setting">닉네임 설정</string>
+    <string name="pick">선택</string>
+    <string name="back">돌아가기</string>
 </resources>
