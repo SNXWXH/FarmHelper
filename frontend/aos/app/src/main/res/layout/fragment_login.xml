@@ -9,7 +9,7 @@
 
         <TextView
             android:id="@+id/loginContentsTV"
-            style="@style/heavyStyle"
+            style="@style/HeavyStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_contents"

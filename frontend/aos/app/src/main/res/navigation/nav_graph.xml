@@ -15,5 +15,17 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.mjc.lst1995.farmhelper.login.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_nickNameFragment"
+            app:destination="@id/nickNameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nickNameFragment"
+        android:name="com.mjc.lst1995.farmhelper.login.NickNameFragment"
+        android:label="NickNameFragment" >
+        <action
+            android:id="@+id/action_nickNameFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

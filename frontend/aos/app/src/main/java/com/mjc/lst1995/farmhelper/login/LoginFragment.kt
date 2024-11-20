@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.identity.GetSignInIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -76,6 +77,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         // 성공하였을 때 서버에 닉네임이 있는지 확인하여 동작 설정
+                        findNavController().navigate(R.id.action_loginFragment_to_nickNameFragment)
                     } else {
                         showMessage("로그인에 실패하였습니다. 다시 시도해 주세요.")
                     }
