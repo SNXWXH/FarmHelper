@@ -19,9 +19,7 @@ export default function DetailWrite() {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      addDetail();
-    }
+    if (e.key === 'Enter') addDetail();
   };
 
   return (
