@@ -1,6 +1,7 @@
 import CropCard from '@/components/CropCard';
 import MainWeather from '@/components/MainWeather';
 import MonthRank from '@/components/MonthRank';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -16,7 +17,9 @@ export default function Home() {
               오늘의 추천 작물
             </p>
             <div className='overflow-x-auto flex gap-6'>
-              <CropCard />
+              <Link href='/todayCrop'>
+                <CropCard />
+              </Link>
               <CropCard />
               <CropCard />
               <CropCard />
