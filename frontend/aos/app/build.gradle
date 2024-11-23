@@ -26,6 +26,7 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "GOOGLE_CLIENT_ID", localProperties['google.client.id'])
+            buildConfigField("String", "BASE_URL", localProperties['base.url'])
         }
         release {
             minifyEnabled false
