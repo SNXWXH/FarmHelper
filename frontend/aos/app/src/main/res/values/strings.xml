@@ -17,4 +17,5 @@
     <string name="nick_name_setting">닉네임 설정</string>
     <string name="pick">선택</string>
     <string name="back">돌아가기</string>
+    <string name="check">확인</string>
 </resources>
