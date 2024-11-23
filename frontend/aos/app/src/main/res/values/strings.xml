@@ -10,6 +10,7 @@
     <string name="recommended_crop_of_the_day">오늘의 추천 작물</string>
     <string name="popular_crop_of_the_month">이번 달 인기 작물</string>
     <string name="daily_work_log">오늘의 작업일지</string>
+    <string name="daily_work_title">작업 일지 제목</string>
     <string name="check_today_work_log_after_login">로그인 후 오늘의 작업일지를 확인해보세요!</string>
 
     <!-- 로그인-->
