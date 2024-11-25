@@ -1,4 +1,4 @@
-package com.mjc.lst1995.farmhelper.core.data.networl.response.login
+package com.mjc.lst1995.farmhelper.core.data.network.response.login
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

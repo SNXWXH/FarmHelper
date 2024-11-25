@@ -1,6 +1,6 @@
 package com.mjc.lst1995.farmhelper.core.data.di
 
-import com.mjc.lst1995.farmhelper.core.data.networl.api.UserSettingApi
+import com.mjc.lst1995.farmhelper.core.data.network.api.UserSettingApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
