@@ -1,4 +1,4 @@
-package com.mjc.lst1995.farmhelper.core.ui.model
+package com.mjc.lst1995.farmhelper.core.domain.model
 
 
 data class Crop(
