@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/Header';
 import { ReactNode } from 'react';
+import AuthContext from '@/components/AuthContext';
 
 export const metadata: Metadata = {
   title: '농부의 하루',
@@ -20,11 +21,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className='font-["NanumSquareNeo"] flex flex-col min-h-screen bg-[#F9FDF4] text-black'>
-        <Header />
-        {children}
-        {modal}
-      </body>
+      <AuthContext>
+        <body className='font-["NanumSquareNeo"] flex flex-col min-h-screen bg-[#F9FDF4] text-black'>
+          <Header />
+          {children}
+          {modal}
+        </body>
+      </AuthContext>
     </html>
   );
 }

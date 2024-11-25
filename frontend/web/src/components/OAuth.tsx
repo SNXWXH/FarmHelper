@@ -1,7 +1,11 @@
+'use client';
+
+import { useSession, signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default function OAuth({ title }: { title: string }) {
+  const { data: session } = useSession();
+
   return (
     <>
       <p className='relative text-3xl'>
@@ -10,12 +14,21 @@ export default function OAuth({ title }: { title: string }) {
         <span className='absolute right-[-175px] top-1/2 transform -translate-y-1/2 w-[165px] border-t-[3px] border-black'></span>
       </p>
 
-      <Link
-        href='/'
-        className='flex justify-center items-center w-20 h-20 bg-[#F8F8F8] rounded-md shadow-2xl m-12'
-      >
-        <Image src='/google.png' alt='google' width={30} height={0} />
-      </Link>
+      {session ? (
+        <button
+          className='flex justify-center items-center w-20 h-20 bg-[#F8F8F8] rounded-md shadow-2xl m-12'
+          onClick={() => signOut()}
+        >
+          <Image src='/logged_in.png' alt='logged in' width={30} height={0} />
+        </button>
+      ) : (
+        <button
+          className='flex justify-center items-center w-20 h-20 bg-[#F8F8F8] rounded-md shadow-2xl m-12'
+          onClick={() => signIn('google', { callbackUrl: '/' })}
+        >
+          <Image src='/google.png' alt='google' width={30} height={0} />
+        </button>
+      )}
     </>
   );
 }
