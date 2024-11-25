@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.mjc.lst1995.farmhelper.R
 import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
 import com.mjc.lst1995.farmhelper.core.ui.adapter.CropHomeAdapter
-import com.mjc.lst1995.farmhelper.core.ui.model.Crop
+import com.mjc.lst1995.farmhelper.core.domain.model.Crop
 import com.mjc.lst1995.farmhelper.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
