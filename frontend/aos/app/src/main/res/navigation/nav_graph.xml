@@ -34,5 +34,17 @@
     <fragment
         android:id="@+id/worksFragment"
         android:name="com.mjc.lst1995.farmhelper.work.WorksFragment"
-        android:label="WorksFragment" />
+        android:label="WorksFragment" >
+        <action
+            android:id="@+id/action_worksFragment_to_workDetailFragment"
+            app:destination="@id/workDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workDetailFragment"
+        android:name="com.mjc.lst1995.farmhelper.work.WorkDetailFragment"
+        android:label="WorkDetailFragment" >
+        <argument
+            android:name="Work"
+            app:argType="string" />
+    </fragment>
 </navigation>
