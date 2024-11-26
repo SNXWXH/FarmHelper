@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mjc.lst1995.farmhelper.core.domain.model.Work
+import com.mjc.lst1995.farmhelper.core.ui.diff.WorkDiffUtil
 import com.mjc.lst1995.farmhelper.databinding.HolderWorksListTitleBinding
 
 class WorkLinearAdapter : ListAdapter<Work, WorkLinearAdapter.WorkLinearHolder>(WorkDiffUtil) {
@@ -27,7 +28,6 @@ class WorkLinearAdapter : ListAdapter<Work, WorkLinearAdapter.WorkLinearHolder>(
             binding.workTitleTV.text = work.cropName
             binding.workDateTV.text = work.cropDate
         }
-
 
         companion object {
             fun from(parent: ViewGroup): WorkLinearHolder {
