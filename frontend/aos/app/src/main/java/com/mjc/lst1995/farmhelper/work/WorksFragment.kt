@@ -2,6 +2,7 @@ package com.mjc.lst1995.farmhelper.work
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mjc.lst1995.farmhelper.R
 import com.mjc.lst1995.farmhelper.core.domain.model.Work
@@ -10,6 +11,8 @@ import com.mjc.lst1995.farmhelper.core.ui.adapter.WorkGridAdapter
 import com.mjc.lst1995.farmhelper.core.ui.adapter.WorkLinearAdapter
 import com.mjc.lst1995.farmhelper.databinding.FragmentWorksBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @AndroidEntryPoint
 class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works) {
@@ -30,8 +33,15 @@ class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works
         super.onViewCreated(view, savedInstanceState)
         binding.materialToolbar2.title = tempClientNameFormat.format(tempClientName)
 
-        gridAdapter = WorkGridAdapter()
-        linearAdapter = WorkLinearAdapter()
+        val listener = { work: Work ->
+            val action = WorksFragmentDirections.actionWorksFragmentToWorkDetailFragment(
+                Json.encodeToString(work)
+            )
+            findNavController().navigate(action)
+        }
+
+        gridAdapter = WorkGridAdapter(listener)
+        linearAdapter = WorkLinearAdapter(listener)
         binding.worksGridRV.adapter = gridAdapter
         binding.worksGridRV.layoutManager = GridLayoutManager(context, 2)
         binding.worksLinearRV.adapter = linearAdapter
