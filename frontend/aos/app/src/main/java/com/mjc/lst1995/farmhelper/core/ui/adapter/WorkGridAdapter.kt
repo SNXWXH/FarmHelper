@@ -13,20 +13,19 @@ class WorkGridAdapter(private val listener: (Work) -> Unit) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): WorkGridHolder = WorkGridHolder.from(parent, listener)
+    ): WorkGridHolder = WorkGridHolder.from(parent)
 
     override fun onBindViewHolder(
         holder: WorkGridHolder,
         position: Int,
     ) {
-        holder.bind(currentList[position])
+        holder.bind(currentList[position], listener)
     }
 
     class WorkGridHolder(
         private val binding: HolderWorksListGridBinding,
-        private val listener: (Work) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(work: Work) {
+        fun bind(work: Work, listener: (Work) -> Unit) {
             binding.workTitleTv.text = work.cropName
             binding.workDateTV.text = work.cropDate
             binding.root.setOnClickListener {
@@ -35,10 +34,10 @@ class WorkGridAdapter(private val listener: (Work) -> Unit) :
         }
 
         companion object {
-            fun from(parent: ViewGroup, listener: (Work) -> Unit): WorkGridHolder {
+            fun from(parent: ViewGroup): WorkGridHolder {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = HolderWorksListGridBinding.inflate(inflater, parent, false)
-                return WorkGridHolder(binding, listener)
+                return WorkGridHolder(binding)
             }
         }
     }
