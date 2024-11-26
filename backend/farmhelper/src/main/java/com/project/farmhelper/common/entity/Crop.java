@@ -29,8 +29,8 @@ public class Crop {
 
     @Column(nullable = false)
     private Boolean isClear;
-
-    @ManyToOne
-    @JoinColumn(name = "user_uuid", nullable = false)
-    private User user;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "user_uuid", nullable = false)
+//    private User user;
 }

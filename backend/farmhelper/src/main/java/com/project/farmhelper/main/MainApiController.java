@@ -2,12 +2,10 @@ package com.project.farmhelper.main;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,15 +15,14 @@ import java.util.Map;
 @RequestMapping("/api")
 public class MainApiController {
 
-    @Autowired
     private final MainService MainService;
 
-//    @PostMapping("/api/weather")
-//    public List<Map<String, Object>> getWeatherData(@RequestBody Map<String, String> requestBody) {
-//        String location = requestBody.get("location"); // JSON 본문에서 location 값 추출
-//        return MainService.getWeeklyWeather(location);
-//    }
+    private final WeatherService weatherService;
 
+    @GetMapping("/weather/{ipAddress}")
+    public Map<String, Object> getWeatherByIP(@PathVariable String ipAddress) {
+        return weatherService.getCurrentWeatherByIP(ipAddress);
+    }
 
     @GetMapping("/main/todaycrop")
     ResponseEntity<List<RecommendationContentDTO>> getTodayCrop() throws IOException {

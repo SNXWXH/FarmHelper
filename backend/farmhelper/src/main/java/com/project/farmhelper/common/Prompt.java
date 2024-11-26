@@ -1,12 +1,13 @@
 package com.project.farmhelper.common;
 
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -15,16 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Getter
-@Service
+@Component
 public class Prompt {
 
     @Value("${openai.api.key}")
     private String gptApiKey;
-//
-//    @Value("${openai.api.url}")
-//    private String gptUrl;
 
-    private static final String OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
+    @Value("${openai.api.url}")
+    private String gptUrl;
 
     public List<String> getBestCropsFromGPT(List<String> cropNames) throws IOException {
         OkHttpClient client = new OkHttpClient();
@@ -43,7 +42,7 @@ public class Prompt {
 
         RequestBody body = RequestBody.create(mediaType, json);
         Request request = new Request.Builder()
-                .url(OPENAI_API_URL)
+                .url(gptUrl)
                 .post(body)
                 .addHeader("Authorization", "Bearer " + gptApiKey)
                 .addHeader("Content-Type", "application/json")

@@ -5,7 +5,6 @@ import com.project.farmhelper.common.Repository.CropRepository;
 import com.project.farmhelper.common.Repository.RecommendationRepository;
 import com.project.farmhelper.common.Repository.UserRepository;
 import com.project.farmhelper.common.Repository.WorkLogRepository;
-import com.project.farmhelper.common.entity.Crop;
 import com.project.farmhelper.common.entity.Recommendation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,9 +25,12 @@ public class MainService {
     private final WorkLogRepository workLogRepository;
     private final RecommendationRepository recommendationRepository;
     private final UserRepository userRepository;
+    private final Prompt promptGpt;
+
+
 
     public ResponseEntity<List<RecommendationContentDTO>> getRecommendation() throws IOException {
-        Prompt promptGpt = new Prompt();
+
 
         // Step 1: Fetch all crop names from the Recommendation table
         List<String> allCropNames = recommendationRepository.findAllCropNames();
@@ -114,5 +113,7 @@ public class MainService {
         return ResponseEntity.ok(dto);
     }
 
-
 }
+
+
+
