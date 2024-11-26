@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mjc.lst1995.farmhelper.core.ui.adapter.CropHomeAdapter.CropHomeHolder.Companion.from
 import com.mjc.lst1995.farmhelper.core.domain.model.Crop
 import com.mjc.lst1995.farmhelper.databinding.HolderRecommendedCropBinding
 
@@ -13,7 +12,7 @@ class CropHomeAdapter : ListAdapter<Crop, CropHomeAdapter.CropHomeHolder>(CropHo
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): CropHomeHolder = from(parent)
+    ): CropHomeHolder = CropHomeHolder.from(parent)
 
     override fun onBindViewHolder(
         holder: CropHomeHolder,
