@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.mjc.lst1995.farmhelper.login.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_nickNameFragment"
             app:destination="@id/nickNameFragment" />
@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/nickNameFragment"
         android:name="com.mjc.lst1995.farmhelper.login.NickNameFragment"
-        android:label="NickNameFragment" >
+        android:label="NickNameFragment">
         <action
             android:id="@+id/action_nickNameFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/worksFragment"
         android:name="com.mjc.lst1995.farmhelper.work.WorksFragment"
-        android:label="WorksFragment" >
+        android:label="WorksFragment">
         <action
             android:id="@+id/action_worksFragment_to_workDetailFragment"
             app:destination="@id/workDetailFragment" />
@@ -42,9 +42,10 @@
     <fragment
         android:id="@+id/workDetailFragment"
         android:name="com.mjc.lst1995.farmhelper.work.WorkDetailFragment"
-        android:label="WorkDetailFragment" >
+        android:label="WorkDetailFragment">
+
         <argument
-            android:name="Work"
-            app:argType="string" />
+            android:name="work"
+            app:argType="com.mjc.lst1995.farmhelper.core.domain.model.Work" />
     </fragment>
 </navigation>

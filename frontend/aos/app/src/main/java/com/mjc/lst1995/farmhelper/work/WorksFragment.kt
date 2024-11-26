@@ -11,8 +11,6 @@ import com.mjc.lst1995.farmhelper.core.ui.adapter.WorkGridAdapter
 import com.mjc.lst1995.farmhelper.core.ui.adapter.WorkLinearAdapter
 import com.mjc.lst1995.farmhelper.databinding.FragmentWorksBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 @AndroidEntryPoint
 class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works) {
@@ -23,6 +21,11 @@ class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works
         Work("호박", "감자", "2024-12-01."),
     )
 
+    private val listener = { work: Work ->
+        val action = WorksFragmentDirections.actionWorksFragmentToWorkDetailFragment(work)
+        findNavController().navigate(action)
+    }
+
     private lateinit var gridAdapter: WorkGridAdapter
     private lateinit var linearAdapter: WorkLinearAdapter
 
@@ -32,13 +35,6 @@ class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.materialToolbar2.title = tempClientNameFormat.format(tempClientName)
-
-        val listener = { work: Work ->
-            val action = WorksFragmentDirections.actionWorksFragmentToWorkDetailFragment(
-                Json.encodeToString(work)
-            )
-            findNavController().navigate(action)
-        }
 
         gridAdapter = WorkGridAdapter(listener)
         linearAdapter = WorkLinearAdapter(listener)
