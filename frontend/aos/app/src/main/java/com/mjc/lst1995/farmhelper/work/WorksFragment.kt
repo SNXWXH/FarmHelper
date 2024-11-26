@@ -14,5 +14,19 @@ class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        binding.materialToolbar2.title = tempClientNameFormat.format(tempClientName)
+        binding.linearChip.setOnClickListener {
+            binding.worksGridRV.visibility = View.GONE
+            binding.worksLinearRV.visibility = View.VISIBLE
+        }
+        binding.gridChip.setOnClickListener {
+            binding.worksGridRV.visibility = View.VISIBLE
+            binding.worksLinearRV.visibility = View.GONE
+        }
+    }
+
+    companion object {
+        private const val tempClientNameFormat = "%s님의 작업일지"
+        private const val tempClientName = "손흥민"
     }
 }
