@@ -36,6 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         setDrawer()
         setNavItemSelect()
         setRecommendedCrop()
+        setDetailFragmentMove()
     }
 
     private fun setRecommendedCrop() {
@@ -55,6 +56,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
     }
 
+    private fun setDetailFragmentMove() {
+        binding.textView5.setOnClickListener {
+            navigateTo(R.layout.fragment_works)
+        }
+    }
+
     private fun setDrawer() {
         binding.materialToolbar.setOnMenuItemClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.END)
@@ -67,6 +74,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         layoutId: Int,
     ) {
         when (layoutId) {
+            R.layout.fragment_works -> findNavController().navigate(R.id.action_homeFragment_to_worksFragment)
             R.layout.fragment_login -> findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
         }
     }
