@@ -24,7 +24,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/materialToolbar"
+                    android:id="@+id/homeTB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="12dp"
@@ -103,7 +103,7 @@
                             android:padding="12dp">
 
                             <TextView
-                                android:id="@+id/textView5"
+                                android:id="@+id/todayWorkLogTV"
                                 style="@style/ExtraBoldStyle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -140,8 +140,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-            app:menu="@menu/menu_login" />
+            app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
