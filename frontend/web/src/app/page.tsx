@@ -3,7 +3,12 @@ import MainWeather from '@/components/MainWeather';
 import MonthRank from '@/components/MonthRank';
 import Link from 'next/link';
 
-export default function Home() {
+export default async function Home() {
+  // const todayCrop: Response = await fetch(
+  //   `${process.env.BASE_URL}/api/todayCrop`
+  // );
+  // const todayCropData = await todayCrop.json();
+
   return (
     <>
       <div className='flex flex-col items-center h-screen pt-14'>
@@ -17,16 +22,14 @@ export default function Home() {
               오늘의 추천 작물
             </p>
             <div className='overflow-x-auto flex gap-6'>
+              {/* {todayCropData.map((data, idx) => (
+                <Link href='/todayCrop' key={idx}>
+                  <CropCard cropName={data.cropName} />
+                </Link>
+              ))} */}
               <Link href='/todayCrop'>
-                <CropCard />
+                <CropCard cropName='감자' />
               </Link>
-              <CropCard />
-              <CropCard />
-              <CropCard />
-              <CropCard />
-              <CropCard />
-              <CropCard />
-              <CropCard />
             </div>
           </div>
           <div className='mt-14'>

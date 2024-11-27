@@ -1,4 +1,10 @@
-export default function MonthRank() {
+export default async function MonthRank() {
+  // const bestCrop: Response = await fetch(
+  //   `${process.env.BASE_URL}/api/bestCrop`
+  // );
+  // const bestCropData = await bestCrop.json();
+  // console.log('🚀  bestCropData:', bestCropData);
+
   const ranks = [];
   for (let idx = 1; idx <= 5; idx++) {
     ranks.push(
