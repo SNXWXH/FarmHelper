@@ -34,17 +34,17 @@ public class WeatherService {
         String ipApiUrl = String.format("http://ip-api.com/json/%s", ipAddress);
 
         try {
-            // Fetch IP location details
+            // Fetch IP ipAddress details
             ResponseEntity<String> ipResponse = restTemplate.getForEntity(ipApiUrl, String.class);
             if (!ipResponse.getStatusCode().is2xxSuccessful()) {
-                throw new RuntimeException("Failed to fetch IP location data: " + ipResponse.getStatusCode());
+                throw new RuntimeException("Failed to fetch IP ipAddress data: " + ipResponse.getStatusCode());
             }
 
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode ipData = objectMapper.readTree(ipResponse.getBody());
 
             if (ipData.path("status").asText().equals("fail")) {
-                throw new RuntimeException("Failed to fetch location for IP: " + ipData.path("message").asText());
+                throw new RuntimeException("Failed to fetch ipAddress for IP: " + ipData.path("message").asText());
             }
 
             String regionName = ipData.path("regionName").asText("Unknown");

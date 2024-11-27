@@ -1,22 +1,22 @@
 package com.project.farmhelper.common.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 import lombok.*;
 
+
 @Entity
-@ToString
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString
+@NoArgsConstructor  // 인자 없는 생성자
+@AllArgsConstructor // 모든 필드를 포함하는 생성자
 public class User {
 
     @Id
-    @Column(nullable = false)
-    private String uuid;
+    @Column(unique = true, name = "user_id")
+    private String userId;
 
-    @Column(nullable = false)
-    private String nickName;
+    private String nickname;
+
 }

@@ -1,9 +1,9 @@
 package com.project.farmhelper.main;
 
+import com.project.farmhelper.User.UserRepository;
 import com.project.farmhelper.common.Prompt;
 import com.project.farmhelper.common.Repository.CropRepository;
 import com.project.farmhelper.common.Repository.RecommendationRepository;
-import com.project.farmhelper.common.Repository.UserRepository;
 import com.project.farmhelper.common.Repository.WorkLogRepository;
 import com.project.farmhelper.common.entity.Recommendation;
 import lombok.RequiredArgsConstructor;
@@ -88,7 +88,7 @@ public class MainService {
                     RecommendationContentDTO recommendationDto = new RecommendationContentDTO();
                     recommendationDto.setCropName(recommendation.getCropName());
                     recommendationDto.setImageUrl(recommendation.getImageUrl());
-                    recommendationDto.setContent(recommendation.getContent());
+                    recommendationDto.setContent(recommendation.getDescription());
                     return recommendationDto;
                 })
                 .collect(Collectors.toList());
