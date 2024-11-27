@@ -19,4 +19,9 @@
     <string name="pick">선택</string>
     <string name="back">돌아가기</string>
     <string name="check">확인</string>
+
+    <!-- 작업 디테일-->
+    <string name="sort_order_change">정렬 순서 변경</string>
+    <string name="task_list">작업 목록</string>
+    <string name="task_create">작업생성</string>
 </resources>
