@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.mjc.lst1995.farmhelper.home.HomeFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.home.HomeFragment"
         android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.mjc.lst1995.farmhelper.login.LoginFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.login.LoginFragment"
         android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_nickNameFragment"
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/nickNameFragment"
-        android:name="com.mjc.lst1995.farmhelper.login.NickNameFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.login.NickNameFragment"
         android:label="NickNameFragment">
         <action
             android:id="@+id/action_nickNameFragment_to_homeFragment"
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/worksFragment"
-        android:name="com.mjc.lst1995.farmhelper.work.WorksFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.work.WorksFragment"
         android:label="WorksFragment">
         <action
             android:id="@+id/action_worksFragment_to_workDetailFragment"
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/workDetailFragment"
-        android:name="com.mjc.lst1995.farmhelper.work.WorkDetailFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.work.WorkDetailFragment"
         android:label="WorkDetailFragment">
 
         <argument

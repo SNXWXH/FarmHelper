@@ -1,4 +1,4 @@
-package com.mjc.lst1995.farmhelper.login
+package com.mjc.lst1995.farmhelper.feature.login
 
 import android.os.Bundle
 import android.view.View

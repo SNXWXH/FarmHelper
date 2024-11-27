@@ -1,4 +1,4 @@
-package com.mjc.lst1995.farmhelper.login
+package com.mjc.lst1995.farmhelper.feature.login
 
 import android.app.PendingIntent
 import android.content.IntentSender

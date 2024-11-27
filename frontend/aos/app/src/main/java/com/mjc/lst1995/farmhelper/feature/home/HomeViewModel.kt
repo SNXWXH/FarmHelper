@@ -1,4 +1,4 @@
-package com.mjc.lst1995.farmhelper.home
+package com.mjc.lst1995.farmhelper.feature.home
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

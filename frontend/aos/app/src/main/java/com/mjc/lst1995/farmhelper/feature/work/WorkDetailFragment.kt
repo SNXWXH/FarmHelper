@@ -1,4 +1,4 @@
-package com.mjc.lst1995.farmhelper.work
+package com.mjc.lst1995.farmhelper.feature.work
 
 import android.os.Bundle
 import android.view.View
@@ -16,6 +16,20 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view,savedInstanceState)
+        setNavItemClick()
+    }
+
+    private fun setNavItemClick() {
+        binding.materialToolbar3.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.task_creat -> {
+                    true
+                }
+
+                else -> false
+            }
+            return@setOnMenuItemClickListener true
+        }
     }
 }

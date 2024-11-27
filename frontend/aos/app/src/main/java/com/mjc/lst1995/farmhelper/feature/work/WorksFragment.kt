@@ -1,4 +1,4 @@
-package com.mjc.lst1995.farmhelper.work
+package com.mjc.lst1995.farmhelper.feature.work
 
 import android.os.Bundle
 import android.view.View
