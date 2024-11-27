@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_worksFragment_to_workDetailFragment"
             app:destination="@id/workDetailFragment" />
+        <action
+            android:id="@+id/action_worksFragment_to_workCreateFragment"
+            app:destination="@id/workCreateFragment" />
     </fragment>
     <fragment
         android:id="@+id/workDetailFragment"
@@ -75,5 +78,13 @@
         <action
             android:id="@+id/action_taskEditFragment_to_workDetailFragment"
             app:destination="@id/workDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workCreateFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.work.WorkCreateFragment"
+        android:label="WorkCreateFragment" >
+        <action
+            android:id="@+id/action_workCreateFragment_to_worksFragment"
+            app:destination="@id/worksFragment" />
     </fragment>
 </navigation>
