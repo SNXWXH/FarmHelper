@@ -9,5 +9,5 @@ import kotlinx.serialization.Serializable
 data class Work(
     val cropName: String,
     val imageUrl: String,
-    val cropDate: String
-): Parcelable
+    val cropDate: String,
+) : Parcelable
