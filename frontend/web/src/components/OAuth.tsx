@@ -6,9 +6,7 @@ import Image from 'next/image';
 export default function OAuth() {
   const { data: session } = useSession();
   // console.log('🚀 session:', session);
-
-  // const uuid = session?.user?.uuid;
-  // console.log('🚀  uuid:', uuid);
+  // console.log('🚀 uuid:', session?.id);
 
   return (
     <>
