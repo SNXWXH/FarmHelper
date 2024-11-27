@@ -17,27 +17,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <com.google.android.material.chip.ChipGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialToolbar2">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/linearChip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:chipIcon="@drawable/menu_menus_24dp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/gridChip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:chipIcon="@drawable/menu_chevron_right_24px" />
-        </com.google.android.material.chip.ChipGroup>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/worksGridRV"
             android:layout_width="match_parent"
@@ -70,5 +49,29 @@
             tools:listitem="@layout/holder_works_list_title">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/listIV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="344dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/worksLinearRV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialToolbar2"
+            app:srcCompat="@drawable/icon_list_24px" />
+
+        <ImageView
+            android:id="@+id/gridIV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/listIV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/listIV"
+            app:layout_constraintTop_toTopOf="@+id/listIV"
+            app:srcCompat="@drawable/icon_grid_on_24px" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

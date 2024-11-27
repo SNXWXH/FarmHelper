@@ -44,11 +44,11 @@ class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works
         gridAdapter.submitList(works)
         linearAdapter.submitList(works)
 
-        binding.linearChip.setOnClickListener {
+        binding.listIV.setOnClickListener {
             binding.worksGridRV.visibility = View.GONE
             binding.worksLinearRV.visibility = View.VISIBLE
         }
-        binding.gridChip.setOnClickListener {
+        binding.gridIV.setOnClickListener {
             binding.worksGridRV.visibility = View.VISIBLE
             binding.worksLinearRV.visibility = View.GONE
         }
