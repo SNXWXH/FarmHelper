@@ -9,7 +9,7 @@ import com.mjc.lst1995.farmhelper.core.ui.diff.WorkDiffUtil
 import com.mjc.lst1995.farmhelper.databinding.HolderWorksListTitleBinding
 
 class WorkLinearAdapter(
-    private val listener: (Work) -> Unit
+    private val listener: (Work) -> Unit,
 ) : ListAdapter<Work, WorkLinearAdapter.WorkLinearHolder>(WorkDiffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -24,9 +24,12 @@ class WorkLinearAdapter(
     }
 
     class WorkLinearHolder(
-        private val binding: HolderWorksListTitleBinding
+        private val binding: HolderWorksListTitleBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(work: Work, listener: (Work) -> Unit) {
+        fun bind(
+            work: Work,
+            listener: (Work) -> Unit,
+        ) {
             binding.workTitleTV.text = work.cropName
             binding.workDateTV.text = work.cropDate
             binding.root.setOnClickListener {

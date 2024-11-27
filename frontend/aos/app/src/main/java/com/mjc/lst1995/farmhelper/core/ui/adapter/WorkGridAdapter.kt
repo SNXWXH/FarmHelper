@@ -8,8 +8,9 @@ import com.mjc.lst1995.farmhelper.core.domain.model.Work
 import com.mjc.lst1995.farmhelper.core.ui.diff.WorkDiffUtil
 import com.mjc.lst1995.farmhelper.databinding.HolderWorksListGridBinding
 
-class WorkGridAdapter(private val listener: (Work) -> Unit) :
-    ListAdapter<Work, WorkGridAdapter.WorkGridHolder>(WorkDiffUtil) {
+class WorkGridAdapter(
+    private val listener: (Work) -> Unit,
+) : ListAdapter<Work, WorkGridAdapter.WorkGridHolder>(WorkDiffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -25,7 +26,10 @@ class WorkGridAdapter(private val listener: (Work) -> Unit) :
     class WorkGridHolder(
         private val binding: HolderWorksListGridBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(work: Work, listener: (Work) -> Unit) {
+        fun bind(
+            work: Work,
+            listener: (Work) -> Unit,
+        ) {
             binding.workTitleTv.text = work.cropName
             binding.workDateTV.text = work.cropDate
             binding.root.setOnClickListener {
@@ -42,4 +46,3 @@ class WorkGridAdapter(private val listener: (Work) -> Unit) :
         }
     }
 }
-
