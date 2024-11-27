@@ -24,4 +24,9 @@
     <string name="sort_order_change">정렬 순서 변경</string>
     <string name="task_list">작업 목록</string>
     <string name="task_create">작업생성</string>
+
+    <!-- 작업 생성-->
+    <string name="task_compleate">완료하기</string>
+    <string name="task_log_create">작업 내용 작성</string>
+    <string name="write_custom_task">추가로 할 작업을 작성해주세요.</string>
 </resources>

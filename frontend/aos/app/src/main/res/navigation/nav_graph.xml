@@ -53,5 +53,16 @@
         <argument
             android:name="work"
             app:argType="com.mjc.lst1995.farmhelper.core.domain.model.Work" />
+        <action
+            android:id="@+id/action_workDetailFragment_to_taskAddFragment"
+            app:destination="@id/taskAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskAddFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.task.TaskAddFragment"
+        android:label="TaskAddFragment" >
+        <action
+            android:id="@+id/action_taskAddFragment_to_workDetailFragment"
+            app:destination="@id/workDetailFragment" />
     </fragment>
 </navigation>
