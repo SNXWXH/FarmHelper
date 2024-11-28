@@ -65,4 +65,10 @@
         <item name="android:fontFamily">@font/nanumsquareneo_bold</item>
     </style>
 
+    <!--    프로그래스 바-->
+    <style name="ProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:padding">60dp</item>
+
+    </style>
+
 </resources>
