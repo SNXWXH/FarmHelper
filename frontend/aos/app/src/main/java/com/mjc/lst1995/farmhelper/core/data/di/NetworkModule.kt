@@ -16,17 +16,30 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    @Provides
     @Singleton
-    fun provideOkhttpClient(): OkHttpClient = OkHttpClient.Builder().build()
-
     @Provides
-    @Singleton
-    fun provideConverterFactory(json: Json): Converter.Factory = json.asConverterFactory("application/json".toMediaType())
+    fun provideJson(): Json {
+        return Json { ignoreUnknownKeys = true }
+    }
 
     @Singleton
     @Provides
-    fun provideClientRetrofit(
+    fun provideConverterFactory(): Converter.Factory {
+        val contentType = "application/json".toMediaType()
+        Json.asConverterFactory(contentType)
+        return Json.asConverterFactory(contentType)
+    }
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(
         okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory,
     ): Retrofit =
