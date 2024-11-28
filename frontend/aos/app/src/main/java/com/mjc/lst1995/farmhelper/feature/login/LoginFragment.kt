@@ -6,24 +6,28 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.identity.GetSignInIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.mjc.lst1995.farmhelper.BuildConfig
 import com.mjc.lst1995.farmhelper.R
 import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
 import com.mjc.lst1995.farmhelper.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
-    @Inject
-    lateinit var auth: FirebaseAuth
+
+    private val loginViewModel: LoginViewModel by viewModels()
 
     private lateinit var signInClient: SignInClient
 
@@ -37,7 +41,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             try {
                 val idToken = signInClient.getSignInCredentialFromIntent(result.data).googleIdToken
                 if (idToken != null) {
-                    firebaseAuthWithGoogle(idToken)
+                    loginViewModel.firebaseAuthWithGoogle(idToken)
                     return@registerForActivityResult
                 }
             } catch (_: ApiException) {
@@ -48,13 +52,37 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view,savedInstanceState)
         setLoginClickListener()
+        observeLoginState()
+        observeIsJoined()
     }
 
     private fun setLoginClickListener() {
         binding.googleLoginIV.setOnClickListener {
             googleWithLogin()
+        }
+    }
+
+    private fun observeLoginState() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                loginViewModel.loginState.collect { isLogin ->
+                    if (isLogin) loginViewModel.userIsJoined()
+                }
+            }
+        }
+    }
+
+    private fun observeIsJoined() {
+        loginViewModel.isJoined.observe(viewLifecycleOwner) { isJoined ->
+            isJoined?.let {
+                if (isJoined == true) {
+                    navigateTo(R.layout.fragment_home)
+                } else {
+                    navigateTo(R.layout.fragment_nick_name)
+                }
+            }
         }
     }
 
@@ -69,23 +97,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             }
     }
 
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        try {
-            val credential = GoogleAuthProvider.getCredential(idToken, null)
-            auth
-                .signInWithCredential(credential)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        // 성공하였을 때 서버에 닉네임이 있는지 확인하여 동작 설정
-                        findNavController().navigate(R.id.action_loginFragment_to_nickNameFragment)
-                    } else {
-                        showMessage("로그인에 실패하였습니다. 다시 시도해 주세요.")
-                    }
-                }
-        } catch (e: Exception) {
-            showMessage("로그인에 실패하였습니다. 다시 시도해 주세요.")
-        }
-    }
 
     private fun launchSignIn(pendingIntent: PendingIntent) {
         try {
@@ -94,5 +105,30 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         } catch (e: IntentSender.SendIntentException) {
             showMessage("현재 구글로 로그인하는 기능에 문제가 발생하였습니다.")
         }
+    }
+
+    private fun navigateTo(
+        @LayoutRes
+        layoutId: Int,
+    ) {
+        when (layoutId) {
+            R.layout.fragment_home ->
+                findNavController().navigate(
+                    R.id.action_loginFragment_to_homeFragment,
+                    null,
+                    navOptions()
+                )
+
+            R.layout.fragment_nick_name ->
+                findNavController().navigate(R.id.action_loginFragment_to_nickNameFragment)
+        }
+    }
+
+    private fun navOptions(): NavOptions {
+        val navController = findNavController()
+        return NavOptions
+            .Builder()
+            .setPopUpTo(navController.graph.startDestinationId,inclusive = true) // 시작 지점까지 모두 팝업
+            .build()
     }
 }

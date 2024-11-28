@@ -6,6 +6,10 @@ import javax.inject.Inject
 class AuthUseCase @Inject constructor(
     private val authRepository: AuthRepository,
 ) {
+    fun firebaseAuthWithGoogle(idToken: String) = authRepository.firebaseAuthWithGoogle(idToken)
+
+    fun loginStateFlow() = authRepository.loginStateFlow()
+
     suspend fun userIsJoined() = authRepository.userIsJoined()
 
     suspend fun setUserNickName(nickName: String) = authRepository.setUserNickName(nickName)
