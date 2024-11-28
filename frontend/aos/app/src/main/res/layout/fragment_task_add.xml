@@ -13,8 +13,6 @@
             android:id="@+id/progressBar"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@android:drawable/menuitem_background"
-            android:padding="80dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,10 +38,11 @@
             app:layout_constraintTop_toBottomOf="@+id/materialToolbar4">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/todayTaskRV"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
