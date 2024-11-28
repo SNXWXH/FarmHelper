@@ -22,14 +22,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private val recommendedCrops =
         listOf(
-            Crop("1", "감자", "", "맛있다1."),
-            Crop("2", "감자", "", "맛있다2."),
-            Crop("3", "감자", "", "맛있다3."),
-            Crop("4", "감자", "", "맛있다4."),
-            Crop("5", "감자", "", "맛있다5."),
-            Crop("6", "감자", "", "맛있다6."),
-            Crop("7", "감자", "", "맛있다7."),
-            Crop("8", "감자", "", "맛있다.8"),
+            Crop("1","감자","","맛있다1."),
+            Crop("2","감자","","맛있다2."),
+            Crop("3","감자","","맛있다3."),
+            Crop("4","감자","","맛있다4."),
+            Crop("5","감자","","맛있다5."),
+            Crop("6","감자","","맛있다6."),
+            Crop("7","감자","","맛있다7."),
+            Crop("8","감자","","맛있다.8"),
         )
 
     private lateinit var adapter: CropHomeAdapter
@@ -38,12 +38,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view,savedInstanceState)
         setDrawer()
         setNavItemSetting()
         setNavItemSelect()
         setRecommendedCrop()
         setDetailFragmentMove()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setDrawerClose()
     }
 
     private fun setRecommendedCrop() {
@@ -58,10 +63,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.homeNV.menu.clear()
         val inflater = requireActivity().menuInflater
         if (auth.uid != null) {
-            inflater.inflate(R.menu.menu_login, binding.homeNV.menu)
+            inflater.inflate(R.menu.menu_login,binding.homeNV.menu)
             return
         }
-        inflater.inflate(R.menu.menu_not_login, binding.homeNV.menu)
+        inflater.inflate(R.menu.menu_not_login,binding.homeNV.menu)
     }
 
     private fun setNavItemSelect() {
@@ -96,6 +101,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
     }
 
+    private fun setDrawerClose() {
+        binding.drawerLayout.closeDrawer(GravityCompat.END)
+    }
+
     private fun navigateTo(
         @LayoutRes
         layoutId: Int,
@@ -117,7 +126,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         val navController = findNavController()
         return NavOptions
             .Builder()
-            .setPopUpTo(navController.graph.startDestinationId, inclusive = true) // 시작 지점까지 모두 팝업
+            .setPopUpTo(navController.graph.startDestinationId,inclusive = true) // 시작 지점까지 모두 팝업
             .build()
     }
 }
