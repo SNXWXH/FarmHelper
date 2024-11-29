@@ -3,7 +3,9 @@ package com.mjc.lst1995.farmhelper.core.ui
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
@@ -21,7 +23,7 @@ abstract class BaseFragment<VB : ViewDataBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+        _binding = DataBindingUtil.inflate(inflater,layoutId,container,false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -31,7 +33,15 @@ abstract class BaseFragment<VB : ViewDataBinding>(
         _binding = null
     }
 
+    protected fun showProgressBar(progressBar: ProgressBar) {
+        progressBar.visibility = VISIBLE
+    }
+
+    protected fun hideProgressBar(progressBar: ProgressBar) {
+        progressBar.visibility = View.GONE
+    }
+
     protected fun showMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
     }
 }
