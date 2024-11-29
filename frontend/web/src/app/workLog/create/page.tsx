@@ -1,15 +1,38 @@
 'use client';
 
 import { ChangeEvent, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { uploadImage } from '@/utils/uploadImage';
 
 export default function CreateLog() {
   const [fileName, setFileName] = useState('');
+  const [fileInput, setFileInput] = useState<File | null>(null);
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) setFileName(file.name);
-    else {
+    if (file) {
+      setFileName(file.name);
+      setFileInput(file);
+    } else {
       setFileName('');
+    }
+  };
+
+  const { data: session } = useSession();
+
+  const handleSubmit = async () => {
+    if (!session?.user.uid) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
+    if (fileInput) {
+      try {
+        const downloadURL = await uploadImage(fileInput, session.user.uid);
+        console.log('🚀  downloadURL:', downloadURL);
+      } catch (error) {
+        console.error(error.message);
+      }
     }
   };
 
@@ -57,7 +80,10 @@ export default function CreateLog() {
               </p>
             )}
           </div>
-          <button className='mt-10 rounded-md font-extrabold w-24 h-9 bg-[#698A54] text-white'>
+          <button
+            className='mt-10 rounded-md font-extrabold w-24 h-9 bg-[#698A54] text-white'
+            onClick={handleSubmit}
+          >
             완료
           </button>
         </div>
