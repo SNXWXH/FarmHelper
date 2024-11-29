@@ -19,7 +19,7 @@ public class MainApiController {
 
     private final WeatherService weatherService;
 
-    @GetMapping("/weather/{ipAddress}")
+    @GetMapping("/main/weather/{ipAddress}")
     public Map<String, Object> getWeatherByIP(@PathVariable String ipAddress) {
         return weatherService.getCurrentWeatherByIP(ipAddress);
     }
@@ -40,7 +40,7 @@ public class MainApiController {
         return MainService.getBestMonthCrop();
     }
 
-    @GetMapping("/main/todaycrop/usercrop/{uuid}")
+    @GetMapping("/main/usercrop/{uuid}")
     ResponseEntity<List<UserWorkLogDTO>> getEnjoyBoard(@PathVariable String uuid){
         return MainService.getUserWorkLog(uuid);
     }

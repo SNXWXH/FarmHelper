@@ -68,6 +68,7 @@ public class MainService {
                     RecommendationContentDTO recommendationDto = new RecommendationContentDTO();
                     recommendationDto.setCropName(recommendation.getCropName());
                     recommendationDto.setImageUrl(recommendation.getImageUrl());
+                    recommendationDto.setDescription(recommendation.getDescription());
                     return recommendationDto;
                 })
                 .collect(Collectors.toList());
@@ -88,7 +89,7 @@ public class MainService {
                     RecommendationContentDTO recommendationDto = new RecommendationContentDTO();
                     recommendationDto.setCropName(recommendation.getCropName());
                     recommendationDto.setImageUrl(recommendation.getImageUrl());
-                    recommendationDto.setContent(recommendation.getDescription());
+                    recommendationDto.setDescription(recommendation.getDescription());
                     return recommendationDto;
                 })
                 .collect(Collectors.toList());
@@ -107,10 +108,15 @@ public class MainService {
         return ResponseEntity.ok(dto);
     }
 
-    public ResponseEntity<List<UserWorkLogDTO>> getUserWorkLog(String uuid){
-        List<UserWorkLogDTO> dto = workLogRepository.findWorkNameAndContentByUserUuid(uuid);
+    public ResponseEntity<List<UserWorkLogDTO>> getUserWorkLog(String uuid) {
+        List<Object[]> results = workLogRepository.findWorkNameAndContentByUserUuid(uuid);
 
-        return ResponseEntity.ok(dto);
+        // DTO로 매핑
+        List<UserWorkLogDTO> dtoList = results.stream()
+                .map(result -> new UserWorkLogDTO((String) result[0], (String) result[1]))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(dtoList);
     }
 
 }

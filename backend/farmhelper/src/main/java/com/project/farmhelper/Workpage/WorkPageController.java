@@ -1,5 +1,6 @@
 package com.project.farmhelper.Workpage;
 
+import com.google.gson.JsonObject;
 import com.project.farmhelper.User.UserRepository;
 import com.project.farmhelper.common.Repository.CropRepository;
 import com.project.farmhelper.common.Repository.WorkLogRepository;
@@ -77,7 +78,7 @@ public class WorkPageController {
         LocalDate today = LocalDate.now();
 
         // 3. 해당 Crop과 User, 날짜로 작업 로그 검색
-        List<WorkLog> workLogs = workLogRepository.findByCropAndUserAndWorkDate(crop, user, today);
+        List<WorkLog> workLogs = workLogRepository.findByCropAndUser(crop, user);
 
         // 4. 날씨 정보 가져오기 (ipAddress 포함)
         Map<String, Object> weatherData = weatherService.getCurrentWeatherByIP(ipAddress);
@@ -111,23 +112,33 @@ public class WorkPageController {
 
     @PostMapping("/listcreate")
     public ResponseEntity<String> createWorkLog(@RequestBody WorkPageRequest workLogRequest) {
+        JsonObject json = new JsonObject();
         try {
             workPageService.createWorkLog(workLogRequest);
-            return ResponseEntity.ok("작업 일지가 성공적으로 생성되었습니다.");
+            json.addProperty("isOK", true);
+
+            return ResponseEntity.ok(json.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body("작업 일지 생성 중 오류가 발생했습니다.");
+            json.addProperty("isOK", false);
+
+            return ResponseEntity.badRequest().body(json.toString());
         }
     }
 
-    @PatchMapping("/fetch")
+    @PatchMapping("/patch")
     public ResponseEntity<String> updateWorkLog(@RequestBody WorkPageRequest workRequest) {
         boolean updated = workPageService.updateWorkLog(workRequest);
 
+            JsonObject json = new JsonObject();
         if (updated) {
-            return ResponseEntity.ok("작업일지가 성공적으로 수정되었습니다.");
+            json.addProperty("isOK", true);
+
+            return ResponseEntity.ok(json.toString());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 작업일지를 찾을 수 없습니다.");
+            json.addProperty("isOK", false);
+
+            return ResponseEntity.badRequest().body(json.toString());
         }
     }
 
@@ -135,10 +146,15 @@ public class WorkPageController {
     public ResponseEntity<String> deleteWorkLog(@RequestBody WorkPageRequest workRequest) {
         boolean deleted = workPageService.deleteWorkLog(workRequest);
 
+            JsonObject json = new JsonObject();
         if (deleted) {
-            return ResponseEntity.ok("작업일지가 성공적으로 삭제되었습니다.");
+            json.addProperty("isOK", true);
+
+            return ResponseEntity.ok(json.toString());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 작업일지를 찾을 수 없습니다.");
+            json.addProperty("isOK", false);
+
+            return ResponseEntity.badRequest().body(json.toString());
         }
     }
 }
