@@ -21,8 +21,6 @@ export default function CreateNickname() {
         `/api/checkNickname?userId=${session?.user.uid}&nickname=${encodedNickname}`
       );
 
-      console.log(response.json());
-
       if (response.ok) {
         alert('닉네임이 설정되었습니다!');
         router.push('/');
