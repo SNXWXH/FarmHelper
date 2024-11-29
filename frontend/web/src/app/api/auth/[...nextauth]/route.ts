@@ -1,64 +1,41 @@
 import NextAuth from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../../../firebase-config';
 
-const authOptions = {
+const handler = NextAuth({
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
     CredentialsProvider({
-      name: 'Credentials',
+      name: 'Firebase Credentials',
       credentials: {
-        email: { label: 'Email', type: 'text' },
-        password: { label: 'Password', type: 'password' },
+        uid: { type: 'text' },
+        email: { type: 'text' },
+        name: { type: 'text' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
+        const { uid, email, name } = credentials;
+
+        if (!uid || !email) {
+          throw new Error('잘못된 인증 정보입니다.');
         }
 
-        try {
-          // Firebase 인증 처리
-          const userCredential = await signInWithEmailAndPassword(
-            auth,
-            credentials.email,
-            credentials.password
-          );
-          const user = userCredential.user;
-          return {
-            id: user.uid,
-            email: user.email,
-          };
-        } catch (error) {
-          console.error('Firebase auth error:', error);
-          return null;
-        }
+        return { uid, email, name };
       },
     }),
   ],
+  session: {
+    strategy: 'jwt',
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
+        token.uid = user.uid;
       }
       return token;
     },
     async session({ session, token }) {
-      session.id = token.id;
-      session.email = token.email;
+      session.user.uid = token.uid;
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    jwt: true,
-  },
-};
-export const handler = NextAuth(authOptions);
+});
 
 export { handler as GET, handler as POST };
