@@ -39,7 +39,12 @@ constructor(
         }
 
     override suspend fun userIsJoined(): Boolean {
-        return userSettingApi.userIdCheck(AuthToken(auth.uid!!)).isJoined
+        try {
+            return userSettingApi.userIdCheck(AuthToken(auth.uid!!)).isJoined
+        } catch (e: Exception) {
+            Log.d("ttttt","userIsJoined 통신 에러" + e.message)
+        }
+        return true
     }
 
     override fun firebaseSignOut() {
@@ -52,7 +57,7 @@ constructor(
                 userSettingApi.setUserNickName(NickNameToken(auth.uid!!,nickName))
             return response.result
         } catch (e: Exception) {
-            Log.d("ttttt","통신 에러" + e.message)
+            Log.d("ttttt","setUserNickName 통신 에러" + e.message)
             return false
         }
     }
