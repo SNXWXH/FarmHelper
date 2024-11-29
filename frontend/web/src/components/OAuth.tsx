@@ -1,45 +1,10 @@
 'use client';
 
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import Image from 'next/image';
-import { auth } from '../../firebase-config';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import handleLogin from '@/utils/handleLogin';
 
 export default function OAuth() {
-  const handleLogin = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-
-      const user = result.user;
-
-      if (!user.uid || !user.email) {
-        throw new Error('Firebase 인증 결과에 UID 또는 Email이 없습니다.');
-      }
-
-      const response = await signIn('credentials', {
-        uid: user.uid,
-        _email: user.email,
-        get email() {
-          return this._email;
-        },
-        set email(value) {
-          this._email = value;
-        },
-        name: user.displayName || 'Unknown User',
-        redirect: false,
-      });
-
-      if (response?.ok) {
-        console.log('NextAuth 세션 생성 성공:', response);
-      } else {
-        console.error('NextAuth 세션 생성 실패:', response?.error);
-      }
-    } catch (error) {
-      console.error('Firebase 로그인 실패:', error);
-    }
-  };
-
   const { data: session } = useSession();
 
   return (
