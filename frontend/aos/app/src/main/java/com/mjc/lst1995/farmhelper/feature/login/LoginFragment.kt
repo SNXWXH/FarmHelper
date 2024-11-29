@@ -61,6 +61,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private fun setLoginClickListener() {
         binding.googleLoginIV.setOnClickListener {
             googleWithLogin()
+            showProgressBar(binding.progressBar)
         }
     }
 
@@ -111,6 +112,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         @LayoutRes
         layoutId: Int,
     ) {
+        hideProgressBar(binding.progressBar)
         when (layoutId) {
             R.layout.fragment_home ->
                 findNavController().navigate(
