@@ -10,6 +10,8 @@ class AuthUseCase @Inject constructor(
 
     fun loginStateFlow() = authRepository.loginStateFlow()
 
+    fun firebaseSignOut() = authRepository.firebaseSignOut()
+
     suspend fun userIsJoined() = authRepository.userIsJoined()
 
     suspend fun setUserNickName(nickName: String) = authRepository.setUserNickName(nickName)

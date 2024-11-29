@@ -4,21 +4,20 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
 import com.mjc.lst1995.farmhelper.R
 import com.mjc.lst1995.farmhelper.core.domain.model.Crop
 import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
 import com.mjc.lst1995.farmhelper.core.ui.adapter.CropHomeAdapter
 import com.mjc.lst1995.farmhelper.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
-    @Inject
-    lateinit var auth: FirebaseAuth
+
+    private val viewModel: HomeViewModel by viewModels()
 
     private val recommendedCrops =
         listOf(
@@ -39,6 +38,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view,savedInstanceState)
+        setBinding()
         setDrawer()
         setNavItemSetting()
         setNavItemSelect()
@@ -51,6 +51,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         setDrawerClose()
     }
 
+    private fun setBinding() {
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+    }
+
     private fun setRecommendedCrop() {
         binding.run {
             adapter = CropHomeAdapter()
@@ -60,13 +65,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun setNavItemSetting() {
-        binding.homeNV.menu.clear()
-        val inflater = requireActivity().menuInflater
-        if (auth.uid != null) {
-            inflater.inflate(R.menu.menu_login,binding.homeNV.menu)
-            return
+        viewModel.navigationItem.observe(viewLifecycleOwner) {
+            binding.homeNV.menu.clear()
+            val inflater = requireActivity().menuInflater
+            inflater.inflate(it,binding.homeNV.menu)
         }
-        inflater.inflate(R.menu.menu_not_login,binding.homeNV.menu)
     }
 
     private fun setNavItemSelect() {
@@ -84,7 +87,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun performLogout() {
-        auth.signOut()
+        viewModel.firebaseSignOut()
         setNavItemSetting()
     }
 
