@@ -3,9 +3,33 @@
 import Image from 'next/image';
 import { signOut, useSession } from 'next-auth/react';
 import handleLogin from '@/utils/handleLogin';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function OAuth() {
   const { data: session } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkUserNickname = async () => {
+      if (session?.user?.uid) {
+        try {
+          const response = await fetch(`/api/login?userId=${session.user.uid}`);
+          const data = await response.json();
+
+          if (!data) {
+            router.push('/createNickname');
+          }
+        } catch (error) {
+          console.error('API 호출 실패:', error);
+        }
+      }
+    };
+
+    if (session) {
+      checkUserNickname();
+    }
+  }, [session, router]);
 
   return (
     <>
