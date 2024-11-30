@@ -8,5 +8,5 @@ data class NickNameToken(
     @SerialName("userId")
     val userId: String,
     @SerialName("nickname")
-    val nickname: String
+    val nickname: String,
 )
