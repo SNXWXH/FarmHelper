@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mjc.lst1995.farmhelper.core.domain.model.Work
+import com.mjc.lst1995.farmhelper.core.domain.model.work.Work
 import com.mjc.lst1995.farmhelper.core.ui.diff.WorkDiffUtil
 import com.mjc.lst1995.farmhelper.databinding.HolderWorksListTitleBinding
 

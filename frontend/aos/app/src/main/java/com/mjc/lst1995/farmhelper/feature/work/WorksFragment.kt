@@ -5,7 +5,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mjc.lst1995.farmhelper.R
-import com.mjc.lst1995.farmhelper.core.domain.model.Work
+import com.mjc.lst1995.farmhelper.core.domain.model.work.Work
 import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
 import com.mjc.lst1995.farmhelper.core.ui.adapter.WorkGridAdapter
 import com.mjc.lst1995.farmhelper.core.ui.adapter.WorkLinearAdapter
