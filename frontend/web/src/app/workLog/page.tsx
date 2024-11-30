@@ -1,11 +1,32 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import CropList from '@/components/CropList';
 import CropListCard from '@/components/CropListCard';
 
 export default function WorkLog() {
   const [isGridView, setIsGridView] = useState(true);
+  const [cropList, setCropList] = useState<any[]>([]);
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const fetchCropData = async () => {
+      if (session?.user.uid) {
+        try {
+          const response = await fetch(
+            `/api/readWorkList?userId=${session.user.uid}`
+          );
+          const data = await response.json();
+          setCropList(data.workList);
+        } catch (error) {
+          console.error('Error fetching crop data:', error);
+        }
+      }
+    };
+
+    fetchCropData();
+  }, [session?.user.uid]);
 
   return (
     <>
@@ -31,26 +52,27 @@ export default function WorkLog() {
             }`}
           >
             {isGridView ? (
-              <>
-                <CropListCard cropName='옥수수' date='2024.10.31' />
-                <CropListCard cropName='옥수수' date='2024.10.31' />
-                <CropListCard cropName='옥수수' date='2024.10.31' />
-                <CropListCard cropName='옥수수' date='2024.10.31' />
-                <CropListCard cropName='옥수수' date='2024.10.31' />
-                <CropListCard cropName='옥수수' date='2024.10.31' />
-                <CropListCard cropName='옥수수' date='2024.10.31' />
-                <CropListCard cropName='옥수수' date='2024.10.31' />
-              </>
+              cropList.length > 0 ? (
+                cropList.map((crop, idx) => (
+                  <CropListCard
+                    key={idx}
+                    cropName={crop.cropName}
+                    date={crop.cropDate}
+                  />
+                ))
+              ) : (
+                <p>작업일지가 없습니다.</p>
+              )
+            ) : cropList.length > 0 ? (
+              cropList.map((crop, idx) => (
+                <CropList
+                  key={idx}
+                  cropName={crop.cropName}
+                  date={crop.cropDate}
+                />
+              ))
             ) : (
-              <>
-                <CropList cropName='옥수수' date='2024.10.31' />
-                <CropList cropName='옥수수' date='2024.10.31' />
-                <CropList cropName='옥수수' date='2024.10.31' />
-                <CropList cropName='옥수수' date='2024.10.31' />
-                <CropList cropName='옥수수' date='2024.10.31' />
-                <CropList cropName='옥수수' date='2024.10.31' />
-                <CropList cropName='옥수수' date='2024.10.31' />
-              </>
+              <p>작업일지가 없습니다.</p>
             )}
           </div>
         </div>
