@@ -8,6 +8,8 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 data class Work(
+    @SerialName("cropId")
+    val cropId: Long,
     @SerialName("cropName")
     val cropName: String,
     @SerialName("imageUrl")
