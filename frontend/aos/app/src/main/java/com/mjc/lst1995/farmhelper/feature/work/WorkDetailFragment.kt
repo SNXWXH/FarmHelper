@@ -24,7 +24,7 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
     private fun setNavItemSelected() {
         binding.materialToolbar3.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.task_creat -> findNavController().navigate(R.id.action_workDetailFragment_to_taskAddFragment)
+                R.id.menu_add -> findNavController().navigate(R.id.action_workDetailFragment_to_taskAddFragment)
             }
             return@setOnMenuItemClickListener true
         }
