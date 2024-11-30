@@ -14,12 +14,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works) {
-
-    private val works = listOf(
-        Work("감자", "감자", "2024-12-01"),
-        Work("고구마", "감자", "2024-12-01."),
-        Work("호박", "감자", "2024-12-01."),
-    )
+    private val works =
+        listOf(
+            Work("감자", "감자", "2024-12-01"),
+            Work("고구마", "감자", "2024-12-01."),
+            Work("호박", "감자", "2024-12-01."),
+        )
 
     private val listener = { work: Work ->
         val action = WorksFragmentDirections.actionWorksFragmentToWorkDetailFragment(work)
@@ -35,6 +35,15 @@ class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.materialToolbar2.title = tempClientNameFormat.format(tempClientName)
+
+        binding.materialToolbar2.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.menu_add -> {
+                    findNavController().navigate(R.id.action_worksFragment_to_workCreateFragment)
+                }
+            }
+            return@setOnMenuItemClickListener true
+        }
 
         gridAdapter = WorkGridAdapter(listener)
         linearAdapter = WorkLinearAdapter(listener)
