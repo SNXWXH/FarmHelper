@@ -84,6 +84,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun performLogout() {
         viewModel.firebaseSignOut()
+        setDrawerClose()
     }
 
     private fun setDetailFragmentMove() {
@@ -108,23 +109,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         layoutId: Int,
     ) {
         when (layoutId) {
-            R.layout.fragment_home ->
-                findNavController().navigate(
-                    R.id.action_homeFragment_self,
-                    null,
-                    navOptions(),
-                )
-
             R.layout.fragment_works -> findNavController().navigate(R.id.action_homeFragment_to_worksFragment)
             R.layout.fragment_login -> findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
         }
-    }
-
-    private fun navOptions(): NavOptions {
-        val navController = findNavController()
-        return NavOptions
-            .Builder()
-            .setPopUpTo(navController.graph.startDestinationId, inclusive = true) // 시작 지점까지 모두 팝업
-            .build()
     }
 }
