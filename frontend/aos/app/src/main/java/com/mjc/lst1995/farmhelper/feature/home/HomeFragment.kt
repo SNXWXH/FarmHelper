@@ -16,19 +16,18 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
-
     private val viewModel: HomeViewModel by viewModels()
 
     private val recommendedCrops =
         listOf(
-            Crop("1","감자","","맛있다1."),
-            Crop("2","감자","","맛있다2."),
-            Crop("3","감자","","맛있다3."),
-            Crop("4","감자","","맛있다4."),
-            Crop("5","감자","","맛있다5."),
-            Crop("6","감자","","맛있다6."),
-            Crop("7","감자","","맛있다7."),
-            Crop("8","감자","","맛있다.8"),
+            Crop("1", "감자", "", "맛있다1."),
+            Crop("2", "감자", "", "맛있다2."),
+            Crop("3", "감자", "", "맛있다3."),
+            Crop("4", "감자", "", "맛있다4."),
+            Crop("5", "감자", "", "맛있다5."),
+            Crop("6", "감자", "", "맛있다6."),
+            Crop("7", "감자", "", "맛있다7."),
+            Crop("8", "감자", "", "맛있다.8"),
         )
 
     private lateinit var adapter: CropHomeAdapter
@@ -37,7 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        super.onViewCreated(view,savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         setBinding()
         setDrawer()
         setNavItemSetting()
@@ -68,7 +67,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         viewModel.navigationItem.observe(viewLifecycleOwner) {
             binding.homeNV.menu.clear()
             val inflater = requireActivity().menuInflater
-            inflater.inflate(it,binding.homeNV.menu)
+            inflater.inflate(it, binding.homeNV.menu)
         }
     }
 
@@ -77,10 +76,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             when (itemMenu.itemId) {
                 R.id.menu_login -> navigateTo(R.layout.fragment_login)
                 R.id.menu_works -> navigateTo(R.layout.fragment_works)
-                R.id.menu_logout -> {
-                    performLogout()
-                    navigateTo(R.layout.fragment_home)
-                }
+                R.id.menu_logout -> performLogout()
             }
             true
         }
@@ -88,7 +84,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun performLogout() {
         viewModel.firebaseSignOut()
-        setNavItemSetting()
     }
 
     private fun setDetailFragmentMove() {
@@ -129,7 +124,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         val navController = findNavController()
         return NavOptions
             .Builder()
-            .setPopUpTo(navController.graph.startDestinationId,inclusive = true) // 시작 지점까지 모두 팝업
+            .setPopUpTo(navController.graph.startDestinationId, inclusive = true) // 시작 지점까지 모두 팝업
             .build()
     }
 }
