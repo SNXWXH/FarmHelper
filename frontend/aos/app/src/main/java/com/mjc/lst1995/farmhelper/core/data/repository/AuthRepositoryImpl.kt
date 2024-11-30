@@ -13,52 +13,51 @@ import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
 class AuthRepositoryImpl
-@Inject
-constructor(
-    private val auth: FirebaseAuth,
-    private val userSettingApi: UserSettingApi,
-) : AuthRepository {
-
-    override fun firebaseAuthWithGoogle(idToken: String) {
-        try {
-            auth.signInWithCredential(GoogleAuthProvider.getCredential(idToken,null))
-            Log.d("AuthRepositoryImpl","${auth.uid}")
-        } catch (e: Exception) {
-            Log.e("AuthRepositoryImpl","Firebase auth with Google failed",e)
-        }
-    }
-
-    override fun loginStateFlow(): Flow<Boolean> =
-        callbackFlow {
-            val authStateListener =
-                FirebaseAuth.AuthStateListener { auth ->
-                    trySend(auth.currentUser != null)
-                }
-            auth.addAuthStateListener(authStateListener)
-            awaitClose { auth.removeAuthStateListener(authStateListener) }
+    @Inject
+    constructor(
+        private val auth: FirebaseAuth,
+        private val userSettingApi: UserSettingApi,
+    ) : AuthRepository {
+        override fun firebaseAuthWithGoogle(idToken: String) {
+            try {
+                auth.signInWithCredential(GoogleAuthProvider.getCredential(idToken, null))
+                Log.d("AuthRepositoryImpl", "${auth.uid}")
+            } catch (e: Exception) {
+                Log.e("AuthRepositoryImpl", "Firebase auth with Google failed", e)
+            }
         }
 
-    override suspend fun userIsJoined(): Boolean {
-        try {
-            return userSettingApi.userIdCheck(AuthToken(auth.uid!!)).isJoined
-        } catch (e: Exception) {
-            Log.d("ttttt","userIsJoined 통신 에러" + e.message)
-        }
-        return true
-    }
+        override fun loginStateFlow(): Flow<Boolean> =
+            callbackFlow {
+                val authStateListener =
+                    FirebaseAuth.AuthStateListener { auth ->
+                        trySend(auth.currentUser != null)
+                    }
+                auth.addAuthStateListener(authStateListener)
+                awaitClose { auth.removeAuthStateListener(authStateListener) }
+            }
 
-    override fun firebaseSignOut() {
-        auth.signOut()
-    }
+        override suspend fun userIsJoined(): Boolean {
+            try {
+                return userSettingApi.userIdCheck(AuthToken(auth.uid!!)).isOk
+            } catch (e: Exception) {
+                Log.d("ttttt", "userIsJoined 통신 에러" + e.message)
+                return false
+            }
+        }
 
-    override suspend fun setUserNickName(nickName: String): Boolean {
-        try {
-            val response =
-                userSettingApi.setUserNickName(NickNameToken(auth.uid!!,nickName))
-            return response.result
-        } catch (e: Exception) {
-            Log.d("ttttt","setUserNickName 통신 에러" + e.message)
-            return false
+        override fun firebaseSignOut() {
+            auth.signOut()
+        }
+
+        override suspend fun setUserNickName(nickName: String): Boolean {
+            try {
+                val response =
+                    userSettingApi.setUserNickName(NickNameToken(auth.uid!!, nickName))
+                return response.isOk
+            } catch (e: Exception) {
+                Log.d("ttttt", "setUserNickName 통신 에러" + e.message)
+                return false
+            }
         }
     }
-}
