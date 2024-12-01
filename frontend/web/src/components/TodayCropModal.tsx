@@ -19,9 +19,7 @@ export default async function TodayCropModal({
 
   const plantingTime = cropDetails['Planting season'];
   const harvestTime = cropDetails['Harvest season'];
-  console.log(harvestTime);
   const description = cropDetails['Description'];
-  console.log(plantingTime);
 
   return (
     <>
