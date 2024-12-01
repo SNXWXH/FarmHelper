@@ -6,7 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mjc.lst1995.farmhelper.R
+import com.mjc.lst1995.farmhelper.core.domain.model.crop.Crop
+import com.mjc.lst1995.farmhelper.core.domain.model.crop.RecommendCrop
 import com.mjc.lst1995.farmhelper.core.domain.usecase.AuthUseCase
+import com.mjc.lst1995.farmhelper.core.domain.usecase.CropUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -15,8 +18,10 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val authUseCase: AuthUseCase,
+    private val cropUseCase: CropUseCase,
 ) : ViewModel() {
-    //val recommendedCrops: Flow<List<Crop>> = TODO()
+    val recommendedCrops: Flow<List<RecommendCrop>> = cropUseCase.getTodayRecommendedCrops()
+
     private val loginState: Flow<Boolean> = authUseCase.loginStateFlow()
 
     private val _isLoginMenusVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)

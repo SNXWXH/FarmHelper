@@ -5,31 +5,26 @@ import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.mjc.lst1995.farmhelper.R
-import com.mjc.lst1995.farmhelper.core.domain.model.crop.Crop
+import com.mjc.lst1995.farmhelper.core.domain.model.crop.RecommendCrop
 import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
-import com.mjc.lst1995.farmhelper.core.ui.adapter.CropHomeAdapter
+import com.mjc.lst1995.farmhelper.core.ui.adapter.RecommendCropAdapter
 import com.mjc.lst1995.farmhelper.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModels()
 
-    private val recommendedCrops =
-        listOf(
-            Crop(1, "감자", "", null),
-            Crop(2, "감자", "", null),
-            Crop(3, "감자", "", null),
-            Crop(4, "감자", "", null),
-            Crop(5, "감자", "", null),
-            Crop(6, "감자", "", null),
-            Crop(7, "감자", "", null),
-            Crop(8, "감자", "", null),
-        )
+    private lateinit var recommendCropAdapter: RecommendCropAdapter
+    private val recommendCropListener: (RecommendCrop) -> Unit = {
 
-    private lateinit var adapter: CropHomeAdapter
+    }
 
     override fun onViewCreated(
         view: View,
@@ -56,9 +51,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun setRecommendedCrop() {
         binding.run {
-            adapter = CropHomeAdapter()
-            adapter.submitList(recommendedCrops)
-            recommendCropRV.adapter = adapter
+            recommendCropAdapter = RecommendCropAdapter()
+            recommendCropRV.adapter = recommendCropAdapter
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.recommendedCrops.collect {
+                    recommendCropAdapter.submitList(it)
+                }
+            }
         }
     }
 

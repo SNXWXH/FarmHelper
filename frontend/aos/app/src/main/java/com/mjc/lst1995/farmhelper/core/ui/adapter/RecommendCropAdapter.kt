@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mjc.lst1995.farmhelper.core.domain.model.crop.Crop
+import com.mjc.lst1995.farmhelper.core.domain.model.crop.RecommendCrop
 import com.mjc.lst1995.farmhelper.databinding.HolderRecommendedCropBinding
 
-class CropHomeAdapter : ListAdapter<Crop, CropHomeAdapter.CropHomeHolder>(CropHomeDiffUtil) {
+class RecommendCropAdapter : ListAdapter<RecommendCrop, RecommendCropAdapter.CropHomeHolder>(RecommendCropHomeDiffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -24,8 +24,9 @@ class CropHomeAdapter : ListAdapter<Crop, CropHomeAdapter.CropHomeHolder>(CropHo
     class CropHomeHolder(
         private val binding: HolderRecommendedCropBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(crop: Crop) {
-            binding.cropNameTV.text = crop.name
+        fun bind(recommendCrop: RecommendCrop) {
+            binding.cropNameTV.text = recommendCrop.cropName
+            recommendCrop.description
         }
 
         companion object {
@@ -37,15 +38,15 @@ class CropHomeAdapter : ListAdapter<Crop, CropHomeAdapter.CropHomeHolder>(CropHo
         }
     }
 
-    object CropHomeDiffUtil : DiffUtil.ItemCallback<Crop>() {
+    object RecommendCropHomeDiffUtil : DiffUtil.ItemCallback<RecommendCrop>() {
         override fun areItemsTheSame(
-            oldItem: Crop,
-            newItem: Crop,
-        ) = oldItem.id == newItem.id
+            oldItem: RecommendCrop,
+            newItem: RecommendCrop,
+        ) = oldItem.cropName == newItem.cropName
 
         override fun areContentsTheSame(
-            oldItem: Crop,
-            newItem: Crop,
+            oldItem: RecommendCrop,
+            newItem: RecommendCrop,
         ) = oldItem == newItem
     }
 }
