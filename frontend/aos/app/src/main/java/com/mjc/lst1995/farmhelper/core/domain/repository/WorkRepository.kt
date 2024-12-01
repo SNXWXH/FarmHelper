@@ -4,6 +4,7 @@ import com.mjc.lst1995.farmhelper.core.domain.model.crop.CropTask
 import com.mjc.lst1995.farmhelper.core.domain.model.task.OtherDetail
 import com.mjc.lst1995.farmhelper.core.domain.model.task.Task
 import com.mjc.lst1995.farmhelper.core.domain.model.work.Work
+import kotlinx.coroutines.flow.Flow
 
 interface WorkRepository {
     suspend fun getTodayTasks(userId: String): List<CropTask>
@@ -21,7 +22,7 @@ interface WorkRepository {
         userId: String,
         cropId: String,
         ipAddress: String,
-    ): List<Task>
+    ): Flow<List<Task>>
 
     suspend fun getWorkTaskOtherDetail(
         userId: String,

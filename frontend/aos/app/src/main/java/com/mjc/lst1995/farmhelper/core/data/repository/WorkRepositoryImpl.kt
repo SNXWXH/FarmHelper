@@ -6,6 +6,7 @@ import com.mjc.lst1995.farmhelper.core.domain.model.task.OtherDetail
 import com.mjc.lst1995.farmhelper.core.domain.model.task.Task
 import com.mjc.lst1995.farmhelper.core.domain.model.work.Work
 import com.mjc.lst1995.farmhelper.core.domain.repository.WorkRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class WorkRepositoryImpl
@@ -34,7 +35,7 @@ class WorkRepositoryImpl
             userId: String,
             cropId: String,
             ipAddress: String,
-        ): List<Task> {
+        ): Flow<List<Task>> {
             TODO("Not yet implemented")
         }
 
