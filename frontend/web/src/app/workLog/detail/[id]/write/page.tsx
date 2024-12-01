@@ -1,11 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import TodoDetail from '@/components/TodoDetail';
 
 export default function DetailWrite() {
   const [details, setDetails] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
+  const searchParams = useSearchParams();
+
+  const userId = searchParams.get('userId');
+  const cropId = searchParams.get('cropId');
+
+  useEffect(() => {
+    const fetchAIData = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAIWorkLog?userId=${userId}&cropId=${cropId}`
+        );
+        const data = await response.json();
+        setDetails(data.recommendations);
+      } catch (error) {
+        console.error('Error fetching AI data:', error);
+      }
+    };
+
+    if (userId && cropId) {
+      fetchAIData();
+    }
+  }, [userId, cropId]);
 
   const addDetail = () => {
     if (inputValue.trim()) {
@@ -22,11 +45,13 @@ export default function DetailWrite() {
     if (e.key === 'Enter') addDetail();
   };
 
+  const handleComplete = async () => {};
+
   return (
     <div className='flex flex-col items-center h-screen w-full pt-14'>
       <div className='w-3/5'>
         <p className='mt-14 font-nanumHeavy font-heavy text-2xl'>
-          이설아님의 작업일지 {'>'} 감자 {'>'} 작업일지 수정
+          이설아님의 작업일지 {'>'} 감자 {'>'} 작업일지 작성
         </p>
         <div className='flex flex-col gap-5 w-full h-3/5 overflow-y-auto my-7'>
           {details.map((detail, index) => (
@@ -54,7 +79,10 @@ export default function DetailWrite() {
               추가
             </button>
           </div>
-          <button className='mt-5 rounded-md font-extrabold w-24 h-9 bg-[#698A54] text-white'>
+          <button
+            onClick={handleComplete}
+            className='mt-5 rounded-md font-extrabold w-24 h-9 bg-[#698A54] text-white'
+          >
             완료
           </button>
         </div>
