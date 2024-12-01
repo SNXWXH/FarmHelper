@@ -22,8 +22,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var recommendCropAdapter: RecommendCropAdapter
-    private val recommendCropListener: (RecommendCrop) -> Unit = {
-
+    private val recommendCropListener: (RecommendCrop) -> Unit = { recommendCrop ->
+        CropContentDialogFragment(recommendCrop).show(parentFragmentManager, "CropContentDialog")
     }
 
     override fun onViewCreated(
@@ -51,7 +51,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun setRecommendedCrop() {
         binding.run {
-            recommendCropAdapter = RecommendCropAdapter()
+            recommendCropAdapter = RecommendCropAdapter(recommendCropListener)
             recommendCropRV.adapter = recommendCropAdapter
         }
         lifecycleScope.launch {

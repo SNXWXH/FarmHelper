@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mjc.lst1995.farmhelper.core.domain.model.crop.RecommendCrop
 import com.mjc.lst1995.farmhelper.databinding.HolderRecommendedCropBinding
 
-class RecommendCropAdapter : ListAdapter<RecommendCrop, RecommendCropAdapter.CropHomeHolder>(RecommendCropHomeDiffUtil) {
+class RecommendCropAdapter(
+    private val recommendCropListener: (RecommendCrop) -> Unit,
+) : ListAdapter<RecommendCrop, RecommendCropAdapter.CropHomeHolder>(RecommendCropHomeDiffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -18,15 +20,20 @@ class RecommendCropAdapter : ListAdapter<RecommendCrop, RecommendCropAdapter.Cro
         holder: CropHomeHolder,
         position: Int,
     ) {
-        holder.bind(currentList[position])
+        holder.bind(currentList[position], recommendCropListener)
     }
 
     class CropHomeHolder(
         private val binding: HolderRecommendedCropBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(recommendCrop: RecommendCrop) {
+        fun bind(
+            recommendCrop: RecommendCrop,
+            recommendCropListener: (RecommendCrop) -> Unit,
+        ) {
             binding.cropNameTV.text = recommendCrop.cropName
-            recommendCrop.description
+            binding.root.setOnClickListener {
+                recommendCropListener(recommendCrop)
+            }
         }
 
         companion object {

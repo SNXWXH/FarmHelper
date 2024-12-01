@@ -14,7 +14,7 @@ data class RecommendCrop(
     val description: String
 )
 
-private fun String.toDescription(): Description {
+fun RecommendCrop.toDescription(): Description {
     val json = Json { ignoreUnknownKeys = true }
-    return json.decodeFromString(this)
+    return json.decodeFromString(this.description)
 }
