@@ -45,7 +45,30 @@ export default function DetailWrite() {
     if (e.key === 'Enter') addDetail();
   };
 
-  const handleComplete = async () => {};
+  const handleComplete = async () => {
+    if (details.length > 0) {
+      const workContent = details.join('q!gL9A');
+
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/createWorkDetail`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, cropId, workContent }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to create work detail: ${response.status}`);
+        }
+
+        const data = await response.json();
+      } catch (error) {
+        console.error('Error sending work detail:', error);
+      }
+    }
+  };
 
   return (
     <div className='flex flex-col items-center h-screen w-full pt-14'>
