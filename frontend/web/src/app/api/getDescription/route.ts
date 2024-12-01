@@ -4,7 +4,6 @@ export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const cropnameParams = searchParams.get('cropName');
   const id = decodeURIComponent(cropnameParams);
-  console.log('🚀  id:', id);
 
   try {
     const response = await fetch(
