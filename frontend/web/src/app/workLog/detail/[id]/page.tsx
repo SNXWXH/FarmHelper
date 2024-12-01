@@ -1,21 +1,14 @@
+'use client';
+
+import AllDetail from '@/components/AllDetail';
 import DeatilList from '@/components/DeatilList';
+import TodayDetail from '@/components/TodayDetail';
+import { useSession } from 'next-auth/react';
+import { useParams } from 'next/navigation';
 
 export default function Detail() {
-  const data1 = [
-    [
-      '밭 준비하기: 감자는 배수가 잘되는 토양을 좋아하니, 심기 전에 흙을 부드럽게 고르고 필요하면 모래를 섞어 배수성을 높여주세요.',
-      '밭 준비하기: 감자는 배수가 잘되는 토양을 좋아하니, 심기 전에 흙을 부드럽게 고르고 필요하면 모래를 섞어 배수성을 높여주세요.',
-      '밭 준비하기: 감자는 배수가 잘되는 토양을 좋아하니, 심기 전에 흙을 부드럽게 고르고 필요하면 모래를 섞어 배수성을 높여주세요.',
-      '밭 준비하기: 감자는 배수가 잘되는 토양을 좋아하니, 심기 전에 흙을 부드럽게 고르고 필요하면 모래를 섞어 배수성을 높여주세요.',
-      '밭 준비하기: 감자는 배수가 잘되는 토양을 좋아하니, 심기 전에 흙을 부드럽게 고르고 필요하면 모래를 섞어 배수성을 높여주세요.',
-      '밭 준비하기: 감자는 배수가 잘되는 토양을 좋아하니, 심기 전에 흙을 부드럽게 고르고 필요하면 모래를 섞어 배수성을 높여주세요.',
-    ],
-    [
-      '밭 준비하기: 감자는 배수가 잘되는 토양을 좋아하니, 심기 전에 흙을 부드럽게 고르고 필요하면 모래를 섞어 배수성을 높여주세요.',
-      '밭 준비하기: 감자는 배수가 잘되는 토양을 좋아하니, 심기 전에 흙을 부드럽게 고르고 필요하면 모래를 섞어 배수성을 높여주세요.',
-      '밭 준비하기: 감자는 배수가 잘되는 토양을 좋아하니, 심기 전에 흙을 부드럽게 고르고 필요하면 모래를 섞어 배수성을 높여주세요.',
-    ],
-  ];
+  const { data: session } = useSession();
+  const { id } = useParams();
 
   return (
     <>
@@ -25,7 +18,7 @@ export default function Detail() {
             이설아님의 작업일지 {'>'} 감자
           </p>
           <div className='mt-5'>
-            <DeatilList />
+            <TodayDetail userId={session?.user.uid} cropId={id} />
           </div>
           <div className='w-full h-0.5 bg-black my-6'> </div>
           <div className='flex flex-col'>
@@ -35,7 +28,7 @@ export default function Detail() {
               </button>
             </div>
             <div className='flex flex-col mb-8'>
-              <DeatilList data={data1} />
+              <AllDetail />
             </div>
           </div>
         </div>
