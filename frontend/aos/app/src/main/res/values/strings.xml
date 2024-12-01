@@ -16,6 +16,8 @@
     <!-- 로그인-->
     <string name="nick_name_input_message">사용하실 닉네임을 입력해주세요.</string>
     <string name="nick_name_setting">닉네임 설정</string>
+    <string name="nick_name_commit_message">닉네임이 적용되었습니다.</string>
+    <string name="nick_name_error_message">해당 닉네임은 적용 불가능 합니다.</string>
     <string name="pick">선택</string>
     <string name="back">돌아가기</string>
     <string name="check">확인</string>

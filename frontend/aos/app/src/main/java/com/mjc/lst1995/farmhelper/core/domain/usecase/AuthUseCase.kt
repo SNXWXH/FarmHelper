@@ -14,5 +14,8 @@ class AuthUseCase @Inject constructor(
 
     suspend fun userIsJoined() = authRepository.userIsJoined()
 
-    suspend fun setUserNickName(nickName: String) = authRepository.setUserNickName(nickName)
+    suspend fun setUserNickName(nickName: String): Boolean{
+        if (nickName.trimIndent().isEmpty()) return false
+        return authRepository.setUserNickName(nickName)
+    }
 }
