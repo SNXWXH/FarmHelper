@@ -3,12 +3,14 @@
 import { ChangeEvent, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { uploadImage } from '@/utils/uploadImage';
+import { useRouter } from 'next/navigation';
 
 export default function CreateLog() {
   const [fileName, setFileName] = useState('');
   const [fileInput, setFileInput] = useState<File | null>(null);
   const [date, setDate] = useState('');
   const [crop, setCrop] = useState('');
+  const router = useRouter();
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -41,13 +43,15 @@ export default function CreateLog() {
     if (fileInput) {
       try {
         const downloadURL = await uploadImage(fileInput, session.user.uid);
+        const encodedImageUrl = encodeURIComponent(downloadURL);
 
         const encodedNickname = encodeURIComponent(crop);
         const cropDate = date;
 
         const response = await fetch(
-          `/api/createWorkList?userId=${session?.user.uid}&cropName=${encodedNickname}&cropDate=${cropDate}&imageUrl=${downloadURL}`
+          `/api/createWorkList?userId=${session?.user.uid}&cropName=${encodedNickname}&cropDate=${cropDate}&imageUrl=${encodedImageUrl}`
         );
+        if (response.ok) router.push('/workLog');
       } catch (error) {
         console.error('Error uploading image or sending data:', error.message);
       }
@@ -68,7 +72,7 @@ export default function CreateLog() {
                 placeholder='작물을 입력해주세요.'
                 className='ml-auto w-2/3 h-12 rounded-lg bg-gray-100 pl-3 text-sm'
                 value={crop}
-                onChange={handleCropChange} // 작물 입력 처리
+                onChange={handleCropChange}
               />
             </div>
             <div className='flex mt-4 items-center'>
