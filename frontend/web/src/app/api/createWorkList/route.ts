@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const cropNameParams = searchParams.get('cropName');
   const cropName = decodeURIComponent(cropNameParams);
   const cropDate = searchParams.get('cropDate');
-  const imageUrl = searchParams.get('imageUrl');
+  const imageUrl = decodeURIComponent(searchParams.get('imageUrl'));
 
   try {
     const response = await fetch(
