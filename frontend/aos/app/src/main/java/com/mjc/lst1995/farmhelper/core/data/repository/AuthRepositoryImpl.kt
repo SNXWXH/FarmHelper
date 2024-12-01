@@ -4,8 +4,10 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.mjc.lst1995.farmhelper.core.data.network.api.UserSettingApi
+import com.mjc.lst1995.farmhelper.core.data.network.api.WorkApi
 import com.mjc.lst1995.farmhelper.core.data.network.request.user.AuthToken
 import com.mjc.lst1995.farmhelper.core.data.network.request.user.NickNameToken
+import com.mjc.lst1995.farmhelper.core.data.network.request.work.WorkDetailToken
 import com.mjc.lst1995.farmhelper.core.domain.repository.AuthRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -17,6 +19,7 @@ class AuthRepositoryImpl
     constructor(
         private val auth: FirebaseAuth,
         private val userSettingApi: UserSettingApi,
+        private val workApi: WorkApi,
     ) : AuthRepository {
         override fun firebaseAuthWithGoogle(idToken: String) {
             try {
@@ -36,6 +39,11 @@ class AuthRepositoryImpl
                 auth.addAuthStateListener(authStateListener)
                 awaitClose { auth.removeAuthStateListener(authStateListener) }
             }
+
+        override suspend fun getUserNickName(): String =
+            workApi
+                .getWorkTaskDetails(WorkDetailToken(auth.uid!!, "1", "8.8.8.8"))
+                .nickname
 
         override suspend fun userIsJoined(): Boolean {
             try {
