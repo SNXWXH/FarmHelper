@@ -45,32 +45,23 @@ class AuthRepositoryImpl
             callbackFlow {
                 val authStateListener =
                     FirebaseAuth.AuthStateListener { auth ->
-                        val uid = auth.uid
-
-                        if (uid != null) {
-                            // launch에서는 `coroutineScope`를 명시하여 스코프를 제어
-                            // `trySendBlocking`을 사용하여 콜백 내에서 안전히 데이터 전송
+                        auth.uid?.let {
                             launch {
                                 try {
                                     val nickName =
                                         workApi
-                                            .getWorkTaskDetails(WorkDetailToken(uid, "1", "8.8.8.8"))
+                                            .getWorkTaskDetails(WorkDetailToken(it, "1", "8.8.8.8"))
                                             .nickname
-                                    trySend(nickName).isSuccess // 전송 여부 확인
+                                    trySend(nickName)
                                 } catch (e: Exception) {
-                                    Log.e("FlowError", "Error fetching nickname: ${e.message}")
-                                    trySend(null).isSuccess
+                                    trySend(null)
                                 }
                             }
-                        } else {
-                            trySend(null).isSuccess
+                        } ?: run {
+                            trySend(null)
                         }
                     }
-
-                // 리스너 등록
                 auth.addAuthStateListener(authStateListener)
-
-                // Flow가 취소될 때 리스너 해제
                 awaitClose {
                     auth.removeAuthStateListener(authStateListener)
                 }
