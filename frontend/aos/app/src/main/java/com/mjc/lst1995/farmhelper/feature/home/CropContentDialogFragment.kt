@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import coil.load
 import com.mjc.lst1995.farmhelper.core.domain.model.crop.RecommendCrop
 import com.mjc.lst1995.farmhelper.core.domain.model.crop.toDescription
 import com.mjc.lst1995.farmhelper.databinding.FragmentCropContentDialogBinding
+import com.mjc.lst1995.farmhelper.util.ImageUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,8 +53,13 @@ class CropContentDialogFragment(
         binding!!.run {
             cropNameTV.text = recommendCrop.cropName
             val description = recommendCrop.toDescription()
-            plantingSeasonTV.text = "심는 시기:" + description.plantingSeason
-            harvestSeasonTV.text = "수확 시기:" + description.harvestSeason
+            plantingSeasonTV.text = "심는 시기: " + description.plantingSeason
+            harvestSeasonTV.text = "수확 시기: " + description.harvestSeason
+            recommendCrop.imageUrl?.let {
+                cropIV.load(it)
+            } ?: run {
+                cropIV.load(ImageUtil.getImageResource(recommendCrop.cropName))
+            }
             contentTV.text = description.content
         }
     }
