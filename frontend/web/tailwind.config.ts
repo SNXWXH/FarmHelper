@@ -19,12 +19,18 @@ export default {
         heavy: '900',
       },
       animation: {
-        spin: 'spin 2s linear infinite', // 회전 애니메이션
+        spin: 'spin 2s linear infinite',
+        skeleton: 'skeleton-loading 1.5s infinite ease-in-out',
       },
       keyframes: {
         spin: {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
+        },
+        'skeleton-loading': {
+          '0%': { backgroundColor: '#f3f3f3' },
+          '50%': { backgroundColor: '#e0e0e0' },
+          '100%': { backgroundColor: '#f3f3f3' },
         },
       },
     },
