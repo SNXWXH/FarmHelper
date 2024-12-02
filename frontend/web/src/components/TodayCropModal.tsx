@@ -1,3 +1,4 @@
+import cropImageMapping from '@/utils/cropImageMapping';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -8,6 +9,7 @@ export default async function TodayCropModal({
 }) {
   const router = useRouter();
   const encodedCropName = encodeURIComponent(cropName);
+  const camelCaseCropName = cropImageMapping[cropName];
 
   const todayCropData = await (
     await fetch(
@@ -34,7 +36,12 @@ export default async function TodayCropModal({
         </button>
         <div className='flex justify-center items-center w-full h-full gap-20'>
           <div className='flex justify-center items-center w-60 h-60 bg-white rounded-lg'>
-            <Image src='/temporaryImg.png' alt='img' width={200} height={0} />
+            <Image
+              src={`/crop/${camelCaseCropName}.png`}
+              alt={cropName}
+              width={200}
+              height={0}
+            />
           </div>
           <div className='w-3/5 h-60'>
             <p className='font-nanumHeavy font-heavy text-3xl'>{cropName}</p>
