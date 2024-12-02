@@ -3,43 +3,104 @@ import MainWeather from '@/components/MainWeather';
 import MainWorkLog from '@/components/MainWorkLog';
 import MonthRank from '@/components/MonthRank';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
-export default async function Home() {
-  const todayCropData = await (
-    await fetch(`${process.env.BASE_URL}/api/todayCrop`)
-  ).json();
+const Skeleton = ({ className }: { className?: string }) => (
+  <div className={`animate-pulse bg-gray-200 rounded-md ${className}`}></div>
+);
 
+async function fetchTodayCropData() {
+  const response = await fetch(`${process.env.BASE_URL}/api/todayCrop`, {
+    // cache: 'no-store',
+  });
+
+  return response.json();
+}
+
+async function TodayCropSection() {
+  const todayCropData = await fetchTodayCropData();
+  return (
+    <div className='overflow-x-auto flex gap-6'>
+      {todayCropData.map((data: any, idx: number) => (
+        <Link href={`/todayCrop?cropName=${data.cropName}`} key={idx}>
+          <CropCard cropName={data.cropName} />
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+export default function Home() {
   return (
     <>
       <div className='flex flex-col items-center h-screen pt-14'>
         <div className='w-3/5'>
           <div className='mt-14'>
             <p className='font-nanumHeavy font-heavy text-2xl'>오늘의 날씨</p>
-            <MainWeather />
+            <Suspense
+              fallback={
+                <Skeleton className='mt-8 h-40 w-full bg-[#F2FFE0] rounded-2xl flex justify-center items-center' />
+              }
+            >
+              <MainWeather />
+            </Suspense>
           </div>
+
           <div className='mt-14'>
             <p className='font-nanumHeavy font-heavy text-2xl'>
               오늘의 추천 작물
             </p>
-            <div className='overflow-x-auto flex gap-6'>
-              {todayCropData.map((data, idx) => (
-                <Link href={`/todayCrop?cropName=${data.cropName}`} key={idx}>
-                  <CropCard cropName={data.cropName} />
-                </Link>
-              ))}
-            </div>
+            <Suspense
+              fallback={
+                <div className='mt-8 flex gap-4 overflow-x-auto '>
+                  {[...Array(5)].map((_, idx) => (
+                    <Skeleton
+                      key={idx}
+                      className='h-40 w-32 rounded-lg flex-shrink-0 '
+                    />
+                  ))}
+                </div>
+              }
+            >
+              <TodayCropSection />
+            </Suspense>
           </div>
+
           <div className='mt-14'>
             <p className='font-nanumHeavy font-heavy text-2xl'>
               이번 달 인기 작물
             </p>
-            <MonthRank />
+            <Suspense
+              fallback={
+                <div className='mt-8'>
+                  {[...Array(5)].map((_, idx) => (
+                    <Skeleton
+                      key={idx}
+                      className='h-8 w-full mb-4 animate-skeleton'
+                    />
+                  ))}
+                </div>
+              }
+            >
+              <MonthRank />
+            </Suspense>
           </div>
-          <div className='my-14 '>
+
+          <div className='my-14'>
             <p className='font-nanumHeavy font-heavy text-2xl'>
               오늘의 작업일지
             </p>
-            <MainWorkLog />
+            <Suspense
+              fallback={
+                <div className='mt-8'>
+                  {[...Array(3)].map((_, idx) => (
+                    <Skeleton key={idx} className='h-12 w-full mb-4' />
+                  ))}
+                </div>
+              }
+            >
+              <MainWorkLog />
+            </Suspense>
           </div>
         </div>
       </div>
