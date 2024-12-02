@@ -16,11 +16,13 @@ export async function GET(req: NextRequest) {
       }
     );
 
-    // const data = await response.json();
-    const responseText = await response.text();
-    console.log('Server Response:', responseText);
+    const data = await response.json();
 
-    return NextResponse.json(responseText, { status: 200 });
+    if (data.isOK) {
+      return NextResponse.json({ message: '로그인 성공' }, { status: 200 });
+    } else {
+      return NextResponse.json({ error: '로그인 실패' }, { status: 400 });
+    }
   } catch (error) {
     throw new Error(error, 'Server-Failed to fetch login Data');
   }
