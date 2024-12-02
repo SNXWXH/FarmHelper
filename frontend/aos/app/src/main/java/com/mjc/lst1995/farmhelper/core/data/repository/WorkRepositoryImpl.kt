@@ -2,6 +2,7 @@ package com.mjc.lst1995.farmhelper.core.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.mjc.lst1995.farmhelper.core.data.network.api.WorkApi
+import com.mjc.lst1995.farmhelper.core.data.network.request.work.WorkCreateToken
 import com.mjc.lst1995.farmhelper.core.domain.model.crop.CropTask
 import com.mjc.lst1995.farmhelper.core.domain.model.task.OtherDetail
 import com.mjc.lst1995.farmhelper.core.domain.model.task.Task
@@ -25,13 +26,19 @@ class WorkRepositoryImpl
         }
 
         override suspend fun createWork(
-            userId: String,
             cropName: String,
             cropDate: String,
             imageUrl: String?,
-        ): Boolean {
-            TODO("Not yet implemented")
-        }
+        ): Boolean =
+            workApi
+                .createWork(
+                    WorkCreateToken(
+                        userId = auth.uid!!,
+                        cropName = cropName,
+                        cropDate = cropDate,
+                        imageUrl = imageUrl,
+                    ),
+                ).isOk
 
         override suspend fun getWorkTaskDetails(
             userId: String,

@@ -12,7 +12,6 @@ interface WorkRepository {
     suspend fun getWorks(userId: String): List<Work>
 
     suspend fun createWork(
-        userId: String,
         cropName: String,
         cropDate: String,
         imageUrl: String?,

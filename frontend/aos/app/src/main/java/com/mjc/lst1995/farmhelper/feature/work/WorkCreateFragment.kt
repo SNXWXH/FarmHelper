@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toFile
 import androidx.fragment.app.viewModels
 import coil.load
 import com.mjc.lst1995.farmhelper.MainActivity
@@ -38,6 +37,17 @@ class WorkCreateFragment : BaseFragment<FragmentWorkCreateBinding>(R.layout.frag
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = workCreateViewModel
         pickImage()
+        setObserver()
+    }
+
+    private fun setObserver() {
+        workCreateViewModel.resultMessage.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) showMessage(it)
+        }
+        workCreateViewModel.progress.observe(viewLifecycleOwner) {
+            if (it == View.GONE) hideProgressBar(binding.progressBar)
+            if (it == View.VISIBLE) showProgressBar(binding.progressBar)
+        }
     }
 
     private fun pickImage() {
