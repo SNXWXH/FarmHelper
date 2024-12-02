@@ -40,33 +40,35 @@ export default function CreateLog() {
       return;
     }
 
-    if (fileInput) {
-      try {
-        const downloadURL = await uploadImage(fileInput, session.user.uid);
+    try {
+      let downloadURL = 'null';
 
-        const cropName = crop;
-        const cropDate = date;
-
-        const response = await fetch('/api/createWorkList', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            userId: session?.user.uid,
-            cropName,
-            cropDate,
-            imageUrl: downloadURL,
-          }),
-        });
-
-        if (response.ok) {
-          router.push('/workLog');
-        } else {
-          const errorData = await response.json();
-          alert(`Error: ${errorData.error}`);
-        }
-      } catch (error) {
-        console.error('Error uploading image or sending data:', error.message);
+      if (fileInput) {
+        downloadURL = await uploadImage(fileInput, session.user.uid);
       }
+
+      const cropName = crop;
+      const cropDate = date;
+
+      const response = await fetch('/api/createWorkList', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: session?.user.uid,
+          cropName,
+          cropDate,
+          imageUrl: downloadURL,
+        }),
+      });
+
+      if (response.ok) {
+        router.push('/workLog');
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error('Error uploading image or sending data:', error.message);
     }
   };
 
