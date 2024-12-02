@@ -27,7 +27,7 @@ interface WorkApi {
         @Body authToken: AuthToken,
     ): WorksResponse
 
-    @POST("work/crop/create")
+    @POST("crop/create")
     suspend fun createWork(
         @Body workCreateToken: WorkCreateToken,
     ): ResultResponse
