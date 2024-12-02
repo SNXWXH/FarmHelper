@@ -33,10 +33,9 @@
     <TextView
         android:id="@+id/userWelcomeTV"
         style="@style/BoldStyle"
-        android:text="@string/user_welcome_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:text="@string/user_welcome_message"
         app:layout_constraintBottom_toBottomOf="@+id/userNicknameTV"
         app:layout_constraintStart_toEndOf="@+id/userNicknameTV"
         app:layout_constraintTop_toTopOf="@+id/userNicknameTV" />
