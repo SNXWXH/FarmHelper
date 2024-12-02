@@ -1,14 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = req.nextUrl;
-  const userId = searchParams.get('userId');
-  const cropNameParams = searchParams.get('cropName');
-  const cropName = decodeURIComponent(cropNameParams);
-  const cropDate = searchParams.get('cropDate');
-  const imageUrl = decodeURIComponent(searchParams.get('imageUrl'));
-
+export async function POST(req: NextRequest) {
   try {
+    const body = await req.json();
+    const { userId, cropName, cropDate, imageUrl } = body;
+
     const response = await fetch(
       `${process.env.SERVER_BASE_URL}/api/crop/create`,
       {
@@ -32,6 +28,9 @@ export async function GET(req: NextRequest) {
       );
     }
   } catch (error) {
-    throw new Error(error, 'Server-Failed to fetch login Data');
+    return NextResponse.json(
+      { error: '서버 요청 처리 중 에러가 발생했습니다.' },
+      { status: 500 }
+    );
   }
 }
