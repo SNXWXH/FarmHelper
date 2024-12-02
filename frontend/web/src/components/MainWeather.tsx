@@ -9,7 +9,7 @@ export default async function MainWeather() {
       <div className='mt-8 h-40 w-full flex justify-center bg-[#F2FFE0] rounded-2xl'>
         <div className='flex justify-center items-center w-1/2 font-nanumHeavy font-heavy'>
           <p className='text-6xl'>{weatherData.temperature}</p>
-          <p className='text-3xl h-16'>°</p>
+          {/* <p className='text-3xl h-16'>°</p> */}
           <div className='ml-2'>
             <p className='text-2xl'>{weatherData.description}</p>
           </div>
