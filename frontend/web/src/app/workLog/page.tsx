@@ -49,42 +49,37 @@ export default function WorkLog() {
           </div>
           <div
             className={`${
-              isGridView
+              cropList.length === 0
+                ? 'flex justify-center items-center w-full h-full font-nanumHeavy font-heavy' // Center message when cropList is empty
+                : isGridView
                 ? 'grid grid-cols-3 gap-16 mb-14'
                 : 'flex flex-col gap-9 mb-14'
             }`}
           >
-            {isGridView ? (
-              cropList.length > 0 ? (
-                cropList.map((crop, idx) => (
-                  <Link href={`workLog/detail/${crop.cropId}`} key={idx}>
+            {cropList.length > 0 ? (
+              cropList.map((crop, idx) => (
+                <Link
+                  href={`workLog/detail/${crop.cropId}?nickName=${nickName}&cropName=${crop.cropName}`}
+                  key={idx}
+                >
+                  {isGridView ? (
                     <CropListCard
                       key={idx}
                       cropName={crop.cropName}
                       date={crop.cropDate}
                       imageUrl={decodeURIComponent(crop.imageUrl)}
                     />
-                  </Link>
-                ))
-              ) : (
-                <p className='flex justify-center items-center h-screen'>
-                  작업일지가 없습니다.
-                </p>
-              )
-            ) : cropList.length > 0 ? (
-              cropList.map((crop, idx) => (
-                <Link href={`workLog/detail/${idx}`} key={idx}>
-                  <CropList
-                    key={idx}
-                    cropName={crop.cropName}
-                    date={crop.cropDate}
-                  />
+                  ) : (
+                    <CropList
+                      key={idx}
+                      cropName={crop.cropName}
+                      date={crop.cropDate}
+                    />
+                  )}
                 </Link>
               ))
             ) : (
-              <p className='flex justify-center items-center w-full h-screen'>
-                작업일지가 없습니다.
-              </p>
+              <p className='text-3xl'>작업일지가 없습니다.</p>
             )}
           </div>
         </div>
