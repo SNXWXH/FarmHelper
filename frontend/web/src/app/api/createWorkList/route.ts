@@ -20,7 +20,17 @@ export async function GET(req: NextRequest) {
 
     const data = await response.json();
 
-    return NextResponse.json(data, { status: 200 });
+    if (data.isOK) {
+      return NextResponse.json(
+        { message: '작업 일지가 성공적으로 생성되었습니다.' },
+        { status: 200 }
+      );
+    } else {
+      return NextResponse.json(
+        { error: '작업 일지 생성에 실패했습니다.' },
+        { status: 400 }
+      );
+    }
   } catch (error) {
     throw new Error(error, 'Server-Failed to fetch login Data');
   }
