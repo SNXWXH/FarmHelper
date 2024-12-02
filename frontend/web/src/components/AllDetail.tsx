@@ -1,12 +1,14 @@
-import Link from 'next/link';
+import calculateDaysDifference from '@/utils/calculateDays';
 import React, { useEffect, useState } from 'react';
 
 export default function AllDetail({
   userId,
   cropId,
+  cropDate,
 }: {
   userId: string;
   cropId: number;
+  cropDate: string;
 }) {
   const [data, setData] = useState<string[][]>([]);
   const [isReversed, setIsReversed] = useState(true);
@@ -58,7 +60,10 @@ export default function AllDetail({
               {displayedData.map((list, idx) => (
                 <div key={idx}>
                   <div className='flex items-center'>
-                    <p className='text-xl font-extrabold'>{list.workDate}</p>
+                    <p className='text-xl font-extrabold'>
+                      {calculateDaysDifference(cropDate, list.workDate)}
+                      일차: {list.workDate}
+                    </p>
                     <p className='ml-4 font-extrabold'>
                       날씨: {list.workWeather} 온도: {list.workTemperature}
                     </p>

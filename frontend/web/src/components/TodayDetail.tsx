@@ -1,8 +1,17 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import calculateDaysDifference from '@/utils/calculateDays';
 
-const WorkLog = ({ userId, cropId }: { userId: string; cropId: number }) => {
+const WorkLog = ({
+  userId,
+  cropId,
+  cropDate,
+}: {
+  userId: string;
+  cropId: number;
+  cropDate: string;
+}) => {
   const [workLogs, setWorkLogs] = useState<any[]>([]);
   const [today, setToday] = useState('');
   const [isLatestToday, setIsLatestToday] = useState(false);
@@ -92,7 +101,11 @@ const WorkLog = ({ userId, cropId }: { userId: string; cropId: number }) => {
                 <div className='flex items-center justify-between'>
                   <div className='flex items-center'>
                     <p className='text-xl font-extrabold'>
-                      {latestWorkLog.workDate}
+                      {calculateDaysDifference(
+                        cropDate,
+                        latestWorkLog.workDate
+                      )}
+                      일차: {latestWorkLog.workDate}
                     </p>
                     <p className='ml-4 font-extrabold'>
                       날씨: {latestWorkLog.workWeather} 온도:{' '}
