@@ -13,6 +13,7 @@ export default function Detail() {
 
   const userId = searchParams.get('nickName');
   const cropName = searchParams.get('cropName');
+  const cropDate = searchParams.get('cropDate');
 
   return (
     <>
@@ -22,10 +23,18 @@ export default function Detail() {
             {userId}님의 작업일지 {'>'} {cropName}
           </p>
           <div className='mt-5'>
-            <TodayDetail userId={session?.user.uid} cropId={id} />
+            <TodayDetail
+              userId={session?.user.uid}
+              cropId={id}
+              cropDate={cropDate}
+            />
           </div>
 
-          <AllDetail userId={session?.user.uid} cropId={id} />
+          <AllDetail
+            userId={session?.user.uid}
+            cropId={id}
+            cropDate={cropDate}
+          />
         </div>
       </div>
     </>

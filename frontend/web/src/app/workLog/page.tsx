@@ -59,7 +59,7 @@ export default function WorkLog() {
             {cropList.length > 0 ? (
               cropList.map((crop, idx) => (
                 <Link
-                  href={`workLog/detail/${crop.cropId}?nickName=${nickName}&cropName=${crop.cropName}`}
+                  href={`workLog/detail/${crop.cropId}?nickName=${nickName}&cropName=${crop.cropName}&cropDate=${crop.cropDate}`}
                   key={idx}
                 >
                   {isGridView ? (
