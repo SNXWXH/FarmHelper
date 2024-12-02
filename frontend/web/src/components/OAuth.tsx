@@ -17,7 +17,7 @@ export default function OAuth() {
           const response = await fetch(`/api/login?userId=${session.user.uid}`);
           const data = await response.json();
 
-          if (!data) {
+          if (!data.isOk) {
             router.push('/createNickname');
           }
         } catch (error) {
