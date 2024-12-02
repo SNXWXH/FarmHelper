@@ -56,7 +56,7 @@ export default function Home() {
                   {[...Array(5)].map((_, idx) => (
                     <Skeleton
                       key={idx}
-                      className='h-40 w-32 rounded-lg flex-shrink-0 '
+                      className='h-44 w-44 rounded-lg flex-shrink-0 '
                     />
                   ))}
                 </div>
