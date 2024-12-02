@@ -10,22 +10,23 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val authUseCase: AuthUseCase,
-) : ViewModel() {
+class LoginViewModel
+    @Inject
+    constructor(
+        private val authUseCase: AuthUseCase,
+    ) : ViewModel() {
+        val loginState = authUseCase.loginStateFlow()
 
-    val loginState = authUseCase.loginStateFlow()
+        private val _isJoined = MutableLiveData<Boolean?>(null)
+        val isJoined: LiveData<Boolean?> = _isJoined
 
-    private val _isJoined = MutableLiveData<Boolean?>(null)
-    val isJoined: LiveData<Boolean?> = _isJoined
+        fun firebaseAuthWithGoogle(idToken: String) {
+            authUseCase.firebaseAuthWithGoogle(idToken)
+        }
 
-    fun firebaseAuthWithGoogle(idToken: String) {
-        authUseCase.firebaseAuthWithGoogle(idToken)
-    }
-
-    suspend fun userIsJoined() {
-        viewModelScope.launch {
-            _isJoined.postValue(authUseCase.userIsJoined())
+        suspend fun userIsJoined() {
+            viewModelScope.launch {
+                _isJoined.postValue(authUseCase.userIsJoined())
+            }
         }
     }
-}

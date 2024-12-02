@@ -14,7 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works) {
-
     private val listener = { work: Work ->
         val action = WorksFragmentDirections.actionWorksFragmentToWorkDetailFragment(work)
         findNavController().navigate(action)
