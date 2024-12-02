@@ -28,9 +28,9 @@ class MainActivity : AppCompatActivity() {
         if (!permissionCheck()) requestPermission()
     }
 
-    private fun permissionCheck(): Boolean = permissions.all { permissionIsPossible(it) }
+    fun permissionCheck(): Boolean = permissions.all { permissionIsPossible(it) }
 
-    private fun requestPermission() {
+    fun requestPermission() {
         // 만약 사용자가 "다시 묻지 않음"을 선택했는지 확인
         if (shouldShowPermissionRationale()) {
             showPermissionDeniedDialogWithSettings()
