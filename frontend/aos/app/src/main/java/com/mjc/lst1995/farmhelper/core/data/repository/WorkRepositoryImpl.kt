@@ -1,5 +1,6 @@
 package com.mjc.lst1995.farmhelper.core.data.repository
 
+import com.google.firebase.auth.FirebaseAuth
 import com.mjc.lst1995.farmhelper.core.data.network.api.WorkApi
 import com.mjc.lst1995.farmhelper.core.domain.model.crop.CropTask
 import com.mjc.lst1995.farmhelper.core.domain.model.task.OtherDetail
@@ -13,6 +14,7 @@ class WorkRepositoryImpl
     @Inject
     constructor(
         private val workApi: WorkApi,
+        private val auth: FirebaseAuth,
     ) : WorkRepository {
         override suspend fun getTodayTasks(userId: String): List<CropTask> {
             TODO("Not yet implemented")
