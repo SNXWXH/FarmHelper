@@ -17,7 +17,19 @@ export default function MainWorkLog() {
           const data = await response.json();
 
           if (Array.isArray(data)) {
-            setTodayCrop(data);
+            const groupedData: Record<string, any> = {};
+
+            data.forEach((item) => {
+              if (!groupedData[item.workName]) groupedData[item.workName] = [];
+
+              groupedData[item.workName].push(item);
+            });
+
+            const latestWork = Object.values(groupedData).map((items) =>
+              items.pop()
+            );
+
+            setTodayCrop(latestWork);
           } else {
             setTodayCrop([]);
           }
@@ -34,7 +46,7 @@ export default function MainWorkLog() {
   return (
     <>
       {session ? (
-        <div className='flex flex-col justify-center items-center mt-8  text-xl font-bold'>
+        <div className='flex flex-col justify-center items-center mt-8 text-xl font-bold'>
           {todayCrop.length > 0 ? (
             todayCrop.map((list, idx) => (
               <div key={idx}>
