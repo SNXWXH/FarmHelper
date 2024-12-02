@@ -3,6 +3,7 @@ import './globals.css';
 import Header from '@/components/Header';
 import { ReactNode } from 'react';
 import AuthContext from '@/components/AuthContext';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: '농부의 하루',
@@ -26,6 +27,12 @@ export default function RootLayout({
           <Header />
           {children}
           {modal}
+          <Link
+            href='/workLog/create'
+            className='fixed bottom-6 right-6 w-14 h-14 bg-[#698A54] text-white flex items-center justify-center rounded-full shadow-lg hover:bg-green-600 transition'
+          >
+            +
+          </Link>
         </body>
       </AuthContext>
     </html>
