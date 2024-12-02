@@ -40,6 +40,12 @@ const WorkLog = ({ userId, cropId }: { userId: string; cropId: number }) => {
       return;
     }
 
+    const confirmDelete = window.confirm('정말로 작업일지를 삭제하시겠습니까?');
+
+    if (!confirmDelete) {
+      return;
+    }
+
     try {
       const response = await fetch(
         `/api/deleteWorkDetail?workId=${latestWorkLog?.workId}&userId=${session.user.uid}&cropId=${cropId}`
