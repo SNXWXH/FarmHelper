@@ -36,6 +36,7 @@
     <string name="write_custom_task">추가로 할 작업을 작성해주세요.</string>
     <string name="task_log_edit">작업 내용 수정</string>
     <string name="delete">제거</string>
+    <string name="not_select_image_message">이미지를 선택하지 않았습니다.</string>
 
     <!-- 작업일지 생성 -->
     <string name="work_create">작업 일지 생성</string>
