@@ -10,7 +10,7 @@ import coil.load
 import com.mjc.lst1995.farmhelper.R
 import com.mjc.lst1995.farmhelper.core.domain.model.crop.RecommendCrop
 import com.mjc.lst1995.farmhelper.databinding.HolderRecommendedCropBinding
-import com.mjc.lst1995.farmhelper.util.ImageUtil
+import com.mjc.lst1995.farmhelper.core.ui.util.ImageUtil
 
 class RecommendCropAdapter(
     private val recommendCropListener: (RecommendCrop) -> Unit,

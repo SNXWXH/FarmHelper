@@ -1,4 +1,4 @@
-package com.mjc.lst1995.farmhelper.util
+package com.mjc.lst1995.farmhelper.core.ui.util
 
 import androidx.annotation.DrawableRes
 import com.mjc.lst1995.farmhelper.R
