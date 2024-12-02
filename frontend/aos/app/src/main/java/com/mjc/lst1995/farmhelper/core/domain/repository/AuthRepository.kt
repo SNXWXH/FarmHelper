@@ -9,7 +9,7 @@ interface AuthRepository {
 
     fun loginStateFlow(): Flow<Boolean>
 
-    suspend fun getUserNickName(): String
+    fun getUserNickName(): Flow<String?>
 
     suspend fun userIsJoined(): Boolean
 

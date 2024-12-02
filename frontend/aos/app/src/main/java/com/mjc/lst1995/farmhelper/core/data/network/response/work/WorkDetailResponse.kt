@@ -7,8 +7,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WorkDetailResponse(
-    @SerialName("workLog")
-    val workLog: List<Task>,
+    @SerialName("workLogs")
+    val workLogs: List<Task>,
     @SerialName("today")
     val today: String,
     @SerialName("cropName")
