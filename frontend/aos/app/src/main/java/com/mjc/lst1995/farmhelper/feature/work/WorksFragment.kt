@@ -14,12 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works) {
-    private val works =
-        listOf(
-            Work("감자", "감자", "2024-12-01"),
-            Work("고구마", "감자", "2024-12-01."),
-            Work("호박", "감자", "2024-12-01."),
-        )
 
     private val listener = { work: Work ->
         val action = WorksFragmentDirections.actionWorksFragmentToWorkDetailFragment(work)
@@ -50,8 +44,8 @@ class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works
         binding.worksGridRV.adapter = gridAdapter
         binding.worksGridRV.layoutManager = GridLayoutManager(context, 2)
         binding.worksLinearRV.adapter = linearAdapter
-        gridAdapter.submitList(works)
-        linearAdapter.submitList(works)
+//        gridAdapter.submitList(works)
+//        linearAdapter.submitList(works)
 
         binding.listIV.setOnClickListener {
             binding.worksGridRV.visibility = View.GONE
