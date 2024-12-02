@@ -14,6 +14,7 @@
     <string name="check_today_work_log_after_login">로그인 후 오늘의 작업일지를 확인해보세요!</string>
     <string name="crop_image">작물 이미지</string>
     <string name="user_welcome_message">님 환영합니다.</string>
+    <string name="logo_image">로고 이미지</string>
 
     <!-- 로그인-->
     <string name="nick_name_input_message">사용하실 닉네임을 입력해주세요.</string>
@@ -46,4 +47,11 @@
     <string name="cover_image">커버 이미지</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    권환 요청-->
+    <string name="permission_required_message">권한이 필요합니다</string>
+    <string name="permission_instructions">이 앱을 사용하려면 권한을 허용해야 합니다. 설정으로 이동하여 권한을 수동으로 허용하세요.</string>
+    <string name="navigate_to_settings">설정으로 이동</string>
+    <string name="allow_permission">권한 허용</string>
+    <string name="request_permission_message">앱을 사용하기 위해 권한을 허용해주세요.</string>
 </resources>
