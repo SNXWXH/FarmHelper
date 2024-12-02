@@ -67,7 +67,7 @@ export default function WorkLog() {
                       key={idx}
                       cropName={crop.cropName}
                       date={crop.cropDate}
-                      imageUrl={decodeURIComponent(crop.imageUrl)}
+                      imageUrl={crop.imageUrl}
                     />
                   ) : (
                     <CropList
