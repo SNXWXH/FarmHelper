@@ -1,5 +1,6 @@
 import CropCard from '@/components/CropCard';
 import MainWeather from '@/components/MainWeather';
+import MainWorkLog from '@/components/MainWorkLog';
 import MonthRank from '@/components/MonthRank';
 import Link from 'next/link';
 
@@ -38,9 +39,7 @@ export default async function Home() {
             <p className='font-nanumHeavy font-heavy text-2xl'>
               오늘의 작업일지
             </p>
-            <div className='flex justify-center items-center mt-8 h-40 text-xl font-bold'>
-              로그인 후 오늘의 작업일지를 확인해보세요!
-            </div>
+            <MainWorkLog />
           </div>
         </div>
       </div>
