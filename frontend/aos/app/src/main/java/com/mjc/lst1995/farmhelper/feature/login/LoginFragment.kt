@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
-
     private val loginViewModel: LoginViewModel by viewModels()
 
     private lateinit var signInClient: SignInClient
@@ -52,7 +51,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        super.onViewCreated(view,savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         setLoginClickListener()
         observeLoginState()
         observeIsJoined()
@@ -98,7 +97,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             }
     }
 
-
     private fun launchSignIn(pendingIntent: PendingIntent) {
         try {
             val intentSenderRequest = IntentSenderRequest.Builder(pendingIntent).build()
@@ -118,7 +116,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 findNavController().navigate(
                     R.id.action_loginFragment_to_homeFragment,
                     null,
-                    navOptions()
+                    navOptions(),
                 )
 
             R.layout.fragment_nick_name ->
@@ -130,7 +128,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         val navController = findNavController()
         return NavOptions
             .Builder()
-            .setPopUpTo(navController.graph.startDestinationId,inclusive = true) // 시작 지점까지 모두 팝업
+            .setPopUpTo(navController.graph.startDestinationId, inclusive = true) // 시작 지점까지 모두 팝업
             .build()
     }
 }
