@@ -18,6 +18,15 @@ export default {
       fontWeight: {
         heavy: '900',
       },
+      animation: {
+        spin: 'spin 2s linear infinite', // 회전 애니메이션
+      },
+      keyframes: {
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+      },
     },
   },
   plugins: [],
