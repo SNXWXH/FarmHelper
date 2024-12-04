@@ -5,7 +5,7 @@ import com.mjc.lst1995.farmhelper.core.data.network.response.task.TaskRecommendR
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface TaskRecommendApi {
+interface TaskApi {
     @POST
     suspend fun getTaskRecommend(
         @Body taskRecommendToken: TaskRecommendToken,
