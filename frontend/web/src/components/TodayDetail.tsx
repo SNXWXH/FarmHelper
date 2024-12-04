@@ -2,8 +2,9 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import calculateDaysDifference from '@/utils/calculateDays';
+import Skeleton from '@/components/Skeleton';
 
-const WorkLog = ({
+const TodayDetail = ({
   userId,
   cropId,
   cropDate,
@@ -16,6 +17,7 @@ const WorkLog = ({
   const [today, setToday] = useState('');
   const [isLatestToday, setIsLatestToday] = useState(false);
   const [latestWorkLog, setLatestWorkLog] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const { data: session } = useSession();
 
@@ -31,17 +33,19 @@ const WorkLog = ({
 
       if (data.workLogs.length > 0) {
         const latestLog = data.workLogs[data.workLogs.length - 1];
-        setLatestWorkLog(latestLog);
-        setIsLatestToday(latestLog.workDate === data.today);
+        if (latestLog.workDate === data.today) {
+          setLatestWorkLog(latestLog);
+          setIsLatestToday(true);
+        } else {
+          setLatestWorkLog(null);
+        }
       }
     } catch (error) {
       console.error('Error fetching work logs:', error);
+    } finally {
+      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchWorkLogs();
-  }, [userId, cropId]);
 
   const handleComplete = async () => {
     if (!session?.user?.uid) {
@@ -73,10 +77,20 @@ const WorkLog = ({
     }
   };
 
+  useEffect(() => {
+    fetchWorkLogs();
+  }, [userId, cropId]);
+
+  if (loading) {
+    return (
+      <Skeleton className='w-full h-56 bg-[#F2FAE7] rounded-2xl p-7 my-6' />
+    );
+  }
+
   return (
     <>
       <div>
-        {workLogs.length === 0 ? (
+        {latestWorkLog === null ? (
           <>
             <div className='w-full bg-[#F2FAE7] rounded-2xl p-7 my-6'>
               <div className='flex flex-col'>
@@ -149,4 +163,4 @@ const WorkLog = ({
   );
 };
 
-export default WorkLog;
+export default TodayDetail;
