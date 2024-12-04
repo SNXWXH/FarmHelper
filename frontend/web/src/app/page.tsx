@@ -2,12 +2,13 @@ import CropCard from '@/components/CropCard';
 import MainWeather from '@/components/MainWeather';
 import MainWorkLog from '@/components/MainWorkLog';
 import MonthRank from '@/components/MonthRank';
+import Skeleton from '@/components/Skeleton';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
-const Skeleton = ({ className }: { className?: string }) => (
-  <div className={`animate-pulse bg-gray-200 rounded-md ${className}`}></div>
-);
+// const Skeleton = ({ className }: { className?: string }) => (
+//   <div className={`animate-pulse bg-gray-200 rounded-md ${className}`}></div>
+// );
 
 async function fetchTodayCropData() {
   const response = await fetch(`${process.env.BASE_URL}/api/todayCrop`, {
@@ -45,7 +46,6 @@ export default function Home() {
               <MainWeather />
             </Suspense>
           </div>
-
           <div className='mt-14'>
             <p className='font-nanumHeavy font-heavy text-2xl'>
               오늘의 추천 작물
