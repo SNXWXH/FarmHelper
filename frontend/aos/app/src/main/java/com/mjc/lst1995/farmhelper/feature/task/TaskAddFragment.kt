@@ -40,7 +40,6 @@ class TaskAddFragment : BaseFragment<FragmentTaskAddBinding>(R.layout.fragment_t
             adapter.submitList(it) {
                 binding.todayTaskRV.scrollToPosition(it.size - 1)
             }
-            Log.d("recommendTasks", "$it")
         }
         viewModel.isSaved.observe(viewLifecycleOwner) {
             if (it) {

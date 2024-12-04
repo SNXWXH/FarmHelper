@@ -9,7 +9,7 @@ import com.mjc.lst1995.farmhelper.core.domain.model.task.RecommendTask
 import com.mjc.lst1995.farmhelper.databinding.HolderCreateTaskBinding
 
 class RecommendTaskAdapter(
-    private val recommendTaskListener: (RecommendTask) -> Unit,
+    private val recommendTaskListener: (Int) -> Unit,
 ) : ListAdapter<RecommendTask, RecommendTaskAdapter.RecommendTaskHolder>(RecommendTaskDiffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -20,7 +20,7 @@ class RecommendTaskAdapter(
         holder: RecommendTaskHolder,
         position: Int,
     ) {
-        holder.bind(currentList[position], recommendTaskListener)
+        holder.bind(currentList[position], recommendTaskListener, position)
     }
 
     class RecommendTaskHolder(
@@ -28,12 +28,13 @@ class RecommendTaskAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             recommendTask: RecommendTask,
-            recommendTaskListener: (RecommendTask) -> Unit,
+            recommendTaskListener: (Int) -> Unit,
+            position: Int,
         ) {
             binding.taskContentTV.text = recommendTask.content
             binding.checkBox.isChecked = recommendTask.isChecked
             binding.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
-                recommendTaskListener(recommendTask.copy(isChecked = isChecked))
+                recommendTaskListener(position)
             }
         }
 

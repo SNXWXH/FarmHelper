@@ -4,13 +4,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TaskUpdateToken(
-    @SerialName("workId")
-    val workId: Long,
+data class TaskCreateToken(
     @SerialName("userId")
     val userId: String,
     @SerialName("cropId")
     val cropId: Long,
     @SerialName("workContent")
     val workContent: String,
+    @SerialName("ipAddress")
+    val ipAddress: String,
 )
