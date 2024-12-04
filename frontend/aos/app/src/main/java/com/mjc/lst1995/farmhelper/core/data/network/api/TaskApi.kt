@@ -6,7 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface TaskApi {
-    @POST
+    @POST("work/recommend/create")
     suspend fun getTaskRecommend(
         @Body taskRecommendToken: TaskRecommendToken,
     ): TaskRecommendResponse
