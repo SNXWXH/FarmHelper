@@ -5,11 +5,13 @@ import { useSession } from 'next-auth/react';
 import CropList from '@/components/CropList';
 import CropListCard from '@/components/CropListCard';
 import Link from 'next/link';
+import Skeleton from '@/components/Skeleton'; // Import the Skeleton component
 
 export default function WorkLog() {
   const [nickName, setNickName] = useState('');
   const [isGridView, setIsGridView] = useState(true);
   const [cropList, setCropList] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // Track loading state
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -24,6 +26,8 @@ export default function WorkLog() {
           setNickName(data.nickname);
         } catch (error) {
           console.error('Error fetching crop data:', error);
+        } finally {
+          setIsLoading(false);
         }
       }
     };
@@ -47,41 +51,46 @@ export default function WorkLog() {
               onClick={() => setIsGridView((prev) => !prev)}
             ></button>
           </div>
-          <div
-            className={`${
-              cropList.length === 0
-                ? 'flex justify-center items-center w-full h-full font-nanumHeavy font-heavy' // Center message when cropList is empty
-                : isGridView
-                ? 'grid grid-cols-3 gap-16 mb-14'
-                : 'flex flex-col gap-9 mb-14'
-            }`}
-          >
-            {cropList.length > 0 ? (
-              cropList.map((crop, idx) => (
-                <Link
-                  href={`workLog/detail/${crop.cropId}?nickName=${nickName}&cropName=${crop.cropName}&cropDate=${crop.cropDate}`}
-                  key={idx}
-                >
-                  {isGridView ? (
-                    <CropListCard
-                      key={idx}
-                      cropName={crop.cropName}
-                      date={crop.cropDate}
-                      imageUrl={crop.imageUrl}
-                    />
-                  ) : (
-                    <CropList
-                      key={idx}
-                      cropName={crop.cropName}
-                      date={crop.cropDate}
-                    />
-                  )}
-                </Link>
-              ))
-            ) : (
-              <p className='text-3xl'>작업일지가 없습니다.</p>
-            )}
-          </div>
+
+          {isLoading ? (
+            <Skeleton />
+          ) : (
+            <div
+              className={`${
+                cropList.length === 0
+                  ? 'flex justify-center items-center w-full h-full font-nanumHeavy font-heavy'
+                  : isGridView
+                  ? 'grid grid-cols-3 gap-16 mb-14'
+                  : 'flex flex-col gap-9 mb-14'
+              }`}
+            >
+              {cropList.length > 0 ? (
+                cropList.map((crop, idx) => (
+                  <Link
+                    href={`workLog/detail/${crop.cropId}?nickName=${nickName}&cropName=${crop.cropName}&cropDate=${crop.cropDate}`}
+                    key={idx}
+                  >
+                    {isGridView ? (
+                      <CropListCard
+                        key={idx}
+                        cropName={crop.cropName}
+                        date={crop.cropDate}
+                        imageUrl={crop.imageUrl}
+                      />
+                    ) : (
+                      <CropList
+                        key={idx}
+                        cropName={crop.cropName}
+                        date={crop.cropDate}
+                      />
+                    )}
+                  </Link>
+                ))
+              ) : (
+                <p className='text-3xl'>작업일지가 없습니다.</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>
