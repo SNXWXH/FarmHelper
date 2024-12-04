@@ -1,7 +1,8 @@
 import calculateDaysDifference from '@/utils/calculateDays';
 import React, { useEffect, useState } from 'react';
+import Skeleton from '@/components/Skeleton'; // Import Skeleton component
 
-export default function AllDetail({
+const AllDetail = ({
   userId,
   cropId,
   cropDate,
@@ -9,9 +10,10 @@ export default function AllDetail({
   userId: string;
   cropId: number;
   cropDate: string;
-}) {
+}) => {
   const [data, setData] = useState<string[][]>([]);
   const [isReversed, setIsReversed] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchWorkLogs = async () => {
@@ -22,19 +24,29 @@ export default function AllDetail({
         const data = await response.json();
 
         if (data.workLogs && Array.isArray(data.workLogs)) {
-          const workLogs = data.workLogs.slice(0, -1);
-          setData(workLogs);
+          const lastWorkLog = data.workLogs[data.workLogs.length - 1];
+          if (lastWorkLog.workDate === data.today) {
+            setData(data.workLogs.slice(0, -1));
+          } else {
+            setData(data.workLogs);
+          }
         } else {
           setData([]);
         }
       } catch (error) {
         console.error('Error fetching work logs:', error);
         setData([]);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchWorkLogs();
   }, [userId, cropId]);
+
+  if (loading) {
+    return <Skeleton />;
+  }
 
   const handleReverse = () => {
     setIsReversed(!isReversed);
@@ -85,4 +97,6 @@ export default function AllDetail({
       )}
     </>
   );
-}
+};
+
+export default AllDetail;
