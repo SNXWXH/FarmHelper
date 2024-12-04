@@ -1,9 +1,12 @@
 package com.mjc.lst1995.farmhelper.core.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.mjc.lst1995.farmhelper.R
 import com.mjc.lst1995.farmhelper.core.domain.model.work.Work
 import com.mjc.lst1995.farmhelper.core.ui.diff.WorkDiffUtil
 import com.mjc.lst1995.farmhelper.databinding.HolderWorksListGridBinding
@@ -32,8 +35,29 @@ class WorkGridAdapter(
         ) {
             binding.workTitleTv.text = work.cropName
             binding.workDateTV.text = work.cropDate
+            imageLoad(work)
+
             binding.root.setOnClickListener {
                 listener(work)
+            }
+        }
+
+        private fun imageLoad(work: Work) {
+            work.imageUrl?.let {
+                binding.progressBar.visibility = View.VISIBLE
+                binding.workTitleIV.load(it) {
+                    listener(
+                        onSuccess = { _, _ ->
+                            binding.progressBar.visibility = View.GONE
+                        },
+                        onError = { _, _ ->
+                            binding.progressBar.visibility = View.GONE
+                        },
+                    )
+                }
+            } ?: run {
+                binding.workTitleIV.load(R.drawable.play_store_512)
+                binding.progressBar.visibility = View.GONE
             }
         }
 

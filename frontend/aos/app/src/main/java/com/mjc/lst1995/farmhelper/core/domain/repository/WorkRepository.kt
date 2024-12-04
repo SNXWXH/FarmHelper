@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface WorkRepository {
     suspend fun getTodayTasks(userId: String): List<CropTask>
 
-    suspend fun getWorks(userId: String): List<Work>
+    fun getWorks(): Flow<List<Work>>
 
     suspend fun createWork(
         cropName: String,

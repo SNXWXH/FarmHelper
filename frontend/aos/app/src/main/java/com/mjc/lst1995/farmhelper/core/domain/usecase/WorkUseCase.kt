@@ -29,6 +29,8 @@ class WorkUseCase
             return workRepository.createWork(cropName, dateString, imageUrl)
         }
 
+        fun getWorks() = workRepository.getWorks()
+
         fun isValid(
             cropName: String?,
             date: Long?,

@@ -15,6 +15,7 @@
     <string name="crop_image">작물 이미지</string>
     <string name="user_welcome_message">님 환영합니다.</string>
     <string name="logo_image">로고 이미지</string>
+    <string name="loading">불러오는 중</string>
 
     <!-- 로그인-->
     <string name="nick_name_input_message">사용하실 닉네임을 입력해주세요.</string>
