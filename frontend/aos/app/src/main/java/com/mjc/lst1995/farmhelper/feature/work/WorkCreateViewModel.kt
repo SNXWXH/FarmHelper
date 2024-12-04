@@ -24,6 +24,7 @@ class WorkCreateViewModel
         val cropName: MutableLiveData<String> = MutableLiveData()
         val resultMessage: MutableLiveData<String> = MutableLiveData()
         val progress: MutableLiveData<Int> = MutableLiveData(null)
+        val isCreated: MutableLiveData<Boolean> = MutableLiveData(null)
 
         init {
             selectedDate.value = System.currentTimeMillis()
@@ -48,6 +49,7 @@ class WorkCreateViewModel
                 workUseCase.createWork(imageUrl, cropName!!, date!!)
                 resultMessage.value = "작업이 생성되었습니다."
                 progress.postValue(View.GONE)
+                isCreated.postValue(true)
             }
         }
 

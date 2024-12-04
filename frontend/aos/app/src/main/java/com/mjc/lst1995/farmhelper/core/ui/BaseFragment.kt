@@ -23,7 +23,7 @@ abstract class BaseFragment<VB : ViewDataBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        _binding = DataBindingUtil.inflate(inflater,layoutId,container,false)
+        _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -42,6 +42,6 @@ abstract class BaseFragment<VB : ViewDataBinding>(
     }
 
     protected fun showMessage(message: String) {
-        Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

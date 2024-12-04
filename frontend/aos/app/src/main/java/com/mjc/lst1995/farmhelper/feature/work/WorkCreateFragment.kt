@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.mjc.lst1995.farmhelper.MainActivity
 import com.mjc.lst1995.farmhelper.R
@@ -47,6 +48,10 @@ class WorkCreateFragment : BaseFragment<FragmentWorkCreateBinding>(R.layout.frag
         workCreateViewModel.progress.observe(viewLifecycleOwner) {
             if (it == View.GONE) hideProgressBar(binding.progressBar)
             if (it == View.VISIBLE) showProgressBar(binding.progressBar)
+        }
+        workCreateViewModel.isCreated.observe(viewLifecycleOwner) {
+            it ?: return@observe
+            if (it) findNavController().popBackStack()
         }
     }
 
