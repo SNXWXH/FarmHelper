@@ -105,6 +105,6 @@ class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works
     }
 
     companion object {
-            private const val CLIENT_NAME_FORMAT = "%s님의 작업일지"
+        private const val CLIENT_NAME_FORMAT = "%s님의 작업일지"
     }
 }
