@@ -33,6 +33,7 @@
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:scaleType="fitXY"
                     app:srcCompat="@mipmap/ic_launcher" />
 
                 <TextView
