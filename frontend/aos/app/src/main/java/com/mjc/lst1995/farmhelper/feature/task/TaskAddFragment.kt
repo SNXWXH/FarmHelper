@@ -1,11 +1,12 @@
 package com.mjc.lst1995.farmhelper.feature.task
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mjc.lst1995.farmhelper.R
-import com.mjc.lst1995.farmhelper.core.domain.model.task.RecommendTask
 import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
 import com.mjc.lst1995.farmhelper.core.ui.adapter.RecommendTaskAdapter
 import com.mjc.lst1995.farmhelper.databinding.FragmentTaskAddBinding
@@ -16,7 +17,7 @@ class TaskAddFragment : BaseFragment<FragmentTaskAddBinding>(R.layout.fragment_t
     private val viewModel: TaskAddViewModel by viewModels()
 
     private val args: TaskAddFragmentArgs by navArgs()
-    private val listener: (RecommendTask) -> Unit = {
+    private val listener: (Int) -> Unit = {
         viewModel.updateRecommendTask(it)
     }
     private val adapter = RecommendTaskAdapter(listener)
@@ -30,6 +31,7 @@ class TaskAddFragment : BaseFragment<FragmentTaskAddBinding>(R.layout.fragment_t
         binding.todayTaskRV.adapter = adapter
         getRecommendTasks()
         addCustomTask()
+        setSaveTasks()
         setObserver()
     }
 
@@ -38,6 +40,19 @@ class TaskAddFragment : BaseFragment<FragmentTaskAddBinding>(R.layout.fragment_t
             adapter.submitList(it) {
                 binding.todayTaskRV.scrollToPosition(it.size - 1)
             }
+            Log.d("recommendTasks", "$it")
+        }
+        viewModel.isSaved.observe(viewLifecycleOwner) {
+            if (it) {
+                showMessage("작업을 저장했습니다.")
+                findNavController().popBackStack()
+            }
+        }
+    }
+
+    private fun setSaveTasks() {
+        binding.taskCompleteBT.setOnClickListener {
+            viewModel.saveTask(args.cropId)
         }
     }
 

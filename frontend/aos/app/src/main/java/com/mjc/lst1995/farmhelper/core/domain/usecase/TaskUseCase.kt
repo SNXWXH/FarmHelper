@@ -12,21 +12,35 @@ class TaskUseCase
         private val recommendTasks = mutableListOf<RecommendTask>()
 
         suspend fun getRecommendTask(cropId: Long): List<RecommendTask> {
-            taskRepository.getRecommendTasks(cropId).forEachIndexed { index, s ->
-                recommendTasks.add(RecommendTask(index, s))
-            }
-            return recommendTasks.toList()
+            val getTasks =
+                taskRepository
+                    .getRecommendTasks(cropId)
+                    .map { RecommendTask(System.currentTimeMillis(), it) }
+            recommendTasks.addAll(getTasks)
+            return recommendTasks.sortedBy { it.id }
+        }
+
+        suspend fun saveTask(
+            ipAddress: String,
+            cropId: Long,
+        ): Boolean {
+            val saveTasks = recommendTasks.filter { it.isChecked }
+            val saveContents = saveTasks.joinToString(SEPARATOR) { it.content }
+            return taskRepository.saveTask(cropId, ipAddress, saveContents)
         }
 
         fun addTask(task: String): List<RecommendTask> {
-            val index = recommendTasks.size
-            recommendTasks.add(RecommendTask(index, task))
-            return recommendTasks.toList()
+            recommendTasks.add(RecommendTask(System.currentTimeMillis(), task))
+            return recommendTasks.sortedBy { it.id }
         }
 
-        fun updateRecommendTask(recommendTask: RecommendTask): List<RecommendTask> {
-            val index = recommendTasks.indexOfFirst { it.id == recommendTask.id }
-            recommendTasks[index] = recommendTask
-            return recommendTasks.toList()
+        fun updateRecommendTask(position: Int): List<RecommendTask> {
+            val newTask = recommendTasks[position].copy(isChecked = !recommendTasks[position].isChecked)
+            recommendTasks[position] = newTask
+            return recommendTasks.sortedBy { it.id }
+        }
+
+        companion object {
+            private const val SEPARATOR = "q!gL9A"
         }
     }
