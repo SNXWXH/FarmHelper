@@ -5,13 +5,13 @@ import { useSession } from 'next-auth/react';
 import CropList from '@/components/CropList';
 import CropListCard from '@/components/CropListCard';
 import Link from 'next/link';
-import Skeleton from '@/components/Skeleton'; // Import the Skeleton component
+import Skeleton from '@/components/Skeleton';
 
 export default function WorkLog() {
   const [nickName, setNickName] = useState('');
   const [isGridView, setIsGridView] = useState(true);
   const [cropList, setCropList] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true); // Track loading state
+  const [isLoading, setIsLoading] = useState(true);
   const { data: session } = useSession();
 
   useEffect(() => {

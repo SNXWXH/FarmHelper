@@ -10,7 +10,7 @@ const UpdateWrite = () => {
   const [workId, setWorkId] = useState<string>('');
   const [nickName, setNickName] = useState<string>('');
   const [cropName, setCropName] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Track loading state
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -20,7 +20,7 @@ const UpdateWrite = () => {
 
   useEffect(() => {
     const fetchWorkLogs = async () => {
-      setIsLoading(true); // Set loading to true when API call starts
+      setIsLoading(true);
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/getWorkLog?userId=${userId}&cropId=${cropId}`
@@ -37,7 +37,7 @@ const UpdateWrite = () => {
       } catch (error) {
         console.error('Error fetching work logs:', error);
       } finally {
-        setIsLoading(false); // Set loading to false once API call completes
+        setIsLoading(false);
       }
     };
 

@@ -9,7 +9,7 @@ const DetailWrite = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [nickName, setNickName] = useState<string>('');
   const [cropName, setCropName] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const [loading, setLoading] = useState<boolean>(true);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -30,7 +30,7 @@ const DetailWrite = () => {
       } catch (error) {
         console.error('Error fetching AI data:', error);
       } finally {
-        setLoading(false); // 데이터 로딩 완료 후 로딩 상태 false로 변경
+        setLoading(false);
       }
     };
 
@@ -86,7 +86,6 @@ const DetailWrite = () => {
           {nickName}님의 작업일지 {'>'} {cropName} {'>'} 작업일지 작성
         </p>
 
-        {/* 로딩 중일 때 로딩 아이콘 표시 */}
         {loading ? (
           <div className='flex justify-center items-center h-56'>
             <div className='border-t-4 border-[#698A54] border-solid w-16 h-16 rounded-full animate-spin'></div>
