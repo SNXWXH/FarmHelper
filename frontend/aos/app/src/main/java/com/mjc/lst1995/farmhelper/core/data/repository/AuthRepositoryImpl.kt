@@ -14,7 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class AuthRepositoryImpl
@@ -77,9 +77,11 @@ class AuthRepositoryImpl
                 val response =
                     userSettingApi.setUserNickName(NickNameToken(auth.uid!!, nickName))
                 return response.isOk
+            } catch (e: HttpException) {
+                if (e.code() / 100 == 4) return true
             } catch (e: Exception) {
                 Log.d("ttttt", "setUserNickName 통신 에러" + e.message)
-                return false
             }
+            return false
         }
     }
