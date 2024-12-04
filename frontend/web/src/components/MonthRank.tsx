@@ -7,7 +7,7 @@ export default async function MonthRank() {
   const cropsToDisplay = [
     ...bestCropData,
     ...Array(10 - bestCropData.length).fill({
-      cropName: '데이터 없음',
+      cropName: '-',
       count: 1,
     }),
   ];
