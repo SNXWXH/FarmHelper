@@ -1,6 +1,7 @@
 package com.mjc.lst1995.farmhelper.core.data.di
 
 import com.mjc.lst1995.farmhelper.core.data.network.api.CropApi
+import com.mjc.lst1995.farmhelper.core.data.network.api.TaskRecommendApi
 import com.mjc.lst1995.farmhelper.core.data.network.api.UserSettingApi
 import com.mjc.lst1995.farmhelper.core.data.network.api.WeatherApi
 import com.mjc.lst1995.farmhelper.core.data.network.api.WorkApi
@@ -30,4 +31,8 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideWorkApi(retrofit: Retrofit): WorkApi = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun provideTaskRecommendApi(retrofit: Retrofit): TaskRecommendApi = retrofit.create()
 }
