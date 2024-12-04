@@ -25,7 +25,7 @@ interface WorkRepository {
     suspend fun getWorkTaskOtherDetail(
         cropId: Long,
         ipAddress: String,
-    ): OtherDetail
+    ): Flow<OtherDetail>
 
     suspend fun updateTask(
         workId: Long,

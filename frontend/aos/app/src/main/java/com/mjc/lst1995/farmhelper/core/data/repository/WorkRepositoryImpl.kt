@@ -13,6 +13,7 @@ import com.mjc.lst1995.farmhelper.core.domain.repository.WorkRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
 import javax.inject.Inject
 
@@ -77,9 +78,19 @@ class WorkRepositoryImpl
         override suspend fun getWorkTaskOtherDetail(
             cropId: Long,
             ipAddress: String,
-        ): OtherDetail {
-            TODO("Not yet implemented")
-        }
+        ): Flow<OtherDetail> =
+            flow {
+                val workDetail =
+                    workApi.getWorkTaskDetails(WorkDetailToken(auth.uid!!, cropId, ipAddress))
+                val otherDetail =
+                    OtherDetail(
+                        today = workDetail.today,
+                        cropName = workDetail.cropName,
+                        nickname = workDetail.nickname,
+                        weather = workDetail.weather,
+                    )
+                emit(otherDetail)
+            }
 
         override suspend fun updateTask(
             workId: Long,

@@ -33,8 +33,9 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
         binding.taskRV.adapter = adapter
         setNavItemSelected()
         getWorkTasks()
-        getNickName()
         setSortObserver()
+        getTodayTask()
+        setScroll()
     }
 
     private fun getWorkTasks() {
@@ -42,11 +43,44 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getWorkTaskDetails(work).collect {
+                    val todayTask =
+                        it.filter { it.workDate == binding.todayTaskInclude.taskDateTV.text }
+                    if (todayTask.isEmpty()) {
+                        binding.todayTaskInclude.taskContentTV.text = "오늘 작업을 추가해 주세요."
+                    } else {
+                        binding.todayTaskInclude.taskContentTV.text =
+                            "${todayTask.size}건의 오늘 작업이 있습니다."
+                    }
                     if (viewModel.sortType.value!!) {
                         adapter.submitList(it)
                         return@collect
                     }
                     adapter.submitList(it.reversed())
+                }
+            }
+        }
+    }
+
+    private fun setScroll() {
+        binding.todayTaskInclude.root.setOnClickListener {
+            val index =
+                adapter.currentList.indexOfFirst { binding.todayTaskInclude.taskDateTV.text == it.workDate }
+            if (index != -1) {
+                binding.taskRV.scrollToPosition(index)
+            }
+        }
+    }
+
+    private fun getTodayTask() {
+        val work = args.work.cropId
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getWorkTaskOtherDetail(work).collect {
+                    binding.todayTaskInclude.taskDateTV.text = it.today
+                    binding.todayTaskInclude.taskWeatherTV.text = it.weather.description
+                    binding.todayTaskInclude.taskTemperatureTV.text = it.weather.temperature
+                    binding.cropNameTV.text = it.cropName + "작업 내역"
+                    setToolbarClientName(it.nickname)
                 }
             }
         }
@@ -65,20 +99,8 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
         }
     }
 
-    private fun getNickName() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.nickName.collect {
-                    setToolbarClientName(it)
-                }
-            }
-        }
-    }
-
-    private fun setToolbarClientName(name: String?) {
-        name?.let {
-            binding.materialToolbar3.title = CLIENT_NAME_FORMAT.format(name)
-        }
+    private fun setToolbarClientName(name: String) {
+        binding.materialToolbar3.title = CLIENT_NAME_FORMAT.format(name)
     }
 
     private fun setNavItemSelected() {
@@ -95,6 +117,6 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
     }
 
     companion object {
-        private const val CLIENT_NAME_FORMAT = "%s님의 작업 목록"
+        private const val CLIENT_NAME_FORMAT = "%s님 작업 목록"
     }
 }

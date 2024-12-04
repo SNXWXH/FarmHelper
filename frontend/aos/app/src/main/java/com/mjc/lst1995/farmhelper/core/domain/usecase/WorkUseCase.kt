@@ -38,6 +38,11 @@ class WorkUseCase
             .getWorkTaskDetails(cropId, ipAddress)
             .map { it.map { it.toSplit() }.sortedByDescending { it.workDate } }
 
+        suspend fun getWorkTaskOtherDetail(
+            cropId: Long,
+            ipAddress: String,
+        ) = workRepository.getWorkTaskOtherDetail(cropId, ipAddress)
+
         fun getWorks() = workRepository.getWorks()
 
         fun isValid(
