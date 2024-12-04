@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import TodoDetail from '@/components/TodoDetail';
 
-export default function UpdateWrite() {
+const UpdateWrite = () => {
   const [details, setDetails] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const [workId, setWorkId] = useState<string>('');
   const [nickName, setNickName] = useState<string>('');
   const [cropName, setCropName] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Track loading state
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function UpdateWrite() {
 
   useEffect(() => {
     const fetchWorkLogs = async () => {
+      setIsLoading(true); // Set loading to true when API call starts
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/getWorkLog?userId=${userId}&cropId=${cropId}`
@@ -34,6 +36,8 @@ export default function UpdateWrite() {
         }
       } catch (error) {
         console.error('Error fetching work logs:', error);
+      } finally {
+        setIsLoading(false); // Set loading to false once API call completes
       }
     };
 
@@ -96,15 +100,23 @@ export default function UpdateWrite() {
         <p className='mt-14 font-nanumHeavy font-heavy text-2xl'>
           {nickName}님의 작업일지 {'>'} {cropName} {'>'} 작업일지 수정
         </p>
-        <div className='flex flex-col gap-5 w-full h-3/5 overflow-y-auto my-7'>
-          {details.map((detail, index) => (
-            <TodoDetail
-              key={index}
-              detail={detail}
-              onRemove={() => removeDetail(index)}
-            />
-          ))}
-        </div>
+
+        {isLoading ? (
+          <div className='flex justify-center items-center h-56'>
+            <div className='border-t-4 border-[#698A54] border-solid w-16 h-16 rounded-full animate-spin'></div>
+          </div>
+        ) : (
+          <div className='flex flex-col gap-5 w-full h-3/5 overflow-y-auto my-7'>
+            {details.map((detail, index) => (
+              <TodoDetail
+                key={index}
+                detail={detail}
+                onRemove={() => removeDetail(index)}
+              />
+            ))}
+          </div>
+        )}
+
         <div className='flex flex-col justify-center items-center'>
           <div className='flex w-full items-center gap-3'>
             <input
@@ -132,4 +144,6 @@ export default function UpdateWrite() {
       </div>
     </div>
   );
-}
+};
+
+export default UpdateWrite;
