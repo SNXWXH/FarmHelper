@@ -1,6 +1,4 @@
 const Skeleton = ({ className }: { className?: string }) => (
-  <div
-    className={` bg-gray-200 rounded-md animate-skeleton ${className}`}
-  ></div>
+  <div className={`animate-pulse bg-gray-200 rounded-md ${className}`}></div>
 );
 export default Skeleton;
