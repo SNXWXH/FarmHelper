@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import TodoDetail from '@/components/TodoDetail';
 
-export default function DetailWrite() {
+const DetailWrite = () => {
   const [details, setDetails] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const [nickName, setNickName] = useState<string>('');
   const [cropName, setCropName] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -25,10 +26,11 @@ export default function DetailWrite() {
         const data = await response.json();
         setCropName(data.cropName);
         setNickName(data.nickname);
-
         setDetails(data.recommendations);
       } catch (error) {
         console.error('Error fetching AI data:', error);
+      } finally {
+        setLoading(false); // 데이터 로딩 완료 후 로딩 상태 false로 변경
       }
     };
 
@@ -83,15 +85,28 @@ export default function DetailWrite() {
         <p className='mt-14 font-nanumHeavy font-heavy text-2xl'>
           {nickName}님의 작업일지 {'>'} {cropName} {'>'} 작업일지 작성
         </p>
-        <div className='flex flex-col gap-5 w-full h-3/5 overflow-y-auto my-7'>
-          {details.map((detail, index) => (
-            <TodoDetail
-              key={index}
-              detail={detail}
-              onRemove={() => removeDetail(index)}
-            />
-          ))}
-        </div>
+
+        {/* 로딩 중일 때 로딩 아이콘 표시 */}
+        {loading ? (
+          <div className='flex justify-center items-center h-56'>
+            <div className='border-t-4 border-[#698A54] border-solid w-16 h-16 rounded-full animate-spin'></div>
+          </div>
+        ) : (
+          <div className='flex flex-col gap-5 w-full h-3/5 overflow-y-auto my-7'>
+            {details.length === 0 ? (
+              <p>추천 작업이 없습니다.</p>
+            ) : (
+              details.map((detail, index) => (
+                <TodoDetail
+                  key={index}
+                  detail={detail}
+                  onRemove={() => removeDetail(index)}
+                />
+              ))
+            )}
+          </div>
+        )}
+
         <div className='flex flex-col justify-center items-center'>
           <div className='flex w-full items-center gap-3'>
             <input
@@ -119,4 +134,6 @@ export default function DetailWrite() {
       </div>
     </div>
   );
-}
+};
+
+export default DetailWrite;
