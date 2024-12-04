@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ResultResponse(
-    @SerialName("isOk")
+    @SerialName("isOK")
     val isOk: Boolean,
 )

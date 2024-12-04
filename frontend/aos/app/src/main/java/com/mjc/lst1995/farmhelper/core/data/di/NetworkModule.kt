@@ -18,9 +18,7 @@ import javax.inject.Singleton
 object NetworkModule {
     @Singleton
     @Provides
-    fun provideJson(): Json {
-        return Json { ignoreUnknownKeys = true }
-    }
+    fun provideJson(): Json = Json { ignoreUnknownKeys = true }
 
     @Singleton
     @Provides
@@ -32,10 +30,10 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
+    fun provideOkHttpClient(): OkHttpClient =
+        OkHttpClient
+            .Builder()
             .build()
-    }
 
     @Singleton
     @Provides
