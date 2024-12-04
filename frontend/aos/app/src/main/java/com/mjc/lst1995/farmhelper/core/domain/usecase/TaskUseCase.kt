@@ -26,6 +26,7 @@ class TaskUseCase
         ): Boolean {
             val saveTasks = recommendTasks.filter { it.isChecked }
             val saveContents = saveTasks.joinToString(SEPARATOR) { it.content }
+            recommendTasks.clear()
             return taskRepository.saveTask(cropId, ipAddress, saveContents)
         }
 

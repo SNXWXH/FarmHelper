@@ -33,7 +33,7 @@ class WorkTaskAdapter(
             binding.taskDateTV.text = task.workDate
             binding.taskContentTV.text = task.workContent
             binding.taskWeatherTV.text = task.workWeather
-            binding.taskTemperatureTV.text = task.workWeather
+            binding.taskTemperatureTV.text = task.workTemperature
         }
 
         companion object {

@@ -33,18 +33,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialToolbar3">
 
-            <TextView
-                android:id="@+id/textView"
-                style="@style/ExtraBoldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="손흥민님의 작업일지"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <LinearLayout
                 android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
@@ -53,7 +41,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <include
                     layout="@layout/holder_task_detail"
@@ -67,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/sort_order_change"
+                android:onClick="@{() -> viewModel.changeSort()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
-                android:text="오름차순"
+                android:onClick="@{() -> viewModel.changeSort()}"
                 app:layout_constraintBottom_toBottomOf="@+id/taskSortSwapIV"
                 app:layout_constraintEnd_toStartOf="@+id/taskSortSwapIV"
                 app:layout_constraintTop_toTopOf="@+id/taskSortSwapIV" />

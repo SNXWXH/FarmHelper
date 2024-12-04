@@ -1,7 +1,6 @@
 package com.mjc.lst1995.farmhelper.feature.work
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -22,7 +21,6 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
     private val args: WorkDetailFragmentArgs by navArgs()
     private val viewModel: WorkDetailViewModel by viewModels()
     private val listener: (Task) -> Unit = {
-
     }
     private val adapter = WorkTaskAdapter(listener)
 
@@ -35,6 +33,8 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
         binding.taskRV.adapter = adapter
         setNavItemSelected()
         getWorkTasks()
+        getNickName()
+        setSortObserver()
     }
 
     private fun getWorkTasks() {
@@ -42,10 +42,42 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getWorkTaskDetails(work).collect {
-                    adapter.submitList(it)
-                    Log.d("tttt", it.joinToString())
+                    if (viewModel.sortType.value!!) {
+                        adapter.submitList(it)
+                        return@collect
+                    }
+                    adapter.submitList(it.reversed())
                 }
             }
+        }
+    }
+
+    private fun setSortObserver() {
+        viewModel.sortType.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.taskSortTV.text = "최신 순"
+            } else {
+                binding.taskSortTV.text = "오래된 순"
+            }
+            adapter.submitList(adapter.currentList.reversed()) {
+                binding.taskRV.scrollToPosition(0)
+            }
+        }
+    }
+
+    private fun getNickName() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.nickName.collect {
+                    setToolbarClientName(it)
+                }
+            }
+        }
+    }
+
+    private fun setToolbarClientName(name: String?) {
+        name?.let {
+            binding.materialToolbar3.title = CLIENT_NAME_FORMAT.format(name)
         }
     }
 
@@ -60,5 +92,9 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
             }
             return@setOnMenuItemClickListener true
         }
+    }
+
+    companion object {
+        private const val CLIENT_NAME_FORMAT = "%s님의 작업 목록"
     }
 }

@@ -75,7 +75,7 @@ class WorkRepositoryImpl
             }
 
         override suspend fun getWorkTaskOtherDetail(
-            cropId: String,
+            cropId: Long,
             ipAddress: String,
         ): OtherDetail {
             TODO("Not yet implemented")
@@ -83,7 +83,7 @@ class WorkRepositoryImpl
 
         override suspend fun updateTask(
             workId: Long,
-            cropId: String,
+            cropId: Long,
             workContent: String,
         ): Boolean {
             TODO("Not yet implemented")
@@ -91,7 +91,7 @@ class WorkRepositoryImpl
 
         override suspend fun deleteTask(
             workId: Long,
-            cropId: String,
+            cropId: Long,
         ): Boolean {
             TODO("Not yet implemented")
         }

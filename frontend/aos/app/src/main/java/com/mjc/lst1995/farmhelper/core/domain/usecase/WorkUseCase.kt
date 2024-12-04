@@ -34,7 +34,9 @@ class WorkUseCase
         suspend fun getWorkTaskDetails(
             cropId: Long,
             ipAddress: String,
-        ) = workRepository.getWorkTaskDetails(cropId, ipAddress).map { it.map { it.toSplit() } }
+        ) = workRepository
+            .getWorkTaskDetails(cropId, ipAddress)
+            .map { it.map { it.toSplit() }.sortedByDescending { it.workDate } }
 
         fun getWorks() = workRepository.getWorks()
 
