@@ -2,15 +2,13 @@ package com.mjc.lst1995.farmhelper.core.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.mjc.lst1995.farmhelper.R
 import com.mjc.lst1995.farmhelper.core.domain.model.crop.RecommendCrop
-import com.mjc.lst1995.farmhelper.databinding.HolderRecommendedCropBinding
 import com.mjc.lst1995.farmhelper.core.ui.util.ImageUtil
+import com.mjc.lst1995.farmhelper.databinding.HolderRecommendedCropBinding
 
 class RecommendCropAdapter(
     private val recommendCropListener: (RecommendCrop) -> Unit,

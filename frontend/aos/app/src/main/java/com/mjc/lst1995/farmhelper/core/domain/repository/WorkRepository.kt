@@ -18,27 +18,23 @@ interface WorkRepository {
     ): Boolean
 
     suspend fun getWorkTaskDetails(
-        userId: String,
-        cropId: String,
+        cropId: Long,
         ipAddress: String,
     ): Flow<List<Task>>
 
     suspend fun getWorkTaskOtherDetail(
-        userId: String,
         cropId: String,
         ipAddress: String,
     ): OtherDetail
 
     suspend fun updateTask(
         workId: Long,
-        userId: String,
         cropId: String,
         workContent: String,
     ): Boolean
 
     suspend fun deleteTask(
         workId: Long,
-        userId: String,
         cropId: String,
     ): Boolean
 }

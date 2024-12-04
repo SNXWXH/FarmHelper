@@ -1,6 +1,8 @@
 package com.mjc.lst1995.farmhelper.core.domain.usecase
 
+import com.mjc.lst1995.farmhelper.core.domain.model.task.toSplit
 import com.mjc.lst1995.farmhelper.core.domain.repository.WorkRepository
+import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -28,6 +30,11 @@ class WorkUseCase
             val dateString = formatLongToDate(date)
             return workRepository.createWork(cropName, dateString, imageUrl)
         }
+
+        suspend fun getWorkTaskDetails(
+            cropId: Long,
+            ipAddress: String,
+        ) = workRepository.getWorkTaskDetails(cropId, ipAddress).map { it.map { it.toSplit() } }
 
         fun getWorks() = workRepository.getWorks()
 

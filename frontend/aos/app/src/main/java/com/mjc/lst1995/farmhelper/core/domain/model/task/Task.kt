@@ -3,6 +3,8 @@ package com.mjc.lst1995.farmhelper.core.domain.model.task
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+private const val SEPARATOR = "q!gL9A"
+
 @Serializable
 data class Task(
     @SerialName("workId")
@@ -16,3 +18,8 @@ data class Task(
     @SerialName("workTemperature")
     val workTemperature: String,
 )
+
+fun Task.toSplit(): Task =
+    this.copy(
+        workContent = this.workContent.split(SEPARATOR).joinToString("\n\n"),
+    )

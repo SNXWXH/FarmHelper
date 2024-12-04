@@ -49,7 +49,7 @@ class AuthRepositoryImpl
                     auth.uid?.let {
                         val nickName =
                             workApi
-                                .getWorkTaskDetails(WorkDetailToken(it, "1", "8.8.8.8"))
+                                .getWorkTaskDetails(WorkDetailToken(it, 1, "8.8.8.8"))
                                 .nickname
                         trySend(nickName)
                     } ?: run {
