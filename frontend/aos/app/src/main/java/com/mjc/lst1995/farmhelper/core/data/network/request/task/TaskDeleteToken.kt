@@ -10,5 +10,5 @@ data class TaskDeleteToken(
     @SerialName("userId")
     val userId: String,
     @SerialName("cropId")
-    val cropId: String
+    val cropId: Long,
 )

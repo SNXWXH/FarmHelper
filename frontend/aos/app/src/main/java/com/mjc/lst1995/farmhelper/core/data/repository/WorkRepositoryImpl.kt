@@ -2,6 +2,7 @@ package com.mjc.lst1995.farmhelper.core.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.mjc.lst1995.farmhelper.core.data.network.api.WorkApi
+import com.mjc.lst1995.farmhelper.core.data.network.request.task.TaskDeleteToken
 import com.mjc.lst1995.farmhelper.core.data.network.request.user.AuthToken
 import com.mjc.lst1995.farmhelper.core.data.network.request.work.WorkCreateToken
 import com.mjc.lst1995.farmhelper.core.data.network.request.work.WorkDetailToken
@@ -103,7 +104,5 @@ class WorkRepositoryImpl
         override suspend fun deleteTask(
             workId: Long,
             cropId: Long,
-        ): Boolean {
-            TODO("Not yet implemented")
-        }
+        ): Boolean = workApi.deleteTask(TaskDeleteToken(workId, auth.uid!!, cropId)).isOk
     }

@@ -43,6 +43,11 @@ class WorkUseCase
             ipAddress: String,
         ) = workRepository.getWorkTaskOtherDetail(cropId, ipAddress)
 
+        suspend fun deleteTask(
+            cropId: Long,
+            workId: Long,
+        ) = workRepository.deleteTask(cropId, workId)
+
         fun getWorks() = workRepository.getWorks()
 
         fun isValid(

@@ -1,26 +1,24 @@
 package com.mjc.lst1995.farmhelper.core.data.network.response.weather
 
-import com.mjc.lst1995.farmhelper.core.domain.model.weather.Weather
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class WeatherResponse(
+    @SerialName("date")
     val date: String,
+    @SerialName("description")
     val description: String,
+    @SerialName("feels_like")
     val feels_like: String,
+    @SerialName("humidity")
     val humidity: String,
+    @SerialName("region")
     val region: String,
+    @SerialName("sunrise")
     val sunrise: String,
+    @SerialName("temperature")
     val temperature: String,
+    @SerialName("wind_speed")
     val wind_speed: String,
 )
-
-fun WeatherResponse.toWeather() =
-    Weather(
-        this.date,
-        this.description,
-        this.feels_like,
-        this.humidity,
-        this.region,
-        this.sunrise,
-        this.temperature,
-        this.wind_speed,
-    )

@@ -5,20 +5,16 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Weather(
+    @SerialName("error")
+    val error: String = "",
     @SerialName("date")
-    val date: String,
+    val date: String = "",
     @SerialName("description")
-    val description: String,
-    @SerialName("feels_like")
-    val feels_like: String,
+    val description: String = "",
     @SerialName("humidity")
-    val humidity: String,
-    @SerialName("region")
-    val region: String,
+    val humidity: String = "",
     @SerialName("sunrise")
-    val sunrise: String,
+    val sunrise: String = "",
     @SerialName("temperature")
-    val temperature: String,
-    @SerialName("wind_speed")
-    val wind_speed: String,
+    val temperature: String = "",
 )

@@ -9,7 +9,7 @@ import com.mjc.lst1995.farmhelper.core.domain.model.task.Task
 import com.mjc.lst1995.farmhelper.databinding.HolderTaskDetailBinding
 
 class WorkTaskAdapter(
-    private val listener: (Task) -> Unit,
+    private val longClickListener: (Task) -> Unit,
 ) : ListAdapter<Task, WorkTaskAdapter.WorkTaskHolder>(TaskDiffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -20,7 +20,7 @@ class WorkTaskAdapter(
         holder: WorkTaskHolder,
         position: Int,
     ) {
-        holder.bind(currentList[position], listener)
+        holder.bind(currentList[position], longClickListener)
     }
 
     class WorkTaskHolder(
@@ -28,12 +28,16 @@ class WorkTaskAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             task: Task,
-            listener: (Task) -> Unit,
+            longClickListener: (Task) -> Unit,
         ) {
             binding.taskDateTV.text = task.workDate
             binding.taskContentTV.text = task.workContent
             binding.taskWeatherTV.text = task.workWeather
             binding.taskTemperatureTV.text = task.workTemperature
+            binding.root.setOnLongClickListener {
+                longClickListener(task)
+                true
+            }
         }
 
         companion object {

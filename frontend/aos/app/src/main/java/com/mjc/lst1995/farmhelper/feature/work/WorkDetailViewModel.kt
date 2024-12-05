@@ -26,6 +26,11 @@ class WorkDetailViewModel
             _sortType.value = _sortType.value != true
         }
 
+        suspend fun deleteTask(
+            cropId: Long,
+            workId: Long,
+        ) = workUseCase.deleteTask(cropId, workId)
+
         suspend fun getWorkTaskOtherDetail(cropId: Long) = workUseCase.getWorkTaskOtherDetail(cropId, networkUseCase.getPublicIPAddress()!!)
 
         suspend fun getWorkTaskDetails(cropId: Long) = workUseCase.getWorkTaskDetails(cropId, networkUseCase.getPublicIPAddress()!!)
