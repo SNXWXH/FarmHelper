@@ -9,7 +9,6 @@ import com.project.farmhelper.common.entity.User;
 import com.project.farmhelper.common.entity.WorkLog;
 import com.project.farmhelper.main.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -157,4 +156,5 @@ public class WorkPageController {
             return ResponseEntity.badRequest().body(json.toString());
         }
     }
+
 }
