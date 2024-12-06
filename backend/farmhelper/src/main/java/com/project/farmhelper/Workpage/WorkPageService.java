@@ -24,7 +24,7 @@ public class WorkPageService {
     private final CropRepository cropRepository;
 
     public WorkPageService(WeatherService weatherService, WorkLogRepository workLogRepository,
-                          UserRepository userRepository, CropRepository cropRepository) {
+                           UserRepository userRepository, CropRepository cropRepository) {
         this.weatherService = weatherService;
         this.workLogRepository = workLogRepository;
         this.userRepository = userRepository;
@@ -105,6 +105,22 @@ public class WorkPageService {
 
         // 삭제
         workLogRepository.delete(workLog);
+        return true;
+    }
+
+    public boolean deleteWorkLogId(WorkPageRequest workRequest) {
+        // workId, userId, cropId로 작업일지 조회
+        WorkLog workLog = workLogRepository.findById(workRequest.getWorkId())
+                .orElse(null);
+
+        if (workLog == null ||
+                !workLog.getUser().getUserId().equals(workRequest.getUserId()) ||
+                !workLog.getCrop().getCropId().equals(workRequest.getCropId())) {
+            return false; // 삭제할 데이터가 없으면 false 반환
+        }
+
+        // 삭제
+        workLogRepository.deleteById(workRequest.getWorkId());
         return true;
     }
 

@@ -154,9 +154,8 @@ public class WorkPageController {
     }
 
     @PostMapping("/app/work/delete")
-    public ResponseEntity<String> deletePostWorkLog(@RequestBody WorkPageRequest workRequest) {
-        System.out.println(workRequest.getWorkId() + " " + workRequest.getCropId());
-        boolean deleted = workPageService.deleteWorkLog(workRequest);
+    public ResponseEntity<String> deleteWorkLogId(@RequestBody WorkPageRequest workRequest) {
+        boolean deleted = workPageService.deleteWorkLogId(workRequest);
 
         JsonObject json = new JsonObject();
         if (deleted) {
