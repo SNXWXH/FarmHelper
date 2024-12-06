@@ -9,8 +9,8 @@ import com.project.farmhelper.common.entity.User;
 import com.project.farmhelper.common.entity.WorkLog;
 import com.project.farmhelper.main.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -23,19 +23,15 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/work")
 public class WorkPageController {
 
+    private final WorkPageService workPageService;
     @Autowired
     private CropRepository cropRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private WorkLogRepository workLogRepository;
-
     @Autowired
     private WeatherService weatherService;
-
-    private final WorkPageService workPageService;
 
     @Autowired
     public WorkPageController(WorkPageService workPageService) {
@@ -129,7 +125,7 @@ public class WorkPageController {
     public ResponseEntity<String> updateWorkLog(@RequestBody WorkPageRequest workRequest) {
         boolean updated = workPageService.updateWorkLog(workRequest);
 
-            JsonObject json = new JsonObject();
+        JsonObject json = new JsonObject();
         if (updated) {
             json.addProperty("isOK", true);
 
@@ -145,7 +141,7 @@ public class WorkPageController {
     public ResponseEntity<String> deleteWorkLog(@RequestBody WorkPageRequest workRequest) {
         boolean deleted = workPageService.deleteWorkLog(workRequest);
 
-            JsonObject json = new JsonObject();
+        JsonObject json = new JsonObject();
         if (deleted) {
             json.addProperty("isOK", true);
 
@@ -154,6 +150,23 @@ public class WorkPageController {
             json.addProperty("isOK", false);
 
             return ResponseEntity.badRequest().body(json.toString());
+        }
+    }
+
+    @PostMapping("/app/work/delete")
+    public ResponseEntity<String> deletePostWorkLog(@RequestBody WorkPageRequest workRequest) {
+        System.out.println(workRequest.getWorkId() + " " + workRequest.getCropId());
+        boolean deleted = workPageService.deleteWorkLog(workRequest);
+
+        JsonObject json = new JsonObject();
+        if (deleted) {
+            json.addProperty("isOK", true);
+
+            return ResponseEntity.ok(json.toString());
+        } else {
+            json.addProperty("isOK", false);
+
+            return ResponseEntity.ok(json.toString());
         }
     }
 
