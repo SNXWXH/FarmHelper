@@ -10,7 +10,7 @@ data class WeatherResponse(
     @SerialName("description")
     val description: String,
     @SerialName("feels_like")
-    val feels_like: String,
+    val feelsLike: String,
     @SerialName("humidity")
     val humidity: String,
     @SerialName("region")
@@ -20,5 +20,5 @@ data class WeatherResponse(
     @SerialName("temperature")
     val temperature: String,
     @SerialName("wind_speed")
-    val wind_speed: String,
+    val windSpeed: String,
 )

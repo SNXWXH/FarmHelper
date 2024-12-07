@@ -11,7 +11,6 @@ import com.mjc.lst1995.farmhelper.core.domain.model.task.OtherDetail
 import com.mjc.lst1995.farmhelper.core.domain.model.task.Task
 import com.mjc.lst1995.farmhelper.core.domain.model.work.Work
 import com.mjc.lst1995.farmhelper.core.domain.repository.WorkRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
@@ -38,7 +37,6 @@ class WorkRepositoryImpl
                     } ?: run {
                         trySend(emptyList())
                     }
-                    delay(5000)
                 }
             }
 
@@ -61,19 +59,12 @@ class WorkRepositoryImpl
             cropId: Long,
             ipAddress: String,
         ): Flow<List<Task>> =
-            callbackFlow {
-                while (isActive) {
-                    auth.uid?.let {
-                        val workLogs =
-                            workApi
-                                .getWorkTaskDetails(WorkDetailToken(it, cropId, ipAddress))
-                                .workLogs
-                        trySend(workLogs)
-                    } ?: run {
-                        trySend(emptyList())
-                    }
-                    delay(3000)
-                }
+            flow {
+                val workLogs =
+                    workApi
+                        .getWorkTaskDetails(WorkDetailToken(auth.uid!!, cropId, ipAddress))
+                        .workLogs
+                emit(workLogs)
             }
 
         override suspend fun getWorkTaskOtherDetail(

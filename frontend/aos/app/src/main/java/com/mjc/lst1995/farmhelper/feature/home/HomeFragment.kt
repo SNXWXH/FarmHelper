@@ -74,13 +74,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun setNavigationViewNickname() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.userNickname.collect { nickname ->
-                    updateNavigationHeader(nickname)
-                }
-            }
-        }
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.userNickname.collect { nickname ->
+//                    updateNavigationHeader(nickname)
+//                }
+//            }
+//        }
     }
 
     private fun updateNavigationHeader(nickname: String?) {

@@ -44,9 +44,9 @@ class WorkUseCase
         ) = workRepository.getWorkTaskOtherDetail(cropId, ipAddress)
 
         suspend fun deleteTask(
-            cropId: Long,
             workId: Long,
-        ) = workRepository.deleteTask(cropId, workId)
+            cropId: Long,
+        ) = workRepository.deleteTask(workId, cropId)
 
         fun getWorks() = workRepository.getWorks()
 

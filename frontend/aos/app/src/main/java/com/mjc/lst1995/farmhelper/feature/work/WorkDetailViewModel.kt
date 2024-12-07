@@ -27,11 +27,19 @@ class WorkDetailViewModel
         }
 
         suspend fun deleteTask(
-            cropId: Long,
             workId: Long,
-        ) = workUseCase.deleteTask(cropId, workId)
+            cropId: Long,
+        ) = workUseCase.deleteTask(workId, cropId)
 
-        suspend fun getWorkTaskOtherDetail(cropId: Long) = workUseCase.getWorkTaskOtherDetail(cropId, networkUseCase.getPublicIPAddress()!!)
+        suspend fun getWorkTaskOtherDetail(cropId: Long) =
+            workUseCase.getWorkTaskOtherDetail(
+                cropId,
+                networkUseCase.getPublicIPAddress(),
+            )
 
-        suspend fun getWorkTaskDetails(cropId: Long) = workUseCase.getWorkTaskDetails(cropId, networkUseCase.getPublicIPAddress()!!)
+        suspend fun getWorkTaskDetails(cropId: Long) =
+            workUseCase.getWorkTaskDetails(
+                cropId,
+                networkUseCase.getPublicIPAddress(),
+            )
     }

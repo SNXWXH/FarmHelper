@@ -22,7 +22,7 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
     private val viewModel: WorkDetailViewModel by viewModels()
     private val deleteSelectListener = { task: Task ->
         lifecycleScope.launch {
-            viewModel.deleteTask(args.work.cropId, task.workId)
+            viewModel.deleteTask(task.workId, args.work.cropId)
             showMessage("삭제 완료 되었습니다.")
         }
     }
@@ -65,10 +65,10 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
                             "${todayTask.size}건의 오늘 작업이 있습니다."
                     }
                     if (viewModel.sortType.value!!) {
-                        adapter.submitList(it)
+                        adapter.submitList(it.reversed())
                         return@collect
                     }
-                    adapter.submitList(it.reversed())
+                    adapter.submitList(it)
                 }
             }
         }

@@ -10,7 +10,6 @@ import com.mjc.lst1995.farmhelper.core.data.network.response.work.TodayTaskRespo
 import com.mjc.lst1995.farmhelper.core.data.network.response.work.WorkDetailResponse
 import com.mjc.lst1995.farmhelper.core.data.network.response.work.WorksResponse
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -42,7 +41,7 @@ interface WorkApi {
         @Body taskUpdateToken: TaskUpdateToken,
     ): ResultResponse
 
-    @DELETE("work/delete")
+    @POST("work/app/delete")
     suspend fun deleteTask(
         @Body taskDeleteToken: TaskDeleteToken,
     ): ResultResponse
