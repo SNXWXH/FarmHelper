@@ -153,7 +153,7 @@ public class WorkPageController {
         }
     }
 
-    @PostMapping("/app/work/delete")
+    @PostMapping("/app/delete")
     public ResponseEntity<String> deleteWorkLogId(@RequestBody WorkPageRequest workRequest) {
         boolean deleted = workPageService.deleteWorkLogId(workRequest);
 
