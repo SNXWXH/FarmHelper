@@ -1,12 +1,14 @@
 package com.mjc.lst1995.farmhelper.core.domain.usecase
 
 import android.content.Context
+import android.util.Log
 import com.mjc.lst1995.farmhelper.BuildConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
 
@@ -27,11 +29,23 @@ class NetworkUseCase
                 try {
                     val response = client.newCall(request).execute()
                     if (response.isSuccessful) {
-                        response.body?.string() ?: "No Response Body"
+                        val responseBody = response.body?.string()
+                        responseBody?.let {
+                            try {
+                                val jsonObject = JSONObject(it)
+                                val ip = jsonObject.optString("ip", BuildConfig.BASE_IP)
+                                Log.d("tttt", ip)
+                                ip
+                            } catch (e: Exception) {
+                                Log.e("tttt", "JSON Parsing error: ${e.message}")
+                                BuildConfig.BASE_IP
+                            }
+                        } ?: BuildConfig.BASE_IP
                     } else {
                         BuildConfig.BASE_IP
                     }
                 } catch (e: IOException) {
+                    Log.e("tttt", "Network error: ${e.message}")
                     BuildConfig.BASE_IP
                 }
             }
