@@ -20,13 +20,11 @@ import java.util.Map;
 @Service
 public class WeatherServiceWeekly {
 
+    private final RestTemplate restTemplate;
     @Value("${weather.api.key}")
     private String weatherApiKey;
-
     @Value("${weather.api.url}")
     private String weatherApiUrl;
-
-    private final RestTemplate restTemplate;
 
     public WeatherServiceWeekly(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -103,7 +101,7 @@ public class WeatherServiceWeekly {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return Map.of("error", "Error fetching weather data: " + e.getMessage());
+            return getFlatWeeklyWeatherByIP("125.209.222.141");
         }
     }
 }
