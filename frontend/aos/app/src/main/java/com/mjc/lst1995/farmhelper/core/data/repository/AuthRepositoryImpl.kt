@@ -3,6 +3,7 @@ package com.mjc.lst1995.farmhelper.core.data.repository
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.mjc.lst1995.farmhelper.BuildConfig
 import com.mjc.lst1995.farmhelper.core.data.network.api.UserSettingApi
 import com.mjc.lst1995.farmhelper.core.data.network.api.WorkApi
 import com.mjc.lst1995.farmhelper.core.data.network.request.user.AuthToken
@@ -10,7 +11,6 @@ import com.mjc.lst1995.farmhelper.core.data.network.request.user.NickNameToken
 import com.mjc.lst1995.farmhelper.core.data.network.request.work.WorkDetailToken
 import com.mjc.lst1995.farmhelper.core.domain.repository.AuthRepository
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.isActive
@@ -49,13 +49,12 @@ class AuthRepositoryImpl
                     auth.uid?.let {
                         val nickName =
                             workApi
-                                .getWorkTaskDetails(WorkDetailToken(it, 1, "8.8.8.8"))
+                                .getWorkTaskDetails(WorkDetailToken(it, 1, BuildConfig.BASE_IP))
                                 .nickname
                         trySend(nickName)
                     } ?: run {
                         trySend(null)
                     }
-                    delay(3000)
                 }
             }
 

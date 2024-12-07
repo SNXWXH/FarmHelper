@@ -20,9 +20,11 @@ import kotlinx.coroutines.launch
 class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.fragment_work_detail) {
     private val args: WorkDetailFragmentArgs by navArgs()
     private val viewModel: WorkDetailViewModel by viewModels()
+    private lateinit var editSelectDialogFragment: EditSelectDialogFragment
     private val deleteSelectListener = { task: Task ->
         lifecycleScope.launch {
             viewModel.deleteTask(task.workId, args.work.cropId)
+            editSelectDialogFragment.dismiss()
             showMessage("삭제 완료 되었습니다.")
         }
     }
@@ -31,7 +33,7 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
     }
 
     private val longClickListener: (Task) -> Unit = { task: Task ->
-        val editSelectDialogFragment =
+        editSelectDialogFragment =
             EditSelectDialogFragment(task, editSelectListener, deleteSelectListener)
         editSelectDialogFragment.show(childFragmentManager, "selectDialog")
     }

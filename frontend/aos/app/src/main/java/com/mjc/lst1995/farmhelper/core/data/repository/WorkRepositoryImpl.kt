@@ -11,6 +11,7 @@ import com.mjc.lst1995.farmhelper.core.domain.model.task.OtherDetail
 import com.mjc.lst1995.farmhelper.core.domain.model.task.Task
 import com.mjc.lst1995.farmhelper.core.domain.model.work.Work
 import com.mjc.lst1995.farmhelper.core.domain.repository.WorkRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
@@ -31,12 +32,12 @@ class WorkRepositoryImpl
             callbackFlow {
                 while (isActive) {
                     auth.uid?.let { userId ->
-                        // 서버에서 데이터를 가져와 채널에 전송
                         val workList = workApi.getWorks(AuthToken(userId)).workList
                         trySend(workList)
                     } ?: run {
                         trySend(emptyList())
                     }
+                    delay(1000)
                 }
             }
 
@@ -59,12 +60,14 @@ class WorkRepositoryImpl
             cropId: Long,
             ipAddress: String,
         ): Flow<List<Task>> =
-            flow {
-                val workLogs =
-                    workApi
-                        .getWorkTaskDetails(WorkDetailToken(auth.uid!!, cropId, ipAddress))
-                        .workLogs
-                emit(workLogs)
+            callbackFlow {
+                while (isActive) {
+                    val workLogs =
+                        workApi
+                            .getWorkTaskDetails(WorkDetailToken(auth.uid!!, cropId, ipAddress))
+                            .workLogs
+                    trySend(workLogs)
+                }
             }
 
         override suspend fun getWorkTaskOtherDetail(

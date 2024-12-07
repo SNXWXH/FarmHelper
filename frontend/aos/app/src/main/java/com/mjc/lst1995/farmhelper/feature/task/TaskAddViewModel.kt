@@ -48,7 +48,7 @@ class TaskAddViewModel
         fun saveTask(cropId: Long) {
             viewModelScope.launch {
                 _progressBarVisibility.postValue(View.VISIBLE)
-                taskUseCase.saveTask(networkUseCase.getPublicIPAddress()!!, cropId)
+                taskUseCase.saveTask(networkUseCase.getPublicIPAddress(), cropId)
                 _progressBarVisibility.postValue(View.GONE)
                 isSaved.postValue(true)
             }
