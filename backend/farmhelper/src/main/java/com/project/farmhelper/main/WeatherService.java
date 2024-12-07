@@ -30,7 +30,7 @@ public class WeatherService {
 
     public Map<String, Object> getCurrentWeatherByIP(String ipAddress) {
         String ipApiUrl = String.format("http://ip-api.com/json/%s", ipAddress);
-
+        System.out.println(ipApiUrl);
         try {
             // Fetch IP ipAddress details
             ResponseEntity<String> ipResponse = restTemplate.getForEntity(ipApiUrl, String.class);
@@ -109,6 +109,7 @@ public class WeatherService {
             return forecastDetails;
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return getCurrentWeatherByIP("125.209.222.141");
         }
     }
