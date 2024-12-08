@@ -7,7 +7,7 @@ import com.mjc.lst1995.farmhelper.core.domain.model.work.Work
 import kotlinx.coroutines.flow.Flow
 
 interface WorkRepository {
-    suspend fun getTodayTasks(userId: String): List<CropTask>
+    suspend fun getTodayTasks(): Flow<List<CropTask>>
 
     fun getWorks(): Flow<List<Work>>
 

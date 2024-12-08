@@ -25,8 +25,18 @@ class WorkRepositoryImpl
         private val workApi: WorkApi,
         private val auth: FirebaseAuth,
     ) : WorkRepository {
-        override suspend fun getTodayTasks(userId: String): List<CropTask> {
-            TODO("Not yet implemented")
+        override suspend fun getTodayTasks(): Flow<List<CropTask>> {
+            auth.uid?.let {
+                return callbackFlow {
+                    trySend(workApi.getTodayTasks(it))
+                    awaitClose()
+                }
+            } ?: run {
+                return callbackFlow {
+                    trySend(emptyList())
+                    awaitClose()
+            }
+        }
         }
 
         override fun getWorks(): Flow<List<Work>> =

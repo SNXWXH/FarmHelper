@@ -1,7 +1,9 @@
 package com.mjc.lst1995.farmhelper.core.domain.usecase
 
+import com.mjc.lst1995.farmhelper.core.domain.model.crop.CropTask
 import com.mjc.lst1995.farmhelper.core.domain.model.task.toSplit
 import com.mjc.lst1995.farmhelper.core.domain.repository.WorkRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -22,6 +24,16 @@ class WorkUseCase
     constructor(
         private val workRepository: WorkRepository,
     ) {
+        suspend fun getTodayTasks(): Flow<List<CropTask>> =
+            workRepository.getTodayTasks().map {
+                it.groupBy { it.workName }.map { (name, tasks) ->
+                    CropTask(
+                        name,
+                        tasks.map { it.workContent }.joinToString(SEPARATOR).replace(SEPARATOR, "\n\n"),
+                    )
+                }
+        }
+
         suspend fun createWork(
             imageUrl: String?,
             cropName: String,
@@ -88,4 +100,8 @@ class WorkUseCase
             // 포맷된 문자열 반환
             return sdf.format(date)
         }
+
+        companion object {
+            private const val SEPARATOR = "q!gL9A"
+    }
     }

@@ -11,6 +11,16 @@ class WeatherRepositoryImpl
         private val weatherApi: WeatherApi,
     ) : WeatherRepository {
         override suspend fun getTodayWeather(ipAddress: String): Weather {
-            TODO("Not yet implemented")
+            val response = weatherApi.getTodayWeather(ipAddress)
+            return Weather(
+                date = response.date,
+                description = response.description,
+                feelsLike = response.feelsLike,
+                humidity = response.humidity,
+                region = response.region,
+                sunrise = response.sunrise,
+                temperature = response.temperature,
+                windSpeed = response.windSpeed,
+            )
         }
     }

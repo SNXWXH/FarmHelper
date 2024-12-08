@@ -10,11 +10,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.mjc.lst1995.farmhelper.R
+import com.mjc.lst1995.farmhelper.core.domain.model.crop.BestCrop
+import com.mjc.lst1995.farmhelper.core.domain.model.crop.CropTask
 import com.mjc.lst1995.farmhelper.core.domain.model.crop.RecommendCrop
 import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
+import com.mjc.lst1995.farmhelper.core.ui.adapter.BestCropsAdapter
 import com.mjc.lst1995.farmhelper.core.ui.adapter.RecommendCropAdapter
+import com.mjc.lst1995.farmhelper.core.ui.adapter.TodayTaskAdapter
 import com.mjc.lst1995.farmhelper.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -25,6 +30,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val recommendCropListener: (RecommendCrop) -> Unit = { recommendCrop ->
         CropContentDialogFragment(recommendCrop).show(parentFragmentManager, "CropContentDialog")
     }
+
+    private val bestCropListener: (BestCrop) -> Unit = { bestCrop ->
+        lifecycleScope.launch {
+            CropContentDialogFragment(viewModel.getCropDetail(bestCrop.cropName).first()).show(
+                parentFragmentManager,
+                "CropContentDialog",
+            )
+        }
+    }
+    private lateinit var bestCropsAdapter: BestCropsAdapter
+
+    private val todayTaskAdapter = TodayTaskAdapter()
 
     override fun onViewCreated(
         view: View,
@@ -37,11 +54,70 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         setNavItemSelect()
         setRecommendedCrop()
         setDetailFragmentMove()
+        setTodayWeather()
+        setMonthOfBestCrop()
+        setTodayWork()
     }
 
     override fun onResume() {
         super.onResume()
         setDrawerClose()
+    }
+
+    private fun setTodayWork() {
+        binding.todayWorkRV.adapter = todayTaskAdapter
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getTodayTasks().collect { todayTasks ->
+                    if (todayTasks.isEmpty()) {
+                        todayTaskAdapter.submitList(
+                            listOf(
+                                CropTask(
+                                    "",
+                                    "작업을 추가해 주세요.",
+                                ),
+                            ),
+                        )
+                        return@collect
+                    }
+                    todayTaskAdapter.submitList(todayTasks)
+                }
+            }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                var position = 0
+                while (true) {
+                    binding.todayWorkRV.smoothScrollToPosition(position)
+                    position++
+                    if (position >= todayTaskAdapter.itemCount) position = 0
+                    delay(3500)
+                }
+            }
+        }
+    }
+
+    private fun setTodayWeather() {
+        viewModel.weather.observe(viewLifecycleOwner) { weather ->
+            binding.weather = weather
+        }
+    }
+
+    private fun setMonthOfBestCrop() {
+        bestCropsAdapter = BestCropsAdapter(bestCropListener)
+        binding.bestCropsRV.adapter = bestCropsAdapter
+        viewModel.bestCrops.observe(viewLifecycleOwner) {
+            bestCropsAdapter.submitList(it.toList())
+        }
+        lifecycleScope.launch {
+            var position = 0
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                while (true) {
+                    binding.bestCropsRV.smoothScrollToPosition(position)
+                    position++
+                    if (position >= bestCropsAdapter.itemCount) position = 0
+                    delay(3500)
+                }
+            }
+        }
     }
 
     private fun setRecommendedCrop() {

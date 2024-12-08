@@ -2,7 +2,6 @@ package com.mjc.lst1995.farmhelper.core.data.repository
 
 import com.mjc.lst1995.farmhelper.core.data.network.api.CropApi
 import com.mjc.lst1995.farmhelper.core.domain.model.crop.BestCrop
-import com.mjc.lst1995.farmhelper.core.domain.model.crop.Crop
 import com.mjc.lst1995.farmhelper.core.domain.model.crop.RecommendCrop
 import com.mjc.lst1995.farmhelper.core.domain.repository.CropRepository
 import kotlinx.coroutines.flow.Flow
@@ -19,11 +18,7 @@ class CropRepositoryImpl
                 emit(cropApi.getTodayRecommendedCrops())
             }
 
-        override suspend fun getCropDetail(cropName: String): Flow<List<Crop>> {
-            TODO("Not yet implemented")
-        }
+        override suspend fun getCropDetail(cropName: String): List<RecommendCrop> = cropApi.getCropDetail(cropName)
 
-        override suspend fun getMonthOfBestCrop(): Flow<List<BestCrop>> {
-            TODO("Not yet implemented")
-        }
+        override suspend fun getMonthOfBestCrop(): List<BestCrop> = cropApi.getMonthOfBestCrop()
     }

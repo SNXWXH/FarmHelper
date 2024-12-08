@@ -9,4 +9,8 @@ class CropUseCase
         private val cropRepository: CropRepository,
     ) {
         fun getTodayRecommendedCrops() = cropRepository.getTodayRecommendedCrops()
+
+        suspend fun getMonthOfBestCrop() = cropRepository.getMonthOfBestCrop()
+
+        suspend fun getCropDetail(cropName: String) = cropRepository.getCropDetail(cropName)
     }

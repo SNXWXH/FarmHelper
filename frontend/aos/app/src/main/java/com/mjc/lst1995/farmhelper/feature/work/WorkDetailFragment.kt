@@ -74,10 +74,10 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
                             "${todayTask.size}건의 오늘 작업이 있습니다."
                     }
                     if (viewModel.sortType.value!!) {
-                        adapter.submitList(it.reversed())
+                        adapter.submitList(it)
                         return@collect
                     }
-                    adapter.submitList(it)
+                    adapter.submitList(it.reversed())
                 }
             }
         }
