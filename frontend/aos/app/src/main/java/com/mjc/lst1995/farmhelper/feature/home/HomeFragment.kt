@@ -2,7 +2,6 @@ package com.mjc.lst1995.farmhelper.feature.home
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
@@ -32,23 +31,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setBinding()
+        binding.viewModel = viewModel
         setDrawer()
         setNavItemSetting()
         setNavItemSelect()
         setRecommendedCrop()
         setDetailFragmentMove()
-        setNavigationViewNickname()
     }
 
     override fun onResume() {
         super.onResume()
         setDrawerClose()
-    }
-
-    private fun setBinding() {
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
     }
 
     private fun setRecommendedCrop() {
@@ -70,31 +63,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             binding.homeNV.menu.clear()
             val inflater = requireActivity().menuInflater
             inflater.inflate(it, binding.homeNV.menu)
-        }
-    }
-
-    private fun setNavigationViewNickname() {
-//        lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                viewModel.userNickname.collect { nickname ->
-//                    updateNavigationHeader(nickname)
-//                }
-//            }
-//        }
-    }
-
-    private fun updateNavigationHeader(nickname: String?) {
-        val headerView = binding.homeNV.getHeaderView(0)
-        val nicknameTextView = headerView.findViewById<TextView>(R.id.userNicknameTV)
-        val welcomeTextView = headerView.findViewById<TextView>(R.id.userWelcomeTV)
-
-        if (nickname != null) {
-            nicknameTextView.text = nickname
-            nicknameTextView.visibility = View.VISIBLE
-            welcomeTextView.visibility = View.VISIBLE
-        } else {
-            nicknameTextView.visibility = View.GONE
-            welcomeTextView.visibility = View.GONE
         }
     }
 

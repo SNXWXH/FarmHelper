@@ -32,7 +32,7 @@ class EditSelectDialogFragment(
         _binding = FragmentEditSelectDalogBinding.inflate(inflater, container, false)
 
         binding!!.editTV.setOnClickListener {
-            editSelectListener
+            editSelectListener(task)
         }
 
         binding!!.deleteTV.setOnClickListener {

@@ -1,11 +1,14 @@
 package com.mjc.lst1995.farmhelper.feature.work
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mjc.lst1995.farmhelper.core.domain.model.task.Task
 import com.mjc.lst1995.farmhelper.core.domain.usecase.NetworkUseCase
 import com.mjc.lst1995.farmhelper.core.domain.usecase.WorkUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,9 +40,11 @@ class WorkDetailViewModel
                 networkUseCase.getPublicIPAddress(),
             )
 
-        suspend fun getWorkTaskDetails(cropId: Long) =
-            workUseCase.getWorkTaskDetails(
+        suspend fun getWorkTaskDetails(cropId: Long): Flow<List<Task>> {
+            Log.d("tttt", "아이피 주소 : ${networkUseCase.getPublicIPAddress()}")
+            return workUseCase.getWorkTaskDetails(
                 cropId,
                 networkUseCase.getPublicIPAddress(),
             )
+        }
     }

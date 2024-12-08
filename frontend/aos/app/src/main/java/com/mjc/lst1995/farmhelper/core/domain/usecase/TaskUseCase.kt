@@ -2,12 +2,14 @@ package com.mjc.lst1995.farmhelper.core.domain.usecase
 
 import com.mjc.lst1995.farmhelper.core.domain.model.task.RecommendTask
 import com.mjc.lst1995.farmhelper.core.domain.repository.TaskRepository
+import com.mjc.lst1995.farmhelper.core.domain.repository.WorkRepository
 import javax.inject.Inject
 
 class TaskUseCase
     @Inject
     constructor(
         private val taskRepository: TaskRepository,
+        private val workRepository: WorkRepository,
     ) {
         private val recommendTasks = mutableListOf<RecommendTask>()
 
@@ -28,6 +30,20 @@ class TaskUseCase
             val saveContents = saveTasks.joinToString(SEPARATOR) { it.content }
             recommendTasks.clear()
             return taskRepository.saveTask(cropId, ipAddress, saveContents)
+        }
+
+        suspend fun setEditTaskSave(
+            workId: Long,
+            cropId: Long,
+        ): Boolean {
+            val result =
+                workRepository.updateTask(
+                    workId,
+                    cropId,
+                    recommendTasks.filter { it.isChecked }.joinToString(SEPARATOR) { it.content },
+                )
+            recommendTasks.clear()
+            return result
         }
 
         fun addTask(task: String): List<RecommendTask> {

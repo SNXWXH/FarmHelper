@@ -33,7 +33,7 @@ class NetworkUseCase
                         responseBody?.let {
                             try {
                                 val jsonObject = JSONObject(it)
-                                val ip = jsonObject.optString("ip", BuildConfig.BASE_IP)
+                                val ip = jsonObject.getString("ip")
                                 Log.d("tttt", ip)
                                 ip
                             } catch (e: Exception) {

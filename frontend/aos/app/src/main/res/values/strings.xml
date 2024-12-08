@@ -47,6 +47,7 @@
     <string name="crop_input_message">작물을 입력해주세요.</string>
     <string name="date">날짜</string>
     <string name="cover_image">커버 이미지</string>
+    <string name="work_title">작업 일지</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

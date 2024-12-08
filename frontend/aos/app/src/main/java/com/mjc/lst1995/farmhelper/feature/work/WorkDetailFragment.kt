@@ -30,6 +30,13 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
     }
 
     private val editSelectListener = { task: Task ->
+        val action =
+            WorkDetailFragmentDirections.actionWorkDetailFragmentToTaskEditFragment(
+                task,
+                args.work.cropId,
+            )
+        findNavController().navigate(action)
+        editSelectDialogFragment.dismiss()
     }
 
     private val longClickListener: (Task) -> Unit = { task: Task ->

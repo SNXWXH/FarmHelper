@@ -22,7 +22,6 @@ class HomeViewModel
         private val cropUseCase: CropUseCase,
     ) : ViewModel() {
         val recommendedCrops: Flow<List<RecommendCrop>> = cropUseCase.getTodayRecommendedCrops()
-        val userNickname: Flow<String?> = authUseCase.getUserNickName()
 
         private val loginState: Flow<Boolean> = authUseCase.loginStateFlow()
 

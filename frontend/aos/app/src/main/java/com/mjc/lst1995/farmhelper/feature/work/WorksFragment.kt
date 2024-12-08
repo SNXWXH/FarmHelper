@@ -76,11 +76,11 @@ class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works
                         gridAdapter.submitList(it)
                     }
                 }
-//                launch {
-//                    worksViewModel.nickName.collect {
-//                        setToolbarClientName(it)
-//                    }
-//                }
+                launch {
+                    worksViewModel.nickname.collect {
+                        setToolbarClientName(it)
+                    }
+                }
             }
         }
     }
@@ -89,7 +89,7 @@ class WorksFragment : BaseFragment<FragmentWorksBinding>(R.layout.fragment_works
         name?.let {
             binding.materialToolbar2.title = CLIENT_NAME_FORMAT.format(name)
         } ?: run {
-            binding.materialToolbar2.title = getString(R.string.loading)
+            binding.materialToolbar2.title = getString(R.string.work_title)
         }
     }
 

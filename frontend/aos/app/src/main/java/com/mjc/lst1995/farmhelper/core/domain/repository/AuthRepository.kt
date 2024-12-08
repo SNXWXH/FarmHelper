@@ -9,8 +9,6 @@ interface AuthRepository {
 
     fun loginStateFlow(): Flow<Boolean>
 
-    fun getUserNickName(): Flow<String?>
-
     suspend fun userIsJoined(): Boolean
 
     suspend fun setUserNickName(nickName: String): Boolean

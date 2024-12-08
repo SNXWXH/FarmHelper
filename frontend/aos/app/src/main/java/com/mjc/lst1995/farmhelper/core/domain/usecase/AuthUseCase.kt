@@ -14,8 +14,6 @@ class AuthUseCase
 
         fun firebaseSignOut() = authRepository.firebaseSignOut()
 
-        fun getUserNickName() = authRepository.getUserNickName()
-
         suspend fun userIsJoined() = authRepository.userIsJoined()
 
         suspend fun setUserNickName(nickName: String): Boolean {

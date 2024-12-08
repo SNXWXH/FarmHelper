@@ -11,6 +11,8 @@ interface WorkRepository {
 
     fun getWorks(): Flow<List<Work>>
 
+    fun getNickname(): Flow<String>
+
     suspend fun createWork(
         cropName: String,
         cropDate: String,

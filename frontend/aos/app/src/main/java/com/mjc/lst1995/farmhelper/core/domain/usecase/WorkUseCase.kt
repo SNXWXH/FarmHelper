@@ -50,6 +50,8 @@ class WorkUseCase
 
         fun getWorks() = workRepository.getWorks()
 
+        fun getNickname() = workRepository.getNickname()
+
         fun isValid(
             cropName: String?,
             date: Long?,

@@ -1,8 +1,10 @@
 package com.mjc.lst1995.farmhelper.core.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.mjc.lst1995.farmhelper.core.data.network.api.WorkApi
 import com.mjc.lst1995.farmhelper.core.data.network.request.task.TaskDeleteToken
+import com.mjc.lst1995.farmhelper.core.data.network.request.task.TaskUpdateToken
 import com.mjc.lst1995.farmhelper.core.data.network.request.user.AuthToken
 import com.mjc.lst1995.farmhelper.core.data.network.request.work.WorkCreateToken
 import com.mjc.lst1995.farmhelper.core.data.network.request.work.WorkDetailToken
@@ -11,7 +13,7 @@ import com.mjc.lst1995.farmhelper.core.domain.model.task.OtherDetail
 import com.mjc.lst1995.farmhelper.core.domain.model.task.Task
 import com.mjc.lst1995.farmhelper.core.domain.model.work.Work
 import com.mjc.lst1995.farmhelper.core.domain.repository.WorkRepository
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
@@ -37,8 +39,21 @@ class WorkRepositoryImpl
                     } ?: run {
                         trySend(emptyList())
                     }
-                    delay(1000)
                 }
+                awaitClose()
+            }
+
+        override fun getNickname(): Flow<String> =
+            callbackFlow {
+                while (isActive) {
+                    auth.uid?.let { userId ->
+                        val workList = workApi.getWorks(AuthToken(userId)).nickName
+                        trySend(workList)
+                    } ?: run {
+                        trySend("")
+                    }
+                }
+                awaitClose()
             }
 
         override suspend fun createWork(
@@ -67,7 +82,11 @@ class WorkRepositoryImpl
                             .getWorkTaskDetails(WorkDetailToken(auth.uid!!, cropId, ipAddress))
                             .workLogs
                     trySend(workLogs)
+                    Log.d("tttt", "서버: $ipAddress")
+                    val token = WorkDetailToken(auth.uid!!, cropId, ipAddress)
+                    Log.d("tttt", "${token.ipAddress}")
                 }
+                awaitClose()
             }
 
         override suspend fun getWorkTaskOtherDetail(
@@ -91,9 +110,7 @@ class WorkRepositoryImpl
             workId: Long,
             cropId: Long,
             workContent: String,
-        ): Boolean {
-            TODO("Not yet implemented")
-        }
+        ): Boolean = workApi.updateTask(TaskUpdateToken(workId, auth.uid!!, cropId, workContent)).isOk
 
         override suspend fun deleteTask(
             workId: Long,

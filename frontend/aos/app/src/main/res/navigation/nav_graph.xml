@@ -66,7 +66,7 @@
     <fragment
         android:id="@+id/taskAddFragment"
         android:name="com.mjc.lst1995.farmhelper.feature.task.TaskAddFragment"
-        android:label="TaskAddFragment" >
+        android:label="TaskAddFragment">
 
         <action
             android:id="@+id/action_taskAddFragment_to_workDetailFragment"
@@ -78,15 +78,21 @@
     <fragment
         android:id="@+id/taskEditFragment"
         android:name="com.mjc.lst1995.farmhelper.feature.task.TaskEditFragment"
-        android:label="TaskEditFragment" >
+        android:label="TaskEditFragment">
         <action
             android:id="@+id/action_taskEditFragment_to_workDetailFragment"
             app:destination="@id/workDetailFragment" />
+        <argument
+            android:name="task"
+            app:argType="com.mjc.lst1995.farmhelper.core.domain.model.task.Task" />
+        <argument
+            android:name="cropId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/workCreateFragment"
         android:name="com.mjc.lst1995.farmhelper.feature.work.WorkCreateFragment"
-        android:label="WorkCreateFragment" >
+        android:label="WorkCreateFragment">
         <action
             android:id="@+id/action_workCreateFragment_to_worksFragment"
             app:destination="@id/worksFragment" />
