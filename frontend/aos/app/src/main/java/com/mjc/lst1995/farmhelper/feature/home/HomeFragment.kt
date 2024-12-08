@@ -83,13 +83,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     todayTaskAdapter.submitList(todayTasks)
                 }
             }
+        }
+        lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 var position = 0
                 while (true) {
                     binding.todayWorkRV.smoothScrollToPosition(position)
                     position++
                     if (position >= todayTaskAdapter.itemCount) position = 0
-                    delay(3500)
+                    delay(SLICE_TIME)
                 }
             }
         }
@@ -114,7 +116,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     binding.bestCropsRV.smoothScrollToPosition(position)
                     position++
                     if (position >= bestCropsAdapter.itemCount) position = 0
-                    delay(3500)
+                    delay(SLICE_TIME)
                 }
             }
         }
@@ -183,5 +185,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             R.layout.fragment_works -> findNavController().navigate(R.id.action_homeFragment_to_worksFragment)
             R.layout.fragment_login -> findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
         }
+    }
+
+    companion object {
+        private const val SLICE_TIME = 5000L
     }
 }
