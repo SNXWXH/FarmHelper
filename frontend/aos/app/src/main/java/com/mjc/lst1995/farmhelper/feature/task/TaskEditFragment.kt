@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mjc.lst1995.farmhelper.R
+import com.mjc.lst1995.farmhelper.core.domain.model.task.RecommendTask
 import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
 import com.mjc.lst1995.farmhelper.core.ui.adapter.RecommendTaskAdapter
 import com.mjc.lst1995.farmhelper.databinding.FragmentTaskEditBinding
@@ -15,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class TaskEditFragment : BaseFragment<FragmentTaskEditBinding>(R.layout.fragment_task_edit) {
     private val viewModel: TaskEditViewModel by viewModels()
     private val args: TaskEditFragmentArgs by navArgs()
-    private val listener: (Int) -> Unit = {
+    private val listener: (RecommendTask) -> Unit = {
         viewModel.updateRecommendTask(it)
     }
     private val adapter = RecommendTaskAdapter(listener)
@@ -35,9 +36,13 @@ class TaskEditFragment : BaseFragment<FragmentTaskEditBinding>(R.layout.fragment
 
     private fun setObserver() {
         viewModel.recommendTask.observe(viewLifecycleOwner) {
-            adapter.submitList(it) {
-                binding.tasksRV.scrollToPosition(it.size - 1)
+            if (adapter.itemCount != it.size) {
+                adapter.submitList(it.toList()) {
+                    binding.tasksRV.scrollToPosition(it.size - 1)
+                }
+                return@observe
             }
+            adapter.submitList(it.toList())
         }
         viewModel.editState.observe(viewLifecycleOwner) {
             if (it) {

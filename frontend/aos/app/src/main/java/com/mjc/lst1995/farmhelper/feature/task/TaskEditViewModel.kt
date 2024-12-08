@@ -9,6 +9,7 @@ import com.mjc.lst1995.farmhelper.core.domain.model.task.RecommendTask
 import com.mjc.lst1995.farmhelper.core.domain.usecase.TaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,8 +26,17 @@ class TaskEditViewModel
 
         fun setTasks(contents: String) {
             contents.split("\n\n").forEach {
-                _recommendTasks.postValue(taskUseCase.addTask(it))
+                addTask(it)
             }
+        }
+
+        fun addTask(task: String) {
+            if (task.isEmpty()) {
+                return
+            }
+            val tasks = RecommendTask(UUID.randomUUID().toString(), task)
+            val new = _recommendTasks.value?.plus(tasks) ?: listOf(tasks)
+            _recommendTasks.postValue(new)
         }
 
         fun setEditTaskSave(
@@ -35,15 +45,24 @@ class TaskEditViewModel
         ) {
             viewModelScope.launch {
                 _progressBarVisibility.postValue(View.VISIBLE)
-                editState.postValue(taskUseCase.setEditTaskSave(workId, cropId))
+                editState.postValue(
+                    recommendTask.value?.let {
+                        taskUseCase.setEditTaskSave(
+                            workId,
+                            cropId,
+                            it,
+                        )
+                    },
+                )
                 _progressBarVisibility.postValue(View.GONE)
             }
         }
 
-        fun updateRecommendTask(position: Int) {
-            viewModelScope.launch {
-                _recommendTasks.postValue(taskUseCase.updateRecommendTask(position))
-            }
+        fun updateRecommendTask(recommendTask: RecommendTask) {
+            val new =
+                _recommendTasks.value?.map { if (recommendTask == it) recommendTask.copy(isChecked = !it.isChecked) else it }
+                    ?: return
+            _recommendTasks.postValue(new)
         }
 
         fun getRecommendTask(cropId: Long) {

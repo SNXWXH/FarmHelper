@@ -10,6 +10,7 @@ import com.mjc.lst1995.farmhelper.core.domain.usecase.NetworkUseCase
 import com.mjc.lst1995.farmhelper.core.domain.usecase.TaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,25 +31,43 @@ class TaskAddViewModel
         fun getRecommendTask(cropId: Long) {
             viewModelScope.launch {
                 _progressBarVisibility.postValue(View.VISIBLE)
-                _recommendTasks.postValue(taskUseCase.getRecommendTask(cropId))
+                val recommendTasks = taskUseCase.getRecommendTask(cropId)
+                val new = _recommendTasks.value?.plus(recommendTasks) ?: recommendTasks
+                _recommendTasks.postValue(new)
                 _progressBarVisibility.postValue(View.GONE)
             }
         }
 
         fun addTask(task: String) {
-            _recommendTasks.value = taskUseCase.addTask(task)
-        }
-
-        fun updateRecommendTask(position: Int) {
             viewModelScope.launch {
-                _recommendTasks.postValue(taskUseCase.updateRecommendTask(position))
+                if (task.isEmpty()) {
+                    return@launch
+                }
+                val tasks = RecommendTask(UUID.randomUUID().toString(), task)
+                val new = _recommendTasks.value?.plus(tasks) ?: listOf(tasks)
+                _recommendTasks.postValue(new)
             }
         }
+
+        fun updateRecommendTask(recommendTask: RecommendTask) {
+            val new =
+                _recommendTasks.value
+                    ?.map { if (recommendTask == it) recommendTask.copy(isChecked = !it.isChecked) else it }
+                    ?.toList()
+                    ?: return
+            _recommendTasks.postValue(new)
+    }
 
         fun saveTask(cropId: Long) {
             viewModelScope.launch {
                 _progressBarVisibility.postValue(View.VISIBLE)
-                taskUseCase.saveTask(networkUseCase.getPublicIPAddress(), cropId)
+                recommendTask.value?.let {
+                    taskUseCase.saveTask(
+                        networkUseCase.getPublicIPAddress(),
+                        cropId,
+                        it,
+                    )
+                }
                 _progressBarVisibility.postValue(View.GONE)
                 isSaved.postValue(true)
             }

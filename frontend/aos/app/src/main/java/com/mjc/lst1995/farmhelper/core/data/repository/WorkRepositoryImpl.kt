@@ -1,6 +1,5 @@
 package com.mjc.lst1995.farmhelper.core.data.repository
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.mjc.lst1995.farmhelper.core.data.network.api.WorkApi
 import com.mjc.lst1995.farmhelper.core.data.network.request.task.TaskDeleteToken
@@ -82,9 +81,6 @@ class WorkRepositoryImpl
                             .getWorkTaskDetails(WorkDetailToken(auth.uid!!, cropId, ipAddress))
                             .workLogs
                     trySend(workLogs)
-                    Log.d("tttt", "서버: $ipAddress")
-                    val token = WorkDetailToken(auth.uid!!, cropId, ipAddress)
-                    Log.d("tttt", "${token.ipAddress}")
                 }
                 awaitClose()
             }
