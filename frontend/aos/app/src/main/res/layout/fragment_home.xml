@@ -271,7 +271,7 @@
                                 android:layout_marginBottom="32dp"
                                 android:gravity="center"
                                 android:text="@string/check_today_work_log_after_login"
-                                android:visibility="gone" />
+                                android:visibility="@{viewModel.isNotLoginMenusVisibility()}" />
                         </LinearLayout>
 
                     </LinearLayout>
