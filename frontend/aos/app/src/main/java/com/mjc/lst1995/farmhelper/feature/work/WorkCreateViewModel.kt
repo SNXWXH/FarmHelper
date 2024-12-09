@@ -43,12 +43,12 @@ class WorkCreateViewModel
                 val valid = workUseCase.isValid(cropName, date)
                 if (valid != WorkError.NONE.message) {
                     resultMessage.value = valid
-                    progress.postValue(View.GONE)
+                    progress.postValue(View.INVISIBLE)
                     return@launch
                 }
                 workUseCase.createWork(imageUrl, cropName!!, date!!)
                 resultMessage.value = "작업이 생성되었습니다."
-                progress.postValue(View.GONE)
+                progress.postValue(View.INVISIBLE)
                 isCreated.postValue(true)
             }
         }

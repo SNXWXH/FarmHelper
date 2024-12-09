@@ -23,7 +23,7 @@ class TaskAddViewModel
         private val _recommendTasks = MutableLiveData<List<RecommendTask>>()
         val recommendTask: LiveData<List<RecommendTask>> = _recommendTasks
 
-        private val _progressBarVisibility = MutableLiveData(View.GONE)
+        private val _progressBarVisibility = MutableLiveData(View.INVISIBLE)
         val progressBarVisibility: LiveData<Int> = _progressBarVisibility
 
         val isSaved = MutableLiveData<Boolean>(false)
@@ -34,7 +34,7 @@ class TaskAddViewModel
                 val recommendTasks = taskUseCase.getRecommendTask(cropId)
                 val new = _recommendTasks.value?.plus(recommendTasks) ?: recommendTasks
                 _recommendTasks.postValue(new)
-                _progressBarVisibility.postValue(View.GONE)
+                _progressBarVisibility.postValue(View.INVISIBLE)
             }
         }
 

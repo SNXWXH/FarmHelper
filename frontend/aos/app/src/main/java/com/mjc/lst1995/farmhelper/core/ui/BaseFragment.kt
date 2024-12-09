@@ -38,7 +38,7 @@ abstract class BaseFragment<VB : ViewDataBinding>(
     }
 
     protected fun hideProgressBar(progressBar: ProgressBar) {
-        progressBar.visibility = View.GONE
+        progressBar.visibility = View.INVISIBLE
     }
 
     protected fun showMessage(message: String) {

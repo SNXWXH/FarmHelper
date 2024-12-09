@@ -20,7 +20,7 @@ class TaskEditViewModel
     ) : ViewModel() {
         private val _recommendTasks = MutableLiveData<List<RecommendTask>>()
         val recommendTask: LiveData<List<RecommendTask>> = _recommendTasks
-        private val _progressBarVisibility = MutableLiveData(View.GONE)
+        private val _progressBarVisibility = MutableLiveData(View.INVISIBLE)
         val progressBarVisibility: LiveData<Int> = _progressBarVisibility
         val editState = MutableLiveData(false)
 
@@ -54,7 +54,7 @@ class TaskEditViewModel
                         )
                     },
                 )
-                _progressBarVisibility.postValue(View.GONE)
+                _progressBarVisibility.postValue(View.INVISIBLE)
             }
         }
 
@@ -69,7 +69,7 @@ class TaskEditViewModel
             viewModelScope.launch {
                 _progressBarVisibility.postValue(View.VISIBLE)
                 _recommendTasks.postValue(taskUseCase.getRecommendTask(cropId))
-                _progressBarVisibility.postValue(View.GONE)
+                _progressBarVisibility.postValue(View.INVISIBLE)
             }
         }
     }

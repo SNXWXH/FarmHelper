@@ -46,7 +46,7 @@ class WorkCreateFragment : BaseFragment<FragmentWorkCreateBinding>(R.layout.frag
             if (!it.isNullOrEmpty()) showMessage(it)
         }
         workCreateViewModel.progress.observe(viewLifecycleOwner) {
-            if (it == View.GONE) hideProgressBar(binding.progressBar)
+            if (it == View.INVISIBLE) hideProgressBar(binding.progressBar)
             if (it == View.VISIBLE) showProgressBar(binding.progressBar)
         }
         workCreateViewModel.isCreated.observe(viewLifecycleOwner) {
