@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
+  console.log('🚀  process.env.SERVER_BASE_URL}:', process.env.SERVER_BASE_URL);
   try {
     const response = await fetch(
       `${process.env.SERVER_BASE_URL}/api/main/todaycrop`,
@@ -14,6 +15,6 @@ export async function GET() {
 
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    throw new Error(error, 'Server-Failed to fetch todayCrop Data');
+    throw new Error('Server-Failed to fetch todayCrop Data');
   }
 }

@@ -19,6 +19,6 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    throw new Error(error, 'Server-Failed to fetch getAiWorkLog Data');
+    throw new Error('Server-Failed to fetch getAiWorkLog Data');
   }
 }

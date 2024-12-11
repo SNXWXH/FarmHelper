@@ -24,6 +24,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: '로그인 실패' }, { status: 400 });
     }
   } catch (error) {
-    throw new Error(error, 'Server-Failed to fetch login Data');
+    throw new Error('Server-Failed to fetch login Data');
   }
 }
