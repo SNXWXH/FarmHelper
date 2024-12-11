@@ -1,3 +1,5 @@
+import RenderWeatherImage from '@/components/RenderWeatherImg';
+
 export default async function MainWeather() {
   const weather: Response = await fetch(
     `${process.env.BASE_URL}/api/currentWeather`
@@ -6,12 +8,22 @@ export default async function MainWeather() {
 
   return (
     <>
-      <div className='mt-8 h-40 w-full flex justify-center bg-[#F2FFE0] rounded-2xl'>
+      <div className='mt-8 h-40 w-full flex justify-center bg-[#F2FFE0] rounded-2xl shadow-xl'>
         <div className='flex justify-center items-center w-1/2 font-nanumHeavy font-heavy'>
           <p className='text-6xl'>{weatherData.temperature}</p>
-          {/* <p className='text-3xl h-16'>°</p> */}
-          <div className='ml-2'>
-            <p className='text-2xl'>{weatherData.description}</p>
+          <div className='relative w-32'>
+            <div className='ml-3'>
+              <p className='text-2xl relative z-10'>
+                {weatherData.description}
+              </p>
+            </div>
+            <div className='absolute -top-9 right-1 z-0'>
+              <RenderWeatherImage
+                weather={weatherData.description}
+                width={100}
+                time={weatherData.date.split(' ')[1]}
+              />
+            </div>
           </div>
         </div>
         <div className='flex flex-col justify-center items-center w-1/2 gap-3 mr-8'>

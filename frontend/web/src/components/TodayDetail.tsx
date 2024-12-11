@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import calculateDaysDifference from '@/utils/calculateDays';
 import Skeleton from '@/components/Skeleton';
+import RenderWeatherImage from '@/components/RenderWeatherImg';
 
 const TodayDetail = ({
   userId,
@@ -10,10 +11,9 @@ const TodayDetail = ({
   cropDate,
 }: {
   userId: string;
-  cropId: number;
+  cropId: string;
   cropDate: string;
 }) => {
-  const [workLogs, setWorkLogs] = useState<any[]>([]);
   const [today, setToday] = useState('');
   const [isLatestToday, setIsLatestToday] = useState(false);
   const [latestWorkLog, setLatestWorkLog] = useState<any | null>(null);
@@ -28,7 +28,6 @@ const TodayDetail = ({
       );
       const data = await response.json();
 
-      setWorkLogs(data.workLogs);
       setToday(data.today);
 
       if (data.workLogs.length > 0) {
@@ -39,6 +38,8 @@ const TodayDetail = ({
         } else {
           setLatestWorkLog(null);
         }
+      } else {
+        setLatestWorkLog(null);
       }
     } catch (error) {
       console.error('Error fetching work logs:', error);
@@ -70,8 +71,6 @@ const TodayDetail = ({
 
       const data = await response.json();
       fetchWorkLogs();
-
-      console.log('Deleted work detail:', data);
     } catch (error) {
       console.error('Error deleting work detail:', error);
     }
@@ -121,9 +120,15 @@ const TodayDetail = ({
                       )}
                       일차: {latestWorkLog.workDate}
                     </p>
-                    <p className='ml-4 font-extrabold'>
-                      날씨: {latestWorkLog.workWeather} 온도:{' '}
-                      {latestWorkLog.workTemperature}
+                    <p className='ml-4 font-extrabold rounded-md'>
+                      날씨: {latestWorkLog.workWeather}{' '}
+                    </p>
+                    <RenderWeatherImage
+                      weather={latestWorkLog.workWeather}
+                      width={20}
+                    />
+                    <p className='ml-2'>
+                      온도: {latestWorkLog.workTemperature}
                     </p>
                   </div>
                   <div className='flex'>

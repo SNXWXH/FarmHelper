@@ -1,17 +1,24 @@
 import calculateDaysDifference from '@/utils/calculateDays';
 import React, { useEffect, useState } from 'react';
-import Skeleton from '@/components/Skeleton'; // Import Skeleton component
-
+import Skeleton from '@/components/Skeleton';
+import RenderWeatherImage from '@/components/RenderWeatherImg';
+interface WorkLogType {
+  workWeather: string;
+  workDate: string;
+  workContent: string;
+  workTemperature: string;
+  workId: number;
+}
 const AllDetail = ({
   userId,
   cropId,
   cropDate,
 }: {
   userId: string;
-  cropId: number;
+  cropId: string;
   cropDate: string;
 }) => {
-  const [data, setData] = useState<string[][]>([]);
+  const [data, setData] = useState<WorkLogType[]>([]);
   const [isReversed, setIsReversed] = useState(true);
   const [loading, setLoading] = useState(true);
 
@@ -34,8 +41,6 @@ const AllDetail = ({
           setData([]);
         }
       } catch (error) {
-        console.error('Error fetching work logs:', error);
-        setData([]);
       } finally {
         setLoading(false);
       }
@@ -76,9 +81,11 @@ const AllDetail = ({
                       {calculateDaysDifference(cropDate, list.workDate)}
                       일차: {list.workDate}
                     </p>
-                    <p className='ml-4 font-extrabold'>
-                      날씨: {list.workWeather} 온도: {list.workTemperature}
+                    <p className='ml-4 font-extrabold rounded-md'>
+                      날씨: {list.workWeather}{' '}
                     </p>
+                    <RenderWeatherImage weather={list.workWeather} width={20} />
+                    <p className='ml-2'>온도: {list.workTemperature}</p>
                   </div>
                   <div className='w-full bg-[#F2FAE7] rounded-2xl p-7 my-6'>
                     <div className='flex flex-col'>
