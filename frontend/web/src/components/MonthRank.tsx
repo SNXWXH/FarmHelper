@@ -1,6 +1,7 @@
 export default async function MonthRank() {
   const bestCrop: Response = await fetch(
-    `${process.env.BASE_URL}/api/bestCrop`
+    `${process.env.BASE_URL}/api/bestCrop`,
+    { cache: 'no-store' }
   );
   const bestCropData = await bestCrop.json();
 
