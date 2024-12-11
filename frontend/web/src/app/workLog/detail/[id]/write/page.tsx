@@ -34,9 +34,7 @@ const DetailWrite = () => {
       }
     };
 
-    if (userId && cropId) {
-      fetchAIData();
-    }
+    fetchAIData();
   }, [userId, cropId]);
 
   const addDetail = () => {
