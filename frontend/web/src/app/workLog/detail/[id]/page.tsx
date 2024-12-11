@@ -28,7 +28,7 @@ export default function Detail() {
             <Suspense fallback={<Skeleton />}>
               <TodayDetail
                 userId={session?.user.uid}
-                cropId={id}
+                cropId={String(id)}
                 cropDate={cropDate}
               />
             </Suspense>
@@ -37,7 +37,7 @@ export default function Detail() {
           <Suspense fallback={<Skeleton />}>
             <AllDetail
               userId={session?.user.uid}
-              cropId={id}
+              cropId={String(id)}
               cropDate={cropDate}
             />
           </Suspense>
