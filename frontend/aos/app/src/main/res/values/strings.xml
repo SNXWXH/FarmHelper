@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">농부의 하루</string>
+    <!-- 메인 화면-->
+    <string name="login_contents">간편 로그인</string>
+    <string name="google_login_contents">구글로 로그인</string>"
+    <string name="login">로그인</string>
+    <string name="logout">로그아웃</string>
+    <string name="menus">메뉴들</string>
+    <string name="today_weather">오늘의 날씨</string>
+    <string name="recommended_crop_of_the_day">오늘의 추천 작물</string>
+    <string name="popular_crop_of_the_month">이번 달 인기 작물</string>
+    <string name="daily_work_log">오늘의 작업일지</string>
+    <string name="daily_work_title">작업 일지 제목</string>
+    <string name="check_today_work_log_after_login">로그인 후 오늘의 작업일지를 확인해보세요!</string>
+    <string name="crop_image">작물 이미지</string>
+    <string name="user_welcome_message">님 환영합니다.</string>
+    <string name="logo_image">로고 이미지</string>
+    <string name="loading">불러오는 중</string>
+
+    <!-- 로그인-->
+    <string name="nick_name_input_message">사용하실 닉네임을 입력해주세요.</string>
+    <string name="nick_name_setting">닉네임 설정</string>
+    <string name="nick_name_commit_message">닉네임이 적용되었습니다.</string>
+    <string name="nick_name_error_message">해당 닉네임은 적용 불가능 합니다.</string>
+    <string name="pick">선택</string>
+    <string name="back">돌아가기</string>
+    <string name="check">확인</string>
+
+    <!-- 작업 디테일-->
+    <string name="sort_order_change">정렬 순서 변경</string>
+    <string name="task_list">작업 목록</string>
+    <string name="task_create">작업생성</string>
+
+    <!-- 작업 생성-->
+    <string name="task_compleate">완료하기</string>
+    <string name="task_log_create">작업 내용 작성</string>
+    <string name="write_custom_task">추가로 할 작업을 작성해주세요.</string>
+    <string name="task_log_edit">작업 내용 수정</string>
+    <string name="delete">제거</string>
+    <string name="not_select_image_message">이미지를 선택하지 않았습니다.</string>
+
+    <!-- 작업일지 생성 -->
+    <string name="work_create">작업 일지 생성</string>
+    <string name="crop_and_date_input_message">심을 작물과 날짜를 입력해주세요!</string>
+    <string name="complete">완료</string>
+    <string name="crop">작물</string>
+    <string name="crop_input_message">작물을 입력해주세요.</string>
+    <string name="date">날짜</string>
+    <string name="cover_image">커버 이미지</string>
+    <string name="work_title">작업 일지</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    권환 요청-->
+    <string name="permission_required_message">권한이 필요합니다</string>
+    <string name="permission_instructions">이 앱을 사용하려면 권한을 허용해야 합니다. 설정으로 이동하여 권한을 수동으로 허용하세요.</string>
+    <string name="navigate_to_settings">설정으로 이동</string>
+    <string name="allow_permission">권한 허용</string>
+    <string name="request_permission_message">앱을 사용하기 위해 권한을 허용해주세요.</string>
+    <string name="task_edit">수정하기</string>
+    <string name="task_deldte">삭제하기</string>
+</resources>

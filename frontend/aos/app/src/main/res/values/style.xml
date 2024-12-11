@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--텍스트 뷰-->
+    <style name="TextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/nanumsquareneo_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ExtraBoldStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/nanumsquareneo_extrabold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="BoldStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/nanumsquareneo_bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="HeavyStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/nanumsquareneo_heavy</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!--카드뷰-->
+    <style name="CardViewStyle" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardElevation">2dp</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardBackgroundColor">@color/md_theme_primaryContainer</item>
+    </style>
+
+    <!--툴바-->
+    <style name="ToolbarStyle" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/md_theme_primary</item>
+        <item name="titleTextAppearance">@style/ToolbarTitleStyle</item>
+    </style>
+
+    <style name="ToolbarTitleStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">@font/nanumsquareneo_heavy</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <!--버튼-->
+    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:fontFamily">@font/nanumsquareneo_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/rounded_button</item>
+        <item name="android:minWidth">100dp</item>
+    </style>
+
+    <!--에디터텍스트-->
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/md_theme_primary</item>
+        <item name="hintTextAppearance">@style/HintTextAppearance</item>
+
+    </style>
+
+    <style name="TextInputEditTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/nanumsquareneo_regular</item>
+    </style>
+
+    <style name="HintTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/nanumsquareneo_bold</item>
+    </style>
+
+    <!--    프로그래스 바-->
+    <style name="ProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:padding">60dp</item>
+
+    </style>
+
+</resources>

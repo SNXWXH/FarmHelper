@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.home.HomeFragment"
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_worksFragment"
+            app:destination="@id/worksFragment" />
+        <action
+            android:id="@+id/action_homeFragment_self"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.login.LoginFragment"
+        android:label="LoginFragment">
+        <action
+            android:id="@+id/action_loginFragment_to_nickNameFragment"
+            app:destination="@id/nickNameFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nickNameFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.login.NickNameFragment"
+        android:label="NickNameFragment">
+        <action
+            android:id="@+id/action_nickNameFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/worksFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.work.WorksFragment"
+        android:label="WorksFragment">
+        <action
+            android:id="@+id/action_worksFragment_to_workDetailFragment"
+            app:destination="@id/workDetailFragment" />
+        <action
+            android:id="@+id/action_worksFragment_to_workCreateFragment"
+            app:destination="@id/workCreateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workDetailFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.work.WorkDetailFragment"
+        android:label="WorkDetailFragment">
+
+        <argument
+            android:name="work"
+            app:argType="com.mjc.lst1995.farmhelper.core.domain.model.work.Work" />
+        <action
+            android:id="@+id/action_workDetailFragment_to_taskAddFragment"
+            app:destination="@id/taskAddFragment" />
+        <action
+            android:id="@+id/action_workDetailFragment_to_taskEditFragment"
+            app:destination="@id/taskEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskAddFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.task.TaskAddFragment"
+        android:label="TaskAddFragment">
+
+        <action
+            android:id="@+id/action_taskAddFragment_to_workDetailFragment"
+            app:destination="@id/workDetailFragment" />
+        <argument
+            android:name="cropId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskEditFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.task.TaskEditFragment"
+        android:label="TaskEditFragment">
+        <action
+            android:id="@+id/action_taskEditFragment_to_workDetailFragment"
+            app:destination="@id/workDetailFragment" />
+        <argument
+            android:name="task"
+            app:argType="com.mjc.lst1995.farmhelper.core.domain.model.task.Task" />
+        <argument
+            android:name="cropId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/workCreateFragment"
+        android:name="com.mjc.lst1995.farmhelper.feature.work.WorkCreateFragment"
+        android:label="WorkCreateFragment">
+        <action
+            android:id="@+id/action_workCreateFragment_to_worksFragment"
+            app:destination="@id/worksFragment" />
+    </fragment>
+</navigation>
