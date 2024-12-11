@@ -10,7 +10,6 @@ import com.mjc.lst1995.farmhelper.core.domain.usecase.NetworkUseCase
 import com.mjc.lst1995.farmhelper.core.domain.usecase.TaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,7 +30,10 @@ class TaskAddViewModel
         fun getRecommendTask(cropId: Long) {
             viewModelScope.launch {
                 _progressBarVisibility.postValue(View.VISIBLE)
-                val recommendTasks = taskUseCase.getRecommendTask(cropId)
+                val recommendTasks =
+                    taskUseCase.getRecommendTask(cropId).mapIndexed { index, recommendTask ->
+                        RecommendTask(index + _recommendTasks.value?.size!!, recommendTask.content)
+                    }
                 val new = _recommendTasks.value?.plus(recommendTasks) ?: recommendTasks
                 _recommendTasks.postValue(new)
                 _progressBarVisibility.postValue(View.INVISIBLE)
@@ -39,24 +41,22 @@ class TaskAddViewModel
         }
 
         fun addTask(task: String) {
-            viewModelScope.launch {
-                if (task.isEmpty()) {
-                    return@launch
-                }
-                val tasks = RecommendTask(UUID.randomUUID().toString(), task)
-                val new = _recommendTasks.value?.plus(tasks) ?: listOf(tasks)
-                _recommendTasks.postValue(new)
+            if (task.isEmpty()) {
+                return
             }
+            val tasks = RecommendTask(_recommendTasks.value?.size ?: 0, task)
+            val new = _recommendTasks.value?.plus(tasks) ?: listOf(tasks)
+            _recommendTasks.postValue(new)
         }
 
         fun updateRecommendTask(recommendTask: RecommendTask) {
             val new =
                 _recommendTasks.value
-                    ?.map { if (recommendTask == it) recommendTask.copy(isChecked = !it.isChecked) else it }
+                    ?.map { if (recommendTask.id == it.id) recommendTask.copy(isChecked = !it.isChecked) else it }
                     ?.toList()
                     ?: return
             _recommendTasks.postValue(new)
-    }
+        }
 
         fun saveTask(cropId: Long) {
             viewModelScope.launch {

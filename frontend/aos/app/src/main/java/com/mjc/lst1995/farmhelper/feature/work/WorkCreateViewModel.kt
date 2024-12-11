@@ -23,7 +23,7 @@ class WorkCreateViewModel
         val selectedDate: MutableLiveData<Long> = MutableLiveData()
         val cropName: MutableLiveData<String> = MutableLiveData()
         val resultMessage: MutableLiveData<String> = MutableLiveData()
-        val progress: MutableLiveData<Int> = MutableLiveData(null)
+        val progress: MutableLiveData<Int> = MutableLiveData(View.INVISIBLE)
         val isCreated: MutableLiveData<Boolean> = MutableLiveData(null)
 
         init {

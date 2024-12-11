@@ -9,7 +9,6 @@ import com.mjc.lst1995.farmhelper.core.domain.model.task.RecommendTask
 import com.mjc.lst1995.farmhelper.core.domain.usecase.TaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,16 +24,16 @@ class TaskEditViewModel
         val editState = MutableLiveData(false)
 
         fun setTasks(contents: String) {
-            contents.split("\n\n").forEach {
-                addTask(it)
-            }
+            _recommendTasks.postValue(
+                contents.split("\n\n").mapIndexed { index, s -> RecommendTask(index, s) },
+            )
         }
 
         fun addTask(task: String) {
             if (task.isEmpty()) {
                 return
             }
-            val tasks = RecommendTask(UUID.randomUUID().toString(), task)
+            val tasks = RecommendTask(_recommendTasks.value?.size ?: 0, task)
             val new = _recommendTasks.value?.plus(tasks) ?: listOf(tasks)
             _recommendTasks.postValue(new)
         }
@@ -42,6 +41,7 @@ class TaskEditViewModel
         fun setEditTaskSave(
             workId: Long,
             cropId: Long,
+            currentList: List<RecommendTask>,
         ) {
             viewModelScope.launch {
                 _progressBarVisibility.postValue(View.VISIBLE)
@@ -50,7 +50,7 @@ class TaskEditViewModel
                         taskUseCase.setEditTaskSave(
                             workId,
                             cropId,
-                            it,
+                            currentList,
                         )
                     },
                 )
@@ -68,7 +68,12 @@ class TaskEditViewModel
         fun getRecommendTask(cropId: Long) {
             viewModelScope.launch {
                 _progressBarVisibility.postValue(View.VISIBLE)
-                _recommendTasks.postValue(taskUseCase.getRecommendTask(cropId))
+                val recommendTasks =
+                    taskUseCase.getRecommendTask(cropId).mapIndexed { index, recommendTask ->
+                        RecommendTask(index + _recommendTasks.value?.size!!, recommendTask.content)
+                    }
+                val new = _recommendTasks.value?.plus(recommendTasks) ?: recommendTasks
+                _recommendTasks.postValue(new)
                 _progressBarVisibility.postValue(View.INVISIBLE)
             }
         }

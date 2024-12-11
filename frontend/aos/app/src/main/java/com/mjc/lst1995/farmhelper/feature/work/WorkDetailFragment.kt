@@ -1,6 +1,7 @@
 package com.mjc.lst1995.farmhelper.feature.work
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -40,6 +41,7 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
     }
 
     private val longClickListener: (Task) -> Unit = { task: Task ->
+        Log.d("tttt", "${task.workContent}")
         editSelectDialogFragment =
             EditSelectDialogFragment(task, editSelectListener, deleteSelectListener)
         editSelectDialogFragment.show(childFragmentManager, "selectDialog")

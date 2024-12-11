@@ -3,6 +3,7 @@ package com.mjc.lst1995.farmhelper.feature.task
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mjc.lst1995.farmhelper.R
@@ -11,6 +12,7 @@ import com.mjc.lst1995.farmhelper.core.ui.BaseFragment
 import com.mjc.lst1995.farmhelper.core.ui.adapter.RecommendTaskAdapter
 import com.mjc.lst1995.farmhelper.databinding.FragmentTaskEditBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TaskEditFragment : BaseFragment<FragmentTaskEditBinding>(R.layout.fragment_task_edit) {
@@ -32,6 +34,16 @@ class TaskEditFragment : BaseFragment<FragmentTaskEditBinding>(R.layout.fragment
         setObserver()
         setEditTaskSave()
         getRecommendTasks()
+        setAddTask()
+    }
+
+    private fun setAddTask() {
+        binding.textInputLayout.setEndIconOnClickListener {
+            lifecycleScope.launch {
+                viewModel.addTask(binding.taskTIET.text.toString())
+                binding.taskTIET.editableText.clear()
+            }
+        }
     }
 
     private fun setObserver() {
@@ -54,7 +66,7 @@ class TaskEditFragment : BaseFragment<FragmentTaskEditBinding>(R.layout.fragment
 
     private fun setEditTaskSave() {
         binding.taskSaveBT.setOnClickListener {
-            viewModel.setEditTaskSave(args.task.workId, args.cropId)
+            viewModel.setEditTaskSave(args.task.workId, args.cropId, adapter.currentList)
         }
     }
 

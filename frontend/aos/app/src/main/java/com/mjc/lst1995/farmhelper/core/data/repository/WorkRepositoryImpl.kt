@@ -35,8 +35,8 @@ class WorkRepositoryImpl
                 return callbackFlow {
                     trySend(emptyList())
                     awaitClose()
+                }
             }
-        }
         }
 
         override fun getWorks(): Flow<List<Work>> =

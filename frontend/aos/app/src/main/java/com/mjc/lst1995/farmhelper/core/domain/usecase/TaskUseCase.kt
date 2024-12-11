@@ -3,7 +3,6 @@ package com.mjc.lst1995.farmhelper.core.domain.usecase
 import com.mjc.lst1995.farmhelper.core.domain.model.task.RecommendTask
 import com.mjc.lst1995.farmhelper.core.domain.repository.TaskRepository
 import com.mjc.lst1995.farmhelper.core.domain.repository.WorkRepository
-import java.util.UUID
 import javax.inject.Inject
 
 class TaskUseCase
@@ -15,12 +14,9 @@ class TaskUseCase
         suspend fun getRecommendTask(cropId: Long): List<RecommendTask> =
             taskRepository
                 .getRecommendTasks(cropId)
-                .map {
-                    RecommendTask(
-                        UUID.randomUUID().toString(),
-                        it,
-                    )
-            }
+                .mapIndexed { index, s ->
+                    RecommendTask(index, s)
+                }
 
         suspend fun saveTask(
             ipAddress: String,
@@ -40,7 +36,10 @@ class TaskUseCase
             workRepository.updateTask(
                 workId,
                 cropId,
-                tasks.filter { it.isChecked }.joinToString(SEPARATOR) { it.content },
+                tasks
+                    .filter { it.isChecked }
+                    .map { it.content }
+                    .joinToString(SEPARATOR),
             )
 
         companion object {

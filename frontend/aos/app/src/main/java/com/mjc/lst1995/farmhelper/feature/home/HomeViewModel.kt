@@ -74,8 +74,8 @@ class HomeViewModel
             viewModelScope.launch {
                 val bestCrops = cropUseCase.getMonthOfBestCrop()
                 _bestCrops.postValue(bestCrops.sortedByDescending { it.count })
+            }
         }
-    }
 
         private fun setObserverViewVisibility() {
             viewModelScope.launch {
