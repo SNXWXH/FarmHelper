@@ -26,7 +26,7 @@ export default function Header() {
   };
 
   return (
-    <div className='fixed top-0 left-0 flex justify-between bg-[#2B590F] text-white h-14 p-3 w-full font-nanumHeavy font-heavy'>
+    <div className='fixed top-0 left-0 flex justify-between bg-[#2B590F] text-white h-14 p-3 w-full font-nanumHeavy font-heavy z-50'>
       <Link href='/'>
         <Image src='/HeaderLogo.png' alt='HeaderLogo' width={110} height={0} />
       </Link>
