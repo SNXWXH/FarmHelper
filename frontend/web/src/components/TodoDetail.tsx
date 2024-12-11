@@ -15,7 +15,7 @@ export default function TodoDetail({
           -
         </button>
       </div>
-      <div className='flex items-center justify-start bg-[#F2FAE7] w-11/12 h-20 text-bold text-lg p-5 rounded-lg'>
+      <div className='flex items-center justify-start bg-[#F2FAE7] w-11/12  text-bold text-lg p-5 rounded-lg'>
         {detail}
       </div>
     </div>
