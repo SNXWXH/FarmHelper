@@ -19,7 +19,7 @@ public class RecommendationContentDTO {
 
     private String cropName;
 
-    private String content;
+    private String description;
 
     private String imageUrl;
 

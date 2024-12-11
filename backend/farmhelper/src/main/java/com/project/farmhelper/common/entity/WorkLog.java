@@ -26,11 +26,11 @@ public class WorkLog {
     @ManyToOne
     @JoinColumn(name = "cropId", nullable = false)  // Crop 엔티티와의 외래키 관계
     private Crop crop;
-
-    private String workName;        // 작업 이름
     private LocalDate workDate;     // 작업 날짜
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String workContent;     // 작업 내용
     private String workWeather;     // 작업 당시 날씨
-    private double workTemperature; // 작업 당시 온도
+    private String workTemperature; // 작업 당시 온도
 }
 

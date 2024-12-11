@@ -17,6 +17,9 @@ public class Recommendation {
     private Long recommendationId;  // 추천 작물의 기본키
 
     private String cropName;        // 추천 작물 이름
-    private String description;     // 추천 작물 설명
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String description;    // 추천 작물 설명
     private String imageUrl;        // 추천 작물 이미지 URL
 }

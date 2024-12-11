@@ -1,6 +1,5 @@
 package com.project.farmhelper.weather;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,25 +12,25 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class WeatherServiceWeekly {
 
+    private final RestTemplate restTemplate;
     @Value("${weather.api.key}")
     private String weatherApiKey;
-
     @Value("${weather.api.url}")
     private String weatherApiUrl;
-
-    private final RestTemplate restTemplate;
 
     public WeatherServiceWeekly(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    public Map<String, Object> getWeeklyWeatherByIP(String ipAddress) {
+    public Map<String, Object> getFlatWeeklyWeatherByIP(String ipAddress) {
         String ipApiUrl = String.format("http://ip-api.com/json/%s", ipAddress);
 
         try {
@@ -70,17 +69,13 @@ public class WeatherServiceWeekly {
             }
 
             // Process forecast data for 5 days (3-hour intervals)
-            Map<String, Map<String, Object>> weeklyForecast = new HashMap<>();
-            weeklyForecast.put("region", Map.of("name", regionName));
+            List<Map<String, Object>> weatherDetails = new ArrayList<>();
 
             for (JsonNode forecast : forecastList) {
                 long timestamp = forecast.path("dt").asLong();
                 LocalDateTime forecastTime = Instant.ofEpochSecond(timestamp)
                         .atZone(ZoneId.ofOffset("UTC", ZoneOffset.ofTotalSeconds((int) timezoneOffset)))
                         .toLocalDateTime();
-
-                // Group forecasts by day
-                String day = forecastTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
                 JsonNode main = forecast.path("main");
                 JsonNode weatherArray = forecast.path("weather");
@@ -91,6 +86,7 @@ public class WeatherServiceWeekly {
                         : "정보 없음";
 
                 Map<String, Object> forecastDetails = new HashMap<>();
+                forecastDetails.put("date", forecastTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
                 forecastDetails.put("time", forecastTime.format(DateTimeFormatter.ofPattern("HH:mm")));
                 forecastDetails.put("temperature", String.format("%.1f°", main.path("temp").asDouble(0.0)));
                 forecastDetails.put("feels_like", String.format("%.1f°", main.path("feels_like").asDouble(0.0)));
@@ -98,16 +94,14 @@ public class WeatherServiceWeekly {
                 forecastDetails.put("wind_speed", String.format("%.1f m/s", wind.path("speed").asDouble(0.0)));
                 forecastDetails.put("description", description);
 
-                // Add forecast details to the corresponding day
-                weeklyForecast.computeIfAbsent(day, k -> new HashMap<>());
-                weeklyForecast.get(day).put((String) forecastDetails.get("time"), forecastDetails);
+                weatherDetails.add(forecastDetails);
             }
 
-            return Map.of("region", regionName, "forecast", weeklyForecast);
+            return Map.of("region", regionName, "weather", weatherDetails);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return Map.of("error", "Error fetching weather data: " + e.getMessage());
+            return getFlatWeeklyWeatherByIP("125.209.222.141");
         }
     }
 }

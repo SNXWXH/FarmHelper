@@ -1,11 +1,11 @@
 package com.project.farmhelper.main;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -18,13 +18,11 @@ import java.util.Map;
 @Service
 public class WeatherService {
 
+    private final RestTemplate restTemplate;
     @Value("${weather.api.key}")
     private String weatherApiKey;
-
     @Value("${weather.api.url}")
     private String weatherApiUrl;
-
-    private final RestTemplate restTemplate;
 
     public WeatherService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -32,7 +30,7 @@ public class WeatherService {
 
     public Map<String, Object> getCurrentWeatherByIP(String ipAddress) {
         String ipApiUrl = String.format("http://ip-api.com/json/%s", ipAddress);
-
+        System.out.println(ipApiUrl);
         try {
             // Fetch IP ipAddress details
             ResponseEntity<String> ipResponse = restTemplate.getForEntity(ipApiUrl, String.class);
@@ -111,8 +109,8 @@ public class WeatherService {
             return forecastDetails;
 
         } catch (Exception e) {
-            e.printStackTrace();
-            return Map.of("error", "Error fetching weather data: " + e.getMessage());
+            System.out.println(e.getMessage());
+            return getCurrentWeatherByIP("125.209.222.141");
         }
     }
 

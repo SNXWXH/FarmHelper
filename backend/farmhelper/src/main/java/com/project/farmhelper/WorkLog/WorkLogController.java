@@ -1,6 +1,5 @@
-package com.project.farmhelper.Workpage;
+package com.project.farmhelper.WorkLog;
 
-import com.google.gson.JsonObject;
 import com.project.farmhelper.User.UserRepository;
 import com.project.farmhelper.common.Repository.CropRepository;
 import com.project.farmhelper.common.Repository.WorkLogRepository;
@@ -10,7 +9,10 @@ import com.project.farmhelper.common.entity.WorkLog;
 import com.project.farmhelper.main.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -21,36 +23,39 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/work")
-public class WorkPageController {
+public class WorkLogController {
 
-    private final WorkPageService workPageService;
     @Autowired
     private CropRepository cropRepository;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private WorkLogRepository workLogRepository;
+
     @Autowired
     private WeatherService weatherService;
 
-    @Autowired
-    public WorkPageController(WorkPageService workPageService) {
-        this.workPageService = workPageService;
+    // 특수문자를 제거하는 유틸리티 메서드
+    private String cleanInput(String input) {
+        if (input == null) {
+            return null;
+        }
+        return input.replaceAll("[^a-zA-Z0-9가-힣 ]", ""); // 알파벳, 숫자, 한글, 공백만 허용
     }
 
-    // 특정 Crop에 대한 WorkLog 조회 API
-    @PostMapping("/crop/worklist")
+    @PostMapping("/worklist")
     public ResponseEntity<?> getWorkLogs(@RequestBody Map<String, Object> requestData) {
-
-        // 요청 데이터에서 cropId, userId, ipAddress 추출
         Long cropId;
         String userId;
         String ipAddress;
 
         try {
-            cropId = Long.valueOf(requestData.get("cropId").toString());
-            userId = requestData.get("userId").toString();
-            ipAddress = requestData.get("ipAddress").toString();  // ipAddress 추가
+            // 특수문자를 제거한 데이터를 사용
+            cropId = Long.valueOf(cleanInput(requestData.get("cropId").toString()));
+            userId = cleanInput(requestData.get("userId").toString());
+            ipAddress = requestData.get("ipAddress").toString();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Invalid request data");
         }
@@ -76,6 +81,7 @@ public class WorkPageController {
         List<WorkLog> workLogs = workLogRepository.findByCropAndUser(crop, user);
 
         // 4. 날씨 정보 가져오기 (ipAddress 포함)
+        System.out.println(ipAddress + "asdasdasd");
         Map<String, Object> weatherData = weatherService.getCurrentWeatherByIP(ipAddress);
 
         // 5. 응답 데이터 생성
@@ -104,69 +110,4 @@ public class WorkPageController {
 
         return ResponseEntity.ok(response);
     }
-
-    @PostMapping("/listcreate")
-    public ResponseEntity<String> createWorkLog(@RequestBody WorkPageRequest workLogRequest) {
-        JsonObject json = new JsonObject();
-        try {
-            workPageService.createWorkLog(workLogRequest);
-            json.addProperty("isOK", true);
-
-            return ResponseEntity.ok(json.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            json.addProperty("isOK", false);
-
-            return ResponseEntity.badRequest().body(json.toString());
-        }
-    }
-
-    @PatchMapping("/patch")
-    public ResponseEntity<String> updateWorkLog(@RequestBody WorkPageRequest workRequest) {
-        boolean updated = workPageService.updateWorkLog(workRequest);
-
-        JsonObject json = new JsonObject();
-        if (updated) {
-            json.addProperty("isOK", true);
-
-            return ResponseEntity.ok(json.toString());
-        } else {
-            json.addProperty("isOK", false);
-
-            return ResponseEntity.badRequest().body(json.toString());
-        }
-    }
-
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteWorkLog(@RequestBody WorkPageRequest workRequest) {
-        boolean deleted = workPageService.deleteWorkLog(workRequest);
-
-        JsonObject json = new JsonObject();
-        if (deleted) {
-            json.addProperty("isOK", true);
-
-            return ResponseEntity.ok(json.toString());
-        } else {
-            json.addProperty("isOK", false);
-
-            return ResponseEntity.badRequest().body(json.toString());
-        }
-    }
-
-    @PostMapping("/app/delete")
-    public ResponseEntity<String> deleteWorkLogId(@RequestBody WorkPageRequest workRequest) {
-        boolean deleted = workPageService.deleteWorkLogId(workRequest);
-
-        JsonObject json = new JsonObject();
-        if (deleted) {
-            json.addProperty("isOK", true);
-
-            return ResponseEntity.ok(json.toString());
-        } else {
-            json.addProperty("isOK", false);
-
-            return ResponseEntity.ok(json.toString());
-        }
-    }
-
 }
