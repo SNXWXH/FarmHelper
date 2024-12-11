@@ -1,6 +1,9 @@
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import NextAuth, { User } from 'next-auth';
 
+import CredentialsProvider from 'next-auth/providers/credentials';
+interface NewUser extends User {
+  uid: string;
+}
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
@@ -11,13 +14,13 @@ const handler = NextAuth({
         name: { type: 'text' },
       },
       async authorize(credentials) {
-        const { uid, email, name } = credentials;
+        const { uid, email, name = '' } = credentials;
 
         if (!uid || !email) {
           throw new Error('잘못된 인증 정보입니다.');
         }
 
-        return { uid, email, name };
+        return { id: uid, uid, email, name };
       },
     }),
   ],
@@ -27,7 +30,7 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.uid = user.uid;
+        token.uid = user.id;
       }
       return token;
     },

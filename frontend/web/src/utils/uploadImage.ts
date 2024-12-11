@@ -16,7 +16,7 @@ const uploadImage = async (file, userID) => {
     const fileRef = ref(storage, filePath);
     await uploadBytes(fileRef, file);
 
-    const downloadURL = await getDownloadURL(fileRef); //
+    const downloadURL = await getDownloadURL(fileRef);
     return downloadURL;
   } catch (error) {
     console.error('Error uploading file:', error);
