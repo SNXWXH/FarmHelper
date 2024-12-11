@@ -43,9 +43,7 @@ export default function OAuth() {
 
       {session ? (
         <>
-          <p className='text-2xl'>
-            {session.user?.name}님 로그아웃 하시겠습니까?
-          </p>
+          <p className='text-2xl'>로그아웃 하시겠습니까?</p>
           <button
             className='flex justify-center items-center w-24 h-14 bg-[#698A54] rounded-md shadow-2xl m-12 text-white'
             onClick={() => signOut()}
