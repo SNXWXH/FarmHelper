@@ -59,4 +59,5 @@
     <string name="request_permission_message">앱을 사용하기 위해 권한을 허용해주세요.</string>
     <string name="task_edit">수정하기</string>
     <string name="task_deldte">삭제하기</string>
+    <string name="task_add">작업 추가</string>
 </resources>

@@ -32,7 +32,8 @@ class TaskAddViewModel
                 _progressBarVisibility.postValue(View.VISIBLE)
                 val recommendTasks =
                     taskUseCase.getRecommendTask(cropId).mapIndexed { index, recommendTask ->
-                        RecommendTask(index + _recommendTasks.value?.size!!, recommendTask.content)
+                        val size = _recommendTasks.value?.size ?: 0
+                        RecommendTask((index + size), recommendTask.content)
                     }
                 val new = _recommendTasks.value?.plus(recommendTasks) ?: recommendTasks
                 _recommendTasks.postValue(new)

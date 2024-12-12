@@ -55,11 +55,19 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.taskRV.adapter = adapter
-        setNavItemSelected()
+        setAddTaskFAB()
         getWorkTasks()
         setSortObserver()
         getTodayTask()
         setScroll()
+    }
+
+    private fun setAddTaskFAB() {
+        binding.taskAddFAB.setOnClickListener {
+            val action =
+                WorkDetailFragmentDirections.actionWorkDetailFragmentToTaskAddFragment(args.work.cropId)
+            findNavController().navigate(action)
+        }
     }
 
     private fun getWorkTasks() {
@@ -71,9 +79,11 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
                         it.filter { it.workDate == binding.todayTaskInclude.taskDateTV.text }
                     if (todayTask.isEmpty()) {
                         binding.todayTaskInclude.taskContentTV.text = "오늘 작업을 추가해 주세요."
+                        binding.taskAddFAB.visibility = View.VISIBLE
                     } else {
                         binding.todayTaskInclude.taskContentTV.text =
                             "${todayTask.size}건의 오늘 작업이 있습니다."
+                        binding.taskAddFAB.visibility = View.GONE
                     }
                     if (viewModel.sortType.value!!) {
                         adapter.submitList(it)
@@ -125,19 +135,6 @@ class WorkDetailFragment : BaseFragment<FragmentWorkDetailBinding>(R.layout.frag
 
     private fun setToolbarClientName(name: String) {
         binding.materialToolbar3.title = CLIENT_NAME_FORMAT.format(name)
-    }
-
-    private fun setNavItemSelected() {
-        binding.materialToolbar3.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.menu_add -> {
-                    val action =
-                        WorkDetailFragmentDirections.actionWorkDetailFragmentToTaskAddFragment(args.work.cropId)
-                    findNavController().navigate(action)
-                }
-            }
-            return@setOnMenuItemClickListener true
-        }
     }
 
     companion object {

@@ -37,6 +37,10 @@ class RecommendTaskAdapter(
                 binding.checkBox.isChecked = !binding.checkBox.isChecked
                 recommendTaskListener(recommendTask)
             }
+            binding.checkBox.setOnClickListener {
+                binding.checkBox.isChecked = !binding.checkBox.isChecked
+                recommendTaskListener(recommendTask)
+            }
         }
 
         companion object {

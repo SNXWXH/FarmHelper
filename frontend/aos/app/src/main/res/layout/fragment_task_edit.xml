@@ -22,7 +22,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/menu_delete"
             app:title="@string/task_log_edit" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,8 +92,8 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/TextInputEditTextAppearance"
                     android:id="@+id/taskTIET"
+                    style="@style/TextInputEditTextAppearance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/write_custom_task" />
